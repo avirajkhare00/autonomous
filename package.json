@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "scripts": {
+    "test": "wsrun test --parallel --exclude-missing"
+  },
+  "devDependencies": {
+    "lerna": "^2.11.0",
+    "wsrun": "^2.2.0"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/zeppelin-solidity",
+      "**/zeppelin-solidity/**"
+    ]
+  }
+}

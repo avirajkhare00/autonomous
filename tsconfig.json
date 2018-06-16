@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "importHelpers": true,
+    "alwaysStrict": true,
+    "sourceMap": true,
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "lib": [
+      "dom",
+      "es6",
+      "es2017.object",
+      "es6"
+    ],
+    "baseUrl": "./packages",
+    "paths": {
+      "@autonomous/*": ["./*/src"]
+    },
+    "typeRoots": [
+      "node_modules/@types",
+      "node_modules/@autonomous/typings/types",
+      "node_modules/@0xproject/typescript-typings/types"
+    ]
+  }
+}

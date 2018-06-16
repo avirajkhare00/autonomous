@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "../../tslint.json",
+    "tslint-react"
+  ],
+  "rules": {
+    "jsx-no-lambda": false,
+    "jsx-no-multiline-js": false,
+    "jsx-boolean-value": false,
+    "class-name": false
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@autonomous/typings",
+  "version": "0.0.1",
+  "description": "",
+  "author": "jvanoers",
+  "dependencies": {
+    "@types/node": "^10.1.1"
+  },
+  "devDependencies": {
+    "tslint": "~5.9.1",
+    "tslint-config-standard": "^7.0.0",
+    "typescript": "~2.8.3"
+  }
+}
