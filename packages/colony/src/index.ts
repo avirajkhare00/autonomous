@@ -1,13 +1,27 @@
+import { providers, Wallet } from 'ethers'
+import dotenv from 'dotenv-safe'
+
+import { TruffleLoader } from '@colony/colony-js-contract-loader-fs'
 import ColonyNetworkClient from '@colony/colony-js-client'
+import EthersAdapter from '@colony/colony-js-adapter-ethers'
 
 export class AutonomousColonyFactory {
   async create () {
-    // const adapter = new EthersAdapter({
-    //   loader,
-    //   provider,
-    //   wallet
-    // })
-    let adapter = 'TODO!'
+    const loader = new TruffleLoader({ contractDir: 'build/contracts' })
+
+    let provider = new providers.JsonRpcProvider('http://localhost:8545/')
+
+    let testMnemonic = process.env.TEST_MNEMONIC!
+
+    // Create a wallet with the private key (so we have a balance we can use)
+    const wallet = Wallet.fromMnemonic(testMnemonic)
+    wallet.provider = provider
+
+    const adapter = new EthersAdapter({
+      loader,
+      provider,
+      wallet
+    })
 
     const networkClient = new ColonyNetworkClient({ adapter })
     await networkClient.init()
@@ -33,7 +47,7 @@ export class AutonomousColonyFactory {
     const colonyClient = await networkClient.getColonyClient(colonyId)
 
     // Or alternatively, just its address:
-    // const colonyClient = await networkClient.getColonyClientByAddress(colonyAddress);
+    // const colonyClient = await networkClient.getColonyClientByAddress(colonyAddress)
 
     // You can also get the Meta Colony:
     const metaColonyClient = await networkClient.getMetaColonyClient()
@@ -42,3 +56,9 @@ export class AutonomousColonyFactory {
     return colonyClient
   }
 }
+
+dotenv.config()
+
+new AutonomousColonyFactory().create()
+  .then(() => console.log('success!'))
+  .catch(console.log.apply('ERROR'))

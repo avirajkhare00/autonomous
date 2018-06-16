@@ -9,6 +9,8 @@
     "test": "react-scripts-ts test --env=jsdom"
   },
   "dependencies": {
+    "@colony/colony-js-adapter-ethers": "^1.4.1",
+    "@colony/colony-js-contract-loader-http": "^1.4.1",
     "enzyme-adapter-react-16": "^1.1.1",
     "glamor": "^2.20.40",
     "glamorous": "^4.13.0",

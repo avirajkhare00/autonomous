@@ -34,3 +34,4 @@ bin/
 # Environment variables
 .env
 ormconfig.ts
+ganache-accounts.json

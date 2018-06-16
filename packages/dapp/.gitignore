@@ -33,6 +33,5 @@ bin/
 
 # Environment variables
 .env
-ormconfig.ts
 
 lerna-debug.log

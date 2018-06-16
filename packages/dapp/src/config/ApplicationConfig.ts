@@ -1,4 +1,4 @@
-interface Environment {
+export interface Environment {
   APP_NAME: string
 }
 
