@@ -326,6 +326,12 @@
   dependencies:
     csstype "^2.2.0"
 
+"@types/redux@^3.6.0":
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/@types/redux/-/redux-3.6.0.tgz#f1ebe1e5411518072e4fdfca5c76e16e74c1399a"
+  dependencies:
+    redux "*"
+
 "@types/secp256k1@^3.5.0":
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/@types/secp256k1/-/secp256k1-3.5.0.tgz#0f3baf16b07488c6da2633a63b4160bcf8d0fd5b"
@@ -9909,7 +9915,7 @@ redux-observable@^0.18.0:
   dependencies:
     gitbook-plugin-github "^2.0.0"
 
-"redux@>= 3.7.2":
+redux@*, "redux@>= 3.7.2":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.0.tgz#aa698a92b729315d22b34a0553d7e6533555cc03"
   dependencies:

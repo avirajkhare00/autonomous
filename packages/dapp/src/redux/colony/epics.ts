@@ -30,15 +30,26 @@ const selectEpic: Epic<RootActions, RootState> =
           .flatMap(client => client.getToken.call())
           .map(token => token.address)
 
+        let tasks$ = client$
+          .flatMap(client => Observable.fromPromise(client.getTaskCount.call())
+            .flatMap(result => Observable.combineLatest(
+              Array(result.count).fill(0).map(
+                (_, i) => client.getTask.call({ taskId: i })
+              )
+            ))
+          )
+
         // Return an action encapsulating the colony
         return Observable.combineLatest(
           client$,
-          token$
+          token$,
+          tasks$
         )
-          .map(([client, tokenAddress]) => createSelectSuccessAction(
+          .map(([client, tokenAddress, tasks]) => createSelectSuccessAction(
             {
               address: action.address,
-              token: tokenAddress
+              token: tokenAddress,
+              tasks: tasks.filter(m => m.specificationHash).map(m => m.specificationHash)
             },
             client
           ))

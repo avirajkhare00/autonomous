@@ -9,11 +9,13 @@ export enum TransactionActionTypes {
   Error = '[WEB3] Transaction Error'
 }
 
+export type TransactionInitiator<T> = () => Promise<ContractResponse<T>>
+
 export interface InitiateTransaction extends Action {
   type: TransactionActionTypes.Initiate
   id: string
   description: string
-  initiator: () => ContractResponse<any>
+  initiator: TransactionInitiator<any>
 }
 
 export interface TransactionSubmitted extends Action {
@@ -34,7 +36,7 @@ export interface TransactionError extends Action {
   error: Error
 }
 
-export function createTransactionInitiateAction (id: string, description: string, initiator: () => ContractResponse<any>): InitiateTransaction {
+export function createTransactionInitiateAction (id: string, description: string, initiator: TransactionInitiator<any>): InitiateTransaction {
   return { type: TransactionActionTypes.Initiate, id, description, initiator }
 }
 

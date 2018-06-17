@@ -1,9 +1,9 @@
 declare module '@colony/colony-js-client' {
   import { Contract } from '@colony/colony-js-adapter'
+  import { SendOptions } from '@colony/colony-js-contract-client'
   import BigNumber from 'bn.js'
 
   export class ColonyClient {
-
     contract: Contract
     /*
       Helper function used to generate the rating secret used in task ratings. Accepts a salt value and a value to hide, and returns the keccak256 hash of both.
@@ -162,7 +162,7 @@ declare module '@colony/colony-js-client' {
     */
     createTask: Sender<{
       specificationHash: IPFSHash, // Hashed output of the task's work specification, stored so that it can later be referenced for task ratings or in the event of a dispute.
-      domainId: number // Domain in which the task has been created (default value: `1`).
+      domainId?: number // Domain in which the task has been created (default value: `1`).
     },
       {
         taskId: number // Will return an integer taskId, from the `TaskAdded` event.
@@ -412,7 +412,7 @@ declare module '@colony/colony-js-client' {
   }
 
   export type Sender<I, O> = {
-    send (input: I): Promise<ContractResponse<O>>
+    send (input: I, options?: Partial<SendOptions>): Promise<ContractResponse<O>>
   }
   export type MultisigSender<I, O> = (input: I) => Promise<O>
   export type Event<T> = () => Promise<T>
