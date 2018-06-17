@@ -1,10 +1,12 @@
 import { ColonyActions, ColonyActionTypes } from './actions'
 import { Colony } from '../../models/Colony'
+import { ColonyClient } from '@colony/colony-js-client'
 
 export interface ColonyState {
   hasColony: boolean
   isLoading: boolean
   colony?: Colony
+  colonyClient?: ColonyClient
 }
 
 const initialState: ColonyState = {
@@ -28,7 +30,8 @@ export function colonyReducer (state: ColonyState = initialState, action: Colony
         ...state,
         hasColony: true,
         isLoading: false,
-        colony: action.colony
+        colony: action.colony,
+        colonyClient: action.client
       }
     }
 
@@ -38,7 +41,8 @@ export function colonyReducer (state: ColonyState = initialState, action: Colony
         ...state,
         hasColony: false,
         isLoading: false,
-        colony: undefined
+        colony: undefined,
+        colonyClient: undefined
       }
     }
 

@@ -19,6 +19,10 @@ declare module 'ethers' {
 
     class Web3Provider implements Provider {
       constructor (web3Provider: Web3, network?: Networks)
+
+      listAccounts(): Promise<string[]>
+
+      getSigner(address?: string): any
     }
 
     class JsonRpcProvider implements Provider {

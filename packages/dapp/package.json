@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@colony/colony-js-adapter-ethers": "^1.4.1",
+    "@colony/colony-js-contract-loader": "^1.4.1",
     "@colony/colony-js-contract-loader-http": "^1.4.1",
     "enzyme-adapter-react-16": "^1.1.1",
     "glamor": "^2.20.40",
@@ -23,7 +24,8 @@
     "redux-observable": "^0.18.0",
     "rxjs": "5.5.0",
     "semantic-ui-css": "^2.3.1",
-    "semantic-ui-react": "^0.81.1"
+    "semantic-ui-react": "^0.81.1",
+    "web3": "^1.0.0-beta.34"
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.10",

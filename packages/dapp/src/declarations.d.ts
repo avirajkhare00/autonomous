@@ -7,3 +7,5 @@ interface Window {
 }
 
 declare var window: Window
+
+declare var web3: Web3 | undefined

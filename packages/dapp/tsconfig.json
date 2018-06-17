@@ -4,6 +4,7 @@
     "jsx": "react",
     "skipLibCheck": true
   },
+  "baseUrl": "src",
   "include": [
     "./src/**/*",
     "./test/**/*"

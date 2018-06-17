@@ -23,7 +23,7 @@ const _colonyRoute: SFC<ColonyRouteProps & RouteProps> = ({ hasColony, isLoading
 
 const mapState = (state: RootState): Partial<ColonyRouteProps> => ({
   hasColony: state.colony.hasColony,
-  isLoading: state.colony.isLoading
+  isLoading: state.colony.isLoading || !state.core.initialised
 })
 
 export const ColonyRoute = connect(mapState)(_colonyRoute)

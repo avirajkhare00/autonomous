@@ -23,7 +23,7 @@ const _noColonyRoute: SFC<UnauthorizedRouteProps & RouteProps> = ({ hasColony, i
 
 const mapState = (state: RootState): Partial<UnauthorizedRouteProps> => ({
   hasColony: state.colony.hasColony,
-  isLoading: state.colony.isLoading
+  isLoading: state.colony.isLoading || !state.core.initialised
 })
 
 export const NoColonyRoute = connect(mapState)(_noColonyRoute)

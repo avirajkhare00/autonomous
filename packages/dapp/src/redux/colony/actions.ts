@@ -1,5 +1,6 @@
 import { Action } from 'redux'
 import { Colony } from '../../models/Colony'
+import { ColonyClient } from '@colony/colony-js-client'
 
 export enum ColonyActionTypes {
   Select = '[Colony] Colony',
@@ -16,6 +17,7 @@ export interface Select extends Action {
 export interface SelectSuccess extends Action {
   type: ColonyActionTypes.SelectSuccess
   colony: Colony
+  client: ColonyClient
 }
 
 export interface SelectFail extends Action {
@@ -31,8 +33,8 @@ export function createSelectAction (address: string): Select {
   return { type: ColonyActionTypes.Select, address }
 }
 
-export function createSelectSuccessAction (colony: Colony): SelectSuccess {
-  return { type: ColonyActionTypes.SelectSuccess, colony }
+export function createSelectSuccessAction (colony: Colony, client: ColonyClient): SelectSuccess {
+  return { type: ColonyActionTypes.SelectSuccess, colony, client }
 }
 
 export function createSelectFailAction (error: Error): SelectFail {
