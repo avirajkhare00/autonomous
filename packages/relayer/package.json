@@ -1,0 +1,44 @@
+{
+  "name": "@autonomous/relayer",
+  "version": "0.0.1",
+  "author": "jvanoers",
+  "engineStrict": true,
+  "engines": {
+    "node": ">= 8.9.0"
+  },
+  "scripts": {
+    "lint": "tslint -t stylish --project \"tsconfig.json\"",
+    "test": "tsc && jest"
+  },
+  "dependencies": {
+    "@autonomous/colony": "0.0.1",
+    "@koa/cors": "2",
+    "dotenv-safe": "^6.0.0",
+    "ethers": "^3.0.22",
+    "ipfs-api": "^22.0.1",
+    "ipfsd-ctl": "^0.37.3",
+    "koa": "^2.5.1",
+    "koa-router": "^7.4.0",
+    "kubernetes-client": "^5.3.0",
+    "rxjs": "5.5.0",
+    "tslib": "~1.9.0"
+  },
+  "devDependencies": {
+    "@0xproject/typescript-typings": "^0.3.2",
+    "@autonomous/typings": "0.0.1",
+    "@types/dotenv-safe": "^5.0.0",
+    "@types/jest": "~22.2.3",
+    "@types/koa": "^2.0.45",
+    "@types/koa-router": "^7.0.28",
+    "@types/koa__cors": "^2.2.2",
+    "@types/node": "^10.1.1",
+    "go-ipfs-dep": "^0.4.15",
+    "jest": "~22.4.3",
+    "ts-jest": "~22.4.4",
+    "ts-node": "^6.0.3",
+    "tslint": "~5.9.1",
+    "tslint-config-standard": "^7.0.0",
+    "tsutils": "~2.26.2",
+    "typescript": "~2.8.3"
+  }
+}

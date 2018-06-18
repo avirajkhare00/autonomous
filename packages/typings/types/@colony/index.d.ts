@@ -1,6 +1,6 @@
 declare module '@colony/colony-js-client' {
   import { Contract } from '@colony/colony-js-adapter'
-  import { SendOptions } from '@colony/colony-js-contract-client'
+  import { ContractResponse, SendOptions } from '@colony/colony-js-contract-client'
   import BigNumber from 'bn.js'
 
   export class ColonyClient {
