@@ -1,14 +1,6 @@
 import { ApiGroup, ClientConfiguration } from 'kubernetes-client'
 
 declare module 'kubernetes-client' {
-  export const ApiExtensions: ApiGroupStatic
-  export const Extensions: ApiGroupStatic
-  export const Core: ApiGroupStatic
-  export const Rbac: ApiGroupStatic
-  export const Batch: ApiGroupStatic
-  export const Apps: ApiGroupStatic
-  export const config: Configuration
-
   export class Client {
     apis: any
 

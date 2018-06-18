@@ -16,7 +16,7 @@
 //
 import { Client, config } from 'kubernetes-client'
 
-const crd = require('./crds/deployment-notifier.json')
+const crd = require('../kubernetes/crds/dn.json')
 
 async function main () {
   try {

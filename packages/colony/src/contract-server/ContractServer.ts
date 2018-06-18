@@ -58,7 +58,7 @@ export class ContractServer {
   }
 
   async start (): Promise<void> {
-    console.log(`Starting contract server lisning on port ${this.port}`)
+    console.log(`Starting contract server listening on port ${this.port}`)
     console.log(`Serving directory ${this.contractDir}`)
     console.log('-----------------------')
     console.log('Files served:')
