@@ -1,9 +1,11 @@
 import ColonyNetworkClient from '@colony/colony-js-client'
 
 import { CoreActions, CoreActionTypes } from './actions'
+import { IPFSAPI } from 'ipfs-api'
 
 export interface CoreState {
   initialised: boolean,
+  ipfsClient?: IPFSAPI
   networkClient?: ColonyNetworkClient
   networkId?: number
   accounts?: string[]
@@ -23,6 +25,7 @@ export function coreReducer (state: CoreState = initialState, action: CoreAction
         ...state,
         initialised: true,
         networkClient: action.networkClient,
+        ipfsClient: action.ipfsClient,
         networkId: action.networkId,
         accounts: action.accounts
       }

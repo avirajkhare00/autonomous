@@ -9,6 +9,13 @@ cd packages/colony
 yarn run ganache:start
 ```
 
+Start a local IPFS node:
+
+```bash
+cd packages/colony
+yarn run ipfs:start
+```
+
 Ensure contracts are compiled: 
 ```bash
 cd packages/colony

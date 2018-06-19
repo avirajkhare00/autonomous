@@ -9,6 +9,7 @@ import { RootState } from '../store'
 import { ROOT_ROUTES } from '../../scenes/routes'
 import { AppReady, CoreActionTypes, createAppInitializedAction, createLoadFailedAction } from './actions'
 import { ContractServerLoader } from '../../lib/ContractServerLoader'
+import { getIPFSClient } from '../../lib/ipfs/getIPFSClient'
 
 const appInitEpic: Epic<any, RootState> =
   action$ => action$.ofType<AppReady>(CoreActionTypes.Ready)
@@ -52,6 +53,7 @@ const appInitEpic: Epic<any, RootState> =
         )
           .map(([networkClient, networkId, accounts]) => createAppInitializedAction(
             networkClient,
+            getIPFSClient(),
             networkId,
             accounts
           ))

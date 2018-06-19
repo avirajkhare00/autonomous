@@ -1,4 +1,5 @@
 import { Action } from 'redux'
+import { IPFSAPI } from 'ipfs-api'
 import ColonyNetworkClient from '@colony/colony-js-client'
 
 export enum CoreActionTypes {
@@ -14,6 +15,7 @@ export interface AppReady extends Action {
 export interface AppInitialized extends Action {
   type: CoreActionTypes.Initialized
   networkClient: ColonyNetworkClient
+  ipfsClient: IPFSAPI
   networkId: number
   accounts: string[]
 }
@@ -28,8 +30,8 @@ export function createAppReadyAction (): AppReady {
   return { type: CoreActionTypes.Ready }
 }
 
-export function createAppInitializedAction (networkClient: ColonyNetworkClient, networkId: number, accounts: string[]): AppInitialized {
-  return { type: CoreActionTypes.Initialized, networkClient, networkId, accounts }
+export function createAppInitializedAction (networkClient: ColonyNetworkClient, ipfsClient: IPFSAPI, networkId: number, accounts: string[]): AppInitialized {
+  return { type: CoreActionTypes.Initialized, networkClient, ipfsClient, networkId, accounts }
 }
 
 export function createLoadFailedAction (error: Error): LoadFailed {

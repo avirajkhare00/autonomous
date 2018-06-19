@@ -11,7 +11,7 @@ import {
 import { Observable } from 'rxjs/Observable'
 
 const initiateTransactionEpic: Epic<RootActions, RootState> =
-  action$ => action$.ofType<InitiateTransaction>(TransactionActionTypes.Initiate)
+  action$ => action$.ofType<InitiateTransaction<any>>(TransactionActionTypes.Initiate)
     .mergeMap(action => {
       let submission$ = Observable.fromPromise(action.initiator())
 
@@ -24,13 +24,21 @@ const initiateTransactionEpic: Epic<RootActions, RootState> =
             : Observable.throw('Receipt not found')
         )
 
+      let successAction$ = submission$
+        .flatMap(tx => tx.eventDataPromise!)
+        .map(returnedData => action.successAction(returnedData))
+
       return Observable.merge(
         submission$.map(tx => createTransactionSubmittedAction(action.id, tx.meta.transaction)),
-        receipt$
+        receipt$,
+        successAction$
       )
         .catch(err => {
           console.log('Error in transaction', err)
-          return Observable.of(createTransactionErrorAction(action.id, err))
+          return [
+            createTransactionErrorAction(action.id, err),
+            action.failAction(err)
+          ]
         })
     })
 

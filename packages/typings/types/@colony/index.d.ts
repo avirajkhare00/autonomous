@@ -704,8 +704,8 @@ declare module '@colony/colony-js-contract-client' {
   export type ContractResponse<EventData> = {
     successful?: boolean,
     successfulPromise?: Promise<boolean>,
-    eventData?: EventData | {},
-    eventDataPromise?: Promise<EventData | {}>,
+    eventData?: EventData,
+    eventDataPromise?: Promise<EventData>,
     meta: ContractResponseMeta
   }
 
