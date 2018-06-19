@@ -9,18 +9,26 @@ import {
 import { DeploymentService, KubernetesDeploymentService } from './kubernetes/deployment/DeploymentService'
 import { DeploymentNotificationListener } from './kubernetes/deployment/DeploymentNotificationListener'
 import { ResourceManager } from './kubernetes/ResourceManager'
+import { ColonyRegistrationListener } from './kubernetes/colony-registration/ColonyRegistrationListener'
+import { default as ColonyNetworkClient } from '@colony/colony-js-client'
+import { IPFSAPI } from 'ipfs-api'
 
 const DEFAULT_PORT = 4030
 
 export class RelayerServer {
   server: Server
+  resourceManager: ResourceManager
+
   deploymentListener: DeploymentNotificationListener
+  colonyListener: ColonyRegistrationListener
+
   colonyRegistrationService: ColonyRegistrationService
   deploymentRegistrationService: DeploymentService
-  resourceManager: ResourceManager
 
   constructor (
     k8sClient: any,
+    private colonyNetworkClient: ColonyNetworkClient,
+    private ipfsClient: IPFSAPI,
     private port: number = DEFAULT_PORT
   ) {
     this.resourceManager = new ResourceManager(k8sClient)
@@ -33,9 +41,12 @@ export class RelayerServer {
 
     this.colonyRegistrationService = new KubernetesColonyRegistrationService(resourceClient)
     this.deploymentRegistrationService = new KubernetesDeploymentService(resourceClient)
+
     this.deploymentListener = new DeploymentNotificationListener(resourceClient)
+    this.colonyListener = new ColonyRegistrationListener(resourceClient, this.colonyNetworkClient, this.ipfsClient)
 
     await this.deploymentListener.initialize()
+    await this.colonyListener.initialize()
 
     let app = this.createApp()
 
@@ -52,7 +63,7 @@ export class RelayerServer {
 
   private configureRoutes (router: Router) {
     router.post('/test-deploy/:colonyAddress', async ctx => {
-      let colony = ctx.params.colonyAddress
+      let colony = ctx.params.colonyAddress.toLowerCase()
 
       if (this.colonyRegistrationService.hasColony(colony)) {
 
@@ -70,7 +81,7 @@ export class RelayerServer {
     })
 
     router.post('/register/:colonyAddress', async ctx => {
-      let colony = ctx.params.colonyAddress
+      let colony = ctx.params.colonyAddress.toLowerCase()
 
       let hasColony = await this.colonyRegistrationService.hasColony(colony)
 
@@ -90,7 +101,7 @@ export class RelayerServer {
 
     router.get('/logs/:colonyAddress', ctx => {
 
-      let colony = ctx.params.colonyAddress
+      let colony = ctx.params.colonyAddress.toLowerCase()
 
       if (this.colonyRegistrationService.hasColony(colony)) {
         let result = this.deploymentListener.getEventsFor(colony)
@@ -109,7 +120,6 @@ export class RelayerServer {
     let app = new Koa()
 
     this.configureRoutes(router)
-
 
     app
       .use(cors())

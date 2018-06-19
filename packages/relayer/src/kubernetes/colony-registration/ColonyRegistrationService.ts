@@ -31,8 +31,11 @@ export class KubernetesColonyRegistrationService implements ColonyRegistrationSe
         name: registration.namespace
       }
     }
-
-    await await this.k8sClient.api.v1.namespaces.post({ body: namespaceResource })
+    try {
+      await await this.k8sClient.api.v1.namespaces.post({ body: namespaceResource })
+    } catch (err) {
+      if (err.statusCode !== 409) throw err
+    }
 
     let listenerResource = buildColonyListener(
       registration.colonyAddress,

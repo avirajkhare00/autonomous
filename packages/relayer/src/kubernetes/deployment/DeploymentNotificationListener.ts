@@ -18,11 +18,8 @@ export class DeploymentNotificationListener {
   }
 
   async initialize () {
-    // let notifiers = await this.notifierClient.get()x
-    // notifiers.map(n => this.initializeDeploymentEventStream$(n))
-
     this.notifierClient.eventStream$().subscribe(event => {
-      console.log('Notifier added!', event.object.colonyAddress, event.object.deploymentName)
+      console.log('[DEPLOYMENT NOTIFIER] Notifier added!', event.object.colonyAddress, event.object.deploymentName)
 
       if (event.type === 'ADDED') {
         this.initializeDeploymentEventStream$(event.object)
@@ -44,7 +41,7 @@ export class DeploymentNotificationListener {
       .map(buffer => JSON.parse(buffer.toString()) as StreamEvent<DeploymentEvent>)
 
     deploymentEvent$.subscribe(event => {
-      console.log('Deployment event received', resource.colonyAddress, resource.deploymentName)
+      console.log('[DEPLOYMENT] Event received', resource.colonyAddress, resource.deploymentName)
 
       if (!this.eventStore[resource.colonyAddress]) {
         this.eventStore[resource.colonyAddress] = {}

@@ -3,6 +3,13 @@ declare module '@colony/colony-js-client' {
   import { ContractResponse, SendOptions } from '@colony/colony-js-contract-client'
   import BigNumber from 'bn.js'
 
+  type TypedEventCallback<ParamTypes> = (args: ParamTypes) => void
+
+  export class ContractEvent<T> {
+    addListener(handlerFunction: TypedEventCallback<T>): void
+    removeListener(handlerFunction: TypedEventCallback<T>): void
+  }
+
   export class ColonyClient {
     contract: Contract
     /*
@@ -366,37 +373,37 @@ declare module '@colony/colony-js-client' {
       {}>
 
     events: {
-      TaskAdded: Event<{ id: number }>,
-      TaskBriefChanged: Event<{
+      TaskAdded: ContractEvent<{ id: number }>,
+      TaskBriefChanged: ContractEvent<{
         id: number,
         specificationHash: string
       }>,
-      TaskDueDateChanged: Event<{
+      TaskDueDateChanged: ContractEvent<{
         id: number,
         dueDate: Date
       }>,
-      TaskDomainChanged: Event<{
+      TaskDomainChanged: ContractEvent<{
         id: number,
         domainId: number
       }>,
-      TaskSkillChanged: Event<{
+      TaskSkillChanged: ContractEvent<{
         id: number,
         skillId: number
       }>,
-      TaskRoleUserChanged: Event<{
+      TaskRoleUserChanged: ContractEvent<{
         id: number,
         role: number,
         user: Address
       }>,
-      TaskWorkerPayoutChanged: Event<{
+      TaskWorkerPayoutChanged: ContractEvent<{
         id: number,
         token: Address,
         amount: number
       }>,
-      TaskFinalized: Event<{
+      TaskFinalized: ContractEvent<{
         id: number
       }>,
-      TaskCanceled: Event<{
+      TaskCanceled: ContractEvent<{
         id: number
       }>
     }
@@ -415,7 +422,6 @@ declare module '@colony/colony-js-client' {
     send (input: I, options?: Partial<SendOptions>): Promise<ContractResponse<O>>
   }
   export type MultisigSender<I, O> = (input: I) => Promise<O>
-  export type Event<T> = () => Promise<T>
   export type Address = string
   export type Role = 'MANAGER' | 'EVALUATOR' | 'WORKER'
   export type IPFSHash = string

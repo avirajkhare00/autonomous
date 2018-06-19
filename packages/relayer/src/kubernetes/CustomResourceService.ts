@@ -6,7 +6,7 @@ import { fromStream } from '../utils/rxjs/fromStream'
 export class CustomResourceClient<T> {
   client: any
 
-  constructor (private k8sClient: any, resourceName: string) {
+  constructor (private k8sClient: any, private resourceName: string) {
     this.client = getAutonomousResource(k8sClient, resourceName)
   }
 
@@ -20,8 +20,8 @@ export class CustomResourceClient<T> {
       .then((c: any) => c.body.items)
   }
 
-  eventStream$ (): Observable<StreamEvent<DeploymentNotifierEvent>> {
-    return fromStream(this.k8sClient.apis[AUTONOMOUS_NAMESPACE].v1.watch.deploymentnotifiers.getStream())
+  eventStream$ (): Observable<StreamEvent<T & K8sEventObject>> {
+    return fromStream(this.k8sClient.apis[AUTONOMOUS_NAMESPACE].v1.watch[this.resourceName].getStream())
       .map(buffer => JSON.parse(buffer.toString()))
   }
 }
