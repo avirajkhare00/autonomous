@@ -8,13 +8,12 @@
   },
   "scripts": {
     "ganache:start": "ganache-cli -d --gasLimit 7000000 --acctKeys ganache-accounts.json",
-    "contracts:compile": "./node_modules/.bin/truffle compile",
-    "contracts:deploy": "./node_modules/.bin/truffle migrate",
-    "contracts:serve": "ts-node src/contract-server/start.ts",
-    "colony:add": "ts-node ./src/addColony.ts",
-    "ipfs:start": "ts-node ./src/ipfs/startIPFSNode.ts",
-    "lint": "tslint -t stylish --project \"tsconfig.json\"",
-    "test": "tsc && jest"
+    "ganache:dev": "ts-node ./src/ganache/start.ts",
+    "ipfs:start": "ts-node ./src/ipfs/start.ts",
+    "truffle:compile": "./node_modules/.bin/truffle compile",
+    "truffle:migrate": "./node_modules/.bin/truffle migrate",
+    "contracts:serve": "ts-node ./src/contract-server/start.ts",
+    "cli": "ts-node -r tsconfig-paths/register ./src/cli.ts"
   },
   "dependencies": {
     "@autonomous/colony": "0.0.1",
@@ -26,6 +25,7 @@
     "@koa/cors": "2",
     "bignumber.js": "~4.1.0",
     "bip39": "^2.5.0",
+    "commander": "^2.15.1",
     "dotenv-safe": "^6.0.0",
     "ethereumjs-tx": "^1.3.4",
     "ethereumjs-wallet": "^0.6.0",
@@ -58,6 +58,7 @@
     "go-ipfs-dep": "^0.4.15",
     "jest": "~22.4.3",
     "truffle": "^4.1.11",
+    "tsconfig-paths": "^3.4.0",
     "ts-jest": "~22.4.4",
     "ts-node": "^6.0.3",
     "tslint": "~5.9.1",

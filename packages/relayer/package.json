@@ -7,9 +7,7 @@
     "node": ">= 8.9.0"
   },
   "scripts": {
-    "start": "ts-node ./src/index.ts",
-    "lint": "tslint -t stylish --project \"tsconfig.json\"",
-    "test": "tsc && jest"
+    "start": "ts-node -r tsconfig-paths/register ./src/index.ts"
   },
   "dependencies": {
     "@autonomous/colony": "0.0.1",
@@ -35,6 +33,7 @@
     "jest": "~22.4.3",
     "ts-jest": "~22.4.4",
     "ts-node": "^6.0.3",
+    "tsconfig-paths": "^3.4.0",
     "tslint": "~5.9.1",
     "tslint-config-standard": "^7.0.0",
     "tsutils": "~2.26.2",

@@ -12,17 +12,29 @@ import 'rxjs/add/operator/timeout'
 import 'rxjs/add/operator/delay'
 
 import { Client, config } from 'kubernetes-client'
+import dotenv from 'dotenv-safe'
+
+import { getColonyClient, getIPFSClient, Web3Config } from '@autonomous/colony'
 
 import { RelayerServer } from './RelayerServer'
-import { getColonyClient } from './getColonyClient'
-import { getIPFSClient } from './getIPFSClient'
 
 (async () => {
+  dotenv.config()
+
   const k8sClient = new Client({ config: config.fromKubeconfig() })
   await k8sClient.loadSpec()
 
-  let networkClient = await getColonyClient()
-  let ipfsClient = await getIPFSClient()
+  let web3Config: Web3Config = {
+    mnemonic: process.env.TEST_MNEMONIC!,
+    hostname: 'localhost',
+    port: 8545
+  }
+
+  let ipfsHost = process.env.IPFS_HOST!
+  let ipfsPort = Number(process.env.IPFS_API_PORT!)
+
+  let networkClient = await getColonyClient(web3Config)
+  let ipfsClient = await getIPFSClient(ipfsHost, ipfsPort)
 
   let relayer = new RelayerServer(k8sClient, networkClient, ipfsClient)
 

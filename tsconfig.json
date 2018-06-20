@@ -24,9 +24,9 @@
       "es2017.object",
       "es6"
     ],
-    "baseUrl": "./packages",
+    "baseUrl": ".",
     "paths": {
-      "@autonomous/*": ["./*/src"]
+      "@autonomous/*": ["./packages/*/src"]
     },
     "typeRoots": [
       "node_modules/@types",
