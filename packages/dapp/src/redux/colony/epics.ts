@@ -13,6 +13,7 @@ import {
 } from './actions'
 import { RootActions, RootState } from '../store'
 import { ROOT_ROUTES } from '../../scenes/routes'
+import { createGetTaskAction } from '../tasks/actions'
 
 const selectEpic: Epic<RootActions, RootState> =
   (action$, store$) => action$.ofType<Select>(ColonyActionTypes.Select)
@@ -30,29 +31,30 @@ const selectEpic: Epic<RootActions, RootState> =
           .flatMap(client => client.getToken.call())
           .map(token => token.address)
 
-        let tasks$ = client$
+        let taskActions$ = client$
           .flatMap(client => Observable.fromPromise(client.getTaskCount.call())
-            .flatMap(result => Observable.combineLatest(
-              Array(result.count).fill(0).map(
-                (_, i) => client.getTask.call({ taskId: i })
+            .map(result => Array(result.count).fill(0).map(
+              (_, i) => createGetTaskAction(i)
               )
-            ))
+            )
           )
 
         // Return an action encapsulating the colony
         return Observable.combineLatest(
           client$,
           token$,
-          tasks$
+          taskActions$
         )
-          .map(([client, tokenAddress, tasks]) => createSelectSuccessAction(
-            {
-              address: action.address,
-              token: tokenAddress,
-              tasks: tasks.filter(m => m.specificationHash).map(m => m.specificationHash)
-            },
-            client
-          ))
+          .flatMap(([client, tokenAddress, taskActions]) => [
+            createSelectSuccessAction(
+              {
+                address: action.address,
+                token: tokenAddress
+              },
+              client
+            ),
+            ...taskActions
+          ])
           .catch(e => Observable.of(createSelectFailAction(e)))
       } else {
         return Observable.of(createSelectFailAction(new Error('Network not ready')))

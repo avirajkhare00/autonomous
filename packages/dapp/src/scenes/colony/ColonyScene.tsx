@@ -1,23 +1,23 @@
 import { default as React, SFC } from 'react'
 import { RouteProps } from 'react-router'
 import { connect } from 'react-redux'
-import { Header, Segment, Button } from 'semantic-ui-react'
-import { ColonyClient } from '@colony/colony-js-client'
+import { Button, Header, Segment } from 'semantic-ui-react'
 import { Dispatch } from 'redux'
 
 import { RootActions, RootState } from '../../redux/store'
 import { ColonyLayout } from '../../components/layout/ColonyLayout'
 import { ColonyNavigation } from './navigation'
 import { Colony } from '../../models/Colony'
-import { createTransactionInitiateAction, TransactionInitiator } from '../../redux/transactions/actions'
+import { createCreateTaskAction } from '../../redux/tasks/actions'
+import { Task } from '../../models/Task'
 
 interface ColonySceneProps {
   colony: Colony
-  colonyClient: ColonyClient
-  createTask (initiator: TransactionInitiator<any>): void
+  tasks: Task[]
+  createTask (): void
 }
 
-const _colonyScene: SFC<ColonySceneProps & RouteProps> = ({ colony, colonyClient, createTask }) => (
+const _colonyScene: SFC<ColonySceneProps & RouteProps> = ({ colony, tasks, createTask }) => (
   <ColonyLayout>
     <Segment>
       <Header as='h1'>Autonomous Colony</Header>
@@ -26,16 +26,12 @@ const _colonyScene: SFC<ColonySceneProps & RouteProps> = ({ colony, colonyClient
           <div>
             Address: {colony.address}
 
-            Tasks: [{colony.tasks.join(', ')}]
+            Tasks: {JSON.stringify(tasks)}
 
             <ColonyNavigation />
 
             <Button
-              onClick={() => createTask(
-                () => colonyClient.createTask.send({
-                  specificationHash: 'QmcNbGg6EVfFn2Z1QxWauR9XY9KhnEcyb5DUXCXHi8pwMJ'
-                }, { waitForMining: false })
-              )}
+              onClick={() => createTask()}
             >
               Create Task
             </Button>
@@ -50,16 +46,14 @@ const _colonyScene: SFC<ColonySceneProps & RouteProps> = ({ colony, colonyClient
 
 const mapState = (state: RootState): Partial<ColonySceneProps> => ({
   colony: state.colony.colony,
-  colonyClient: state.colony.colonyClient
+  tasks: state.tasks.tasks
 })
 
 const mapDispatch = (dispatch: Dispatch<RootActions>) => ({
-  createTask (initiator: TransactionInitiator<any>) {
-    dispatch(createTransactionInitiateAction(
-      'test',
-      'Create task',
-      initiator
-    ))
+  createTask () {
+    dispatch(createCreateTaskAction({
+      foo: 'bar'
+    }))
   }
 })
 

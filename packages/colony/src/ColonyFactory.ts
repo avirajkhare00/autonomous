@@ -34,10 +34,9 @@ export class ColonyFactory {
     })
     console.log('Token address: ' + tokenAddress)
 
-    // Create a cool Colony!
-    const {
-      eventData: { colonyId, colonyAddress }
-    } = await networkClient.createColony.send({ tokenAddress })
+    let result = await networkClient.createColony.send({ tokenAddress })
+
+    let { colonyId, colonyAddress } = result.eventData!
 
     // Congrats, you've created a Colony!
     console.log('Colony ID: ' + colonyId)

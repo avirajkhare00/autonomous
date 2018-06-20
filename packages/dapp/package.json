@@ -15,6 +15,7 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "glamor": "^2.20.40",
     "glamorous": "^4.13.0",
+    "ipfs-api": "^22.1.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
@@ -25,6 +26,7 @@
     "rxjs": "5.5.0",
     "semantic-ui-css": "^2.3.1",
     "semantic-ui-react": "^0.81.1",
+    "uuid": "^3.2.1",
     "web3": "^1.0.0-beta.34"
   },
   "devDependencies": {
@@ -37,6 +39,7 @@
     "@types/react-router-dom": "^4.2.6",
     "@types/react-router-redux": "^5.0.14",
     "@types/redux": "^3.6.0",
+    "@types/uuid": "^3.4.3",
     "babel-core": "^6.26.3",
     "enzyme": "^3.3.0",
     "jest": "^22.4.3",

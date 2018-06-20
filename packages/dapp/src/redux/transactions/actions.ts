@@ -10,12 +10,16 @@ export enum TransactionActionTypes {
 }
 
 export type TransactionInitiator<T> = () => Promise<ContractResponse<T>>
+export type TransactionResultResolver<T> = (input: T) => Action
+export type TransactionFailResolver = (err: Error) => Action
 
-export interface InitiateTransaction extends Action {
+export interface InitiateTransaction<T> extends Action {
   type: TransactionActionTypes.Initiate
   id: string
   description: string
-  initiator: TransactionInitiator<any>
+  initiator: TransactionInitiator<T>
+  successAction: TransactionResultResolver<T>
+  failAction: TransactionFailResolver
 }
 
 export interface TransactionSubmitted extends Action {
@@ -36,8 +40,14 @@ export interface TransactionError extends Action {
   error: Error
 }
 
-export function createTransactionInitiateAction (id: string, description: string, initiator: TransactionInitiator<any>): InitiateTransaction {
-  return { type: TransactionActionTypes.Initiate, id, description, initiator }
+export function createTransactionInitiateAction<T> (
+  id: string,
+  description: string,
+  initiator: TransactionInitiator<T>,
+  successAction: TransactionResultResolver<T>,
+  failAction: TransactionFailResolver
+): InitiateTransaction<T> {
+  return { type: TransactionActionTypes.Initiate, id, description, initiator, successAction, failAction }
 }
 
 export function createTransactionSubmittedAction (id: string, transaction: Transaction): TransactionSubmitted {
@@ -53,7 +63,7 @@ export function createTransactionErrorAction (id: string, error: Error): Transac
 }
 
 export type TransactionActions =
-  | InitiateTransaction
+  | InitiateTransaction<any>
   | TransactionSubmitted
   | TransactionReceiptReceived
   | TransactionError
