@@ -57,17 +57,17 @@ declare module '@colony/colony-js-client' {
     */
     getTask: Caller<{ taskId: number },
       {
-        cancelled: boolean, // Boolean flag denoting whether the task is cancelled
-        deliverableDate?: Date, // Date when the deliverable is due
-        deliverableHash?: IPFSHash, // Unique hash of the deliverable content
-        domainId: number, // Integer Domain ID the task belongs to
-        dueDate?: Date, // When the task is due
-        finalized: boolean, // Boolean flag denoting whether the task is finalized
-        id: number, // Integer task ID
-        payoutsWeCannotMake?: number, // Number of payouts that cannot be completed with the current task funding
-        potId?: number, // Integer ID of funding pot for the task
-        skillId: number, // Integer Skill ID the task is assigned to
-        specificationHash: IPFSHash // Unique hash of the specification content
+        cancelled: boolean,             // Boolean flag denoting whether the task is cancelled.
+        deliverableDate?: Date,         // Date when the deliverable is due.
+        deliverableHash?: IPFSHash,     // Unique hash of the deliverable content.
+        domainId: number,               // Integer Domain ID the task belongs to.
+        dueDate?: Date,                 // When the task is due.
+        finalized: boolean,             // Boolean flag denoting whether the task is finalized.
+        id: number,                     // Integer task ID.
+        payoutsWeCannotMake?: number,   // Number of payouts that cannot be completed with the current task funding.
+        potId?: number,                 // Integer ID of funding pot for the task.
+        skillId: number,                // Integer Skill ID the task is assigned to.
+        specificationHash: IPFSHash     // Unique hash of the specification content.
       }>
     /*
       Given a specific task, a defined role for the task, and a token address, will return any payout attached to the task in the token specified.

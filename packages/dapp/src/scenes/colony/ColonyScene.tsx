@@ -3,21 +3,20 @@ import { RouteProps } from 'react-router'
 import { connect } from 'react-redux'
 import { Button, Header, Segment } from 'semantic-ui-react'
 import { Dispatch } from 'redux'
-
 import { RootActions, RootState } from '../../redux/store'
 import { ColonyLayout } from '../../components/layout/ColonyLayout'
-import { ColonyNavigation } from './navigation'
 import { Colony } from '../../models/Colony'
-import { createCreateTaskAction } from '../../redux/tasks/actions'
-import { Task } from '../../models/Task'
+import { createCreateTaskAction, createGetAllTasksAction } from '../../redux/tasks/actions'
+import { DashboardScene } from './dashboard/DashboardScene'
 
 interface ColonySceneProps {
   colony: Colony
-  tasks: Task[]
-  createTask (): void
+
+  createTask(): void
+  refreshTasks(): void
 }
 
-const _colonyScene: SFC<ColonySceneProps & RouteProps> = ({ colony, tasks, createTask }) => (
+const _colonyScene: SFC<ColonySceneProps & RouteProps> = ({ colony, createTask, refreshTasks }) => (
   <ColonyLayout>
     <Segment>
       <Header as='h1'>Autonomous Colony</Header>
@@ -26,34 +25,33 @@ const _colonyScene: SFC<ColonySceneProps & RouteProps> = ({ colony, tasks, creat
           <div>
             Address: {colony.address}
 
-            Tasks: {JSON.stringify(tasks)}
+            <br />
 
-            <ColonyNavigation />
-
-            <Button
-              onClick={() => createTask()}
-            >
-              Create Task
-            </Button>
+            <Button onClick={() => createTask()}>Create Task</Button>
+            <Button onClick={() => refreshTasks()}>Refresh Tasks</Button>
           </div>
         )
         : null
       }
+
+      <DashboardScene/>
 
     </Segment>
   </ColonyLayout>
 )
 
 const mapState = (state: RootState): Partial<ColonySceneProps> => ({
-  colony: state.colony.colony,
-  tasks: state.tasks.tasks
+  colony: state.colony.colony
 })
 
 const mapDispatch = (dispatch: Dispatch<RootActions>) => ({
-  createTask () {
+  createTask() {
     dispatch(createCreateTaskAction({
       foo: 'bar'
     }))
+  },
+  refreshTasks() {
+    dispatch(createGetAllTasksAction())
   }
 })
 

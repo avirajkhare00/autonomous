@@ -3,10 +3,10 @@ import { Colony } from '../../models/Colony'
 import { ColonyClient } from '@colony/colony-js-client'
 
 export enum ColonyActionTypes {
-  Select = '[Colony] Colony',
+  Select = '[Colony] Colony Select',
   SelectSuccess = '[Colony] Colony Success',
   SelectFail = '[Colony] Colony Fail',
-  Deselect = '[Colony] Deselect'
+  Deselect = '[Colony] Colony Deselect'
 }
 
 export interface Select extends Action {
