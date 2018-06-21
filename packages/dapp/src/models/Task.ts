@@ -4,6 +4,10 @@ export interface Task {
   specification: {
     description: string
   }
+  deliverableHash?: string,
+  deliverable?: {
+    description: string
+  }
 }
 //
 // More detailed task interface, but doesn't seem required at this stage

@@ -10,5 +10,7 @@ export const TaskRow: SFC<TaskListTableProps> = ({ task }) => (
     <td>{task.id}</td>
     <td>{task.specificationHash}</td>
     <td>{task.specification.description}</td>
+    <td>{task.deliverableHash}</td>
+    {/*<td>{task.deliverable!.description}</td>*/}
   </tr>
 )

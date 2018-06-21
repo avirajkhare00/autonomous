@@ -39,7 +39,6 @@ export class SubmitTaskConfigForm extends Component<SubmitTaskConfigFormProps, S
       <Form onSubmit={e => this.handleSubmit(e)}>
         <Form.Select
           value={this.state.taskId}
-          defaultValue={this.state.taskId}
           options={this.taskIdOptions()}
           label='Task Id'
           onChange={(_, data) => this.setState({ taskId: data.value as number })}
@@ -47,7 +46,7 @@ export class SubmitTaskConfigForm extends Component<SubmitTaskConfigFormProps, S
         <Form.Input
           fluid
           label='Config Url'
-          placeholder='0x...'
+          placeholder='https://github.com/...'
           value={this.state.configUrl}
           onChange={event => this.setState({ configUrl: event.currentTarget.value })}
         />

@@ -3,17 +3,21 @@ import { Task } from '../../models/Task'
 
 export interface TasksState {
   isCreateTaskLoading: boolean,
-  isCreateTaskModalVisible: boolean
+  isCreateTaskModalVisible: boolean,
+  isModifyTaskLoading: boolean,
+  isModifyTaskModalVisible: boolean,
   tasks: Task[]
 }
 
 const initialState: TasksState = {
   isCreateTaskLoading: false,
   isCreateTaskModalVisible: false,
+  isModifyTaskLoading: false,
+  isModifyTaskModalVisible: false,
   tasks: []
 }
 
-export function tasksReducer (state: TasksState = initialState, action: TaskActions): TasksState {
+export function tasksReducer(state: TasksState = initialState, action: TaskActions): TasksState {
   switch (action.type) {
     case TaskActionTypes.Create: {
       return {
@@ -34,6 +38,28 @@ export function tasksReducer (state: TasksState = initialState, action: TaskActi
       return {
         ...state,
         isCreateTaskLoading: false
+      }
+    }
+
+    case TaskActionTypes.SubmitConfig: {
+      return {
+        ...state,
+        isModifyTaskLoading: true
+      }
+    }
+
+    case TaskActionTypes.SubmitConfigSuccess: {
+      return {
+        ...state,
+        isModifyTaskLoading: false,
+        isModifyTaskModalVisible: false
+      }
+    }
+
+    case TaskActionTypes.SubmitConfigFailed: {
+      return {
+        ...state,
+        isModifyTaskLoading: false
       }
     }
 

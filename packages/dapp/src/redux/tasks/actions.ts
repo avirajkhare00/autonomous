@@ -9,7 +9,10 @@ export enum TaskActionTypes {
   GetFailed = '[Task] Task Get Failed',
   Create = '[Task] Task Create',
   CreateSuccess = '[Task] Task Create Success',
-  CreateFailed = '[Task] Task Create Failed'
+  CreateFailed = '[Task] Task Create Failed',
+  SubmitConfig = '[Task] Task Submit Config',
+  SubmitConfigSuccess = '[Task] Task Submit Config Success',
+  SubmitConfigFailed = '[Task] Task Submit Config Failed'
 }
 
 export interface GetAllTasks extends Action {
@@ -44,7 +47,6 @@ export interface CreateTask extends Action {
 export interface CreateTaskSuccess extends Action {
   type: TaskActionTypes.CreateSuccess
   taskId: number
-
 }
 
 export interface CreateTaskFailed extends Action {
@@ -52,36 +54,64 @@ export interface CreateTaskFailed extends Action {
   error: Error
 }
 
-export function createGetAllTasksAction (): GetAllTasks {
+export interface SubmitTaskConfig extends Action {
+  type: TaskActionTypes.SubmitConfig
+  taskId: number
+  configUrl: string
+}
+
+export interface SubmitTaskConfigSuccess extends Action {
+  type: TaskActionTypes.SubmitConfigSuccess
+  taskId: number
+}
+
+export interface SubmitTaskConfigFailed extends Action {
+  type: TaskActionTypes.SubmitConfigFailed
+  error: Error
+}
+
+export function createGetAllTasksAction(): GetAllTasks {
   return { type: TaskActionTypes.GetAll }
 }
 
-export function createGetAllTasksFailedAction (error: Error): GetAllTasksFailed {
+export function createGetAllTasksFailedAction(error: Error): GetAllTasksFailed {
   return { type: TaskActionTypes.GetAllFailed, error }
 }
 
-export function createGetTaskAction (id: number): GetTask {
+export function createGetTaskAction(id: number): GetTask {
   return { type: TaskActionTypes.Get, id }
 }
 
-export function createGetTaskSuccessAction (task: Task): GetTaskSuccess {
+export function createGetTaskSuccessAction(task: Task): GetTaskSuccess {
   return { type: TaskActionTypes.GetSuccess, task }
 }
 
-export function createGetTaskFailedAction (error: Error): GetTaskFailed {
+export function createGetTaskFailedAction(error: Error): GetTaskFailed {
   return { type: TaskActionTypes.GetFailed, error }
 }
 
-export function createCreateTaskAction (specification: string): CreateTask {
+export function createCreateTaskAction(specification: string): CreateTask {
   return { type: TaskActionTypes.Create, specification }
 }
 
-export function createCreateTaskSuccessAction (taskId: number): CreateTaskSuccess {
+export function createCreateTaskSuccessAction(taskId: number): CreateTaskSuccess {
   return { type: TaskActionTypes.CreateSuccess, taskId }
 }
 
-export function createCreateTaskFailedAction (error: Error): CreateTaskFailed {
+export function createCreateTaskFailedAction(error: Error): CreateTaskFailed {
   return { type: TaskActionTypes.CreateFailed, error }
+}
+
+export function createSubmitTaskConfigAction(taskId: number, configUrl: string): SubmitTaskConfig {
+  return { type: TaskActionTypes.SubmitConfig, taskId, configUrl }
+}
+
+export function createSubmitTaskConfigSuccessAction(taskId: number): SubmitTaskConfigSuccess {
+  return { type: TaskActionTypes.SubmitConfigSuccess, taskId }
+}
+
+export function createSubmitTaskConfigFailedAction(error: Error): SubmitTaskConfigFailed {
+  return { type: TaskActionTypes.SubmitConfigFailed, error }
 }
 
 export type TaskActions =
@@ -93,3 +123,6 @@ export type TaskActions =
   | CreateTask
   | CreateTaskSuccess
   | CreateTaskFailed
+  | SubmitTaskConfig
+  | SubmitTaskConfigSuccess
+  | SubmitTaskConfigFailed

@@ -7,7 +7,11 @@ import { RouteProps } from 'react-router'
 
 import { TaskListTable } from './TaskListTable'
 import { Task } from '../../../models/Task'
-import { createCreateTaskAction, createGetAllTasksAction } from '../../../redux/tasks/actions'
+import {
+  createCreateTaskAction,
+  createGetAllTasksAction,
+  createSubmitTaskConfigAction
+} from '../../../redux/tasks/actions'
 import { CreateTaskForm } from './CreateTaskForm'
 import { SubmitTaskConfigForm } from './SubmitTaskConfigForm'
 
@@ -48,6 +52,9 @@ const mapDispatch = (dispatch: Dispatch<RootActions>) => ({
     ))
   },
   submitConfig(taskId: number, configUrl: string) {
+    dispatch(createSubmitTaskConfigAction(
+      taskId, configUrl
+    ))
     console.log(taskId, configUrl)
   },
   refreshTasks() {
