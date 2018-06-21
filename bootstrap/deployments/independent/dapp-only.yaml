@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autonomous-dapp
+spec:
+  selector:
+    matchLabels:
+      app: autonomous-dapp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: autonomous-dapp
+    spec:
+      containers:
+      - name: autonomous-dapp
+        image: autonomous-dapp:0.1
+        ports:
+        - name: http
+          containerPort: 8080
+        env:
+        - name: REACT_APP_APP_NAME
+          value: "Autonomous (Kubernetes)"
+        - name: REACT_APP_IPFS_HOST
+          value: "127.0.0.1"
+        - name: IPFS_API_PORT
+          value: "43123"
+        - name: REACT_APP_CONTRACT_SERVER_HOST
+          value: "localhost"
+        - name: REACT_APP_CONTRACT_SERVER_PORT
+          value: "3030"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: autonomous-dapp
+spec:
+  selector:
+    app: autonomous-dapp
+  ports:
+  - protocol: TCP
+    port: 9999
+    targetPort: 8080
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ipfs-proxy
+spec:
+  type: ExternalName
+  # https://docs.docker.com/docker-for-mac/networking/#use-cases-and-workarounds
+  externalName: host.docker.internal
+  ports:
+    - name: port
+      port: 43123
+

@@ -4,7 +4,7 @@ declare module 'kubernetes-client' {
   export class Client {
     apis: any
 
-    constructor ({ config }: { config?: ClientConfiguration })
+    constructor ({ config }: { config: ClientConfiguration })
 
     loadSpec(): void
     addCustomResourceDefinition(crd: any): void

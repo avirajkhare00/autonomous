@@ -2,6 +2,11 @@ import Koa from 'koa'
 import cors from '@koa/cors'
 import Router from 'koa-router'
 import { Server } from 'http'
+import { IPFSAPI } from 'ipfs-api'
+import bodyParser from 'koa-bodyparser'
+
+import { default as ColonyNetworkClient } from '@colony/colony-js-client'
+
 import {
   ColonyRegistrationService,
   KubernetesColonyRegistrationService
@@ -10,8 +15,6 @@ import { DeploymentService, KubernetesDeploymentService } from './kubernetes/dep
 import { DeploymentNotificationListener } from './kubernetes/deployment/DeploymentNotificationListener'
 import { ResourceManager } from './kubernetes/ResourceManager'
 import { ColonyRegistrationListener } from './kubernetes/colony-registration/ColonyRegistrationListener'
-import { default as ColonyNetworkClient } from '@colony/colony-js-client'
-import { IPFSAPI } from 'ipfs-api'
 
 const DEFAULT_PORT = 4030
 
@@ -62,14 +65,22 @@ export class RelayerServer {
   }
 
   private configureRoutes (router: Router) {
-    router.post('/test-deploy/:colonyAddress', async ctx => {
+    router.post('/deploy/:colonyAddress', async ctx => {
       let colony = ctx.params.colonyAddress.toLowerCase()
+
+      let deployment = ctx.request.body
+
+      if (!deployment) {
+        ctx.status = 400
+        ctx.body = { error: 'No deployment supplied' }
+        return
+      }
 
       if (this.colonyRegistrationService.hasColony(colony)) {
 
         await this.deploymentRegistrationService.deploy({
           colonyAddress: colony,
-          deploymentPayload: require('./nginx-ref/deployment.json')
+          deploymentPayload: deployment
         })
 
         ctx.status = 201
@@ -123,6 +134,7 @@ export class RelayerServer {
 
     app
       .use(cors())
+      .use(bodyParser())
       .use(router.routes())
       .use(router.allowedMethods())
 

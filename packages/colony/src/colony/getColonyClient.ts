@@ -3,14 +3,15 @@ import EthersAdapter from '@colony/colony-js-adapter-ethers'
 import ColonyNetworkClient from '@colony/colony-js-client'
 
 import { ContractServerLoader } from '../contract-server/ContractServerLoader'
-import { Web3Config } from '../types'
+import { ContractServerConfig, Web3Config } from '../types'
 
-export async function getColonyClient (config: Web3Config) {
+export async function getColonyClient (web3Config: Web3Config, contractServerConfig: ContractServerConfig) {
 
-  const loader = new ContractServerLoader()
-  let provider = new providers.JsonRpcProvider(`${config.hostname}:${config.port}`)
+  const loader = new ContractServerLoader(contractServerConfig)
 
-  const wallet = Wallet.fromMnemonic(config.mnemonic)
+  let provider = new providers.JsonRpcProvider(`http://${web3Config.hostname}:${web3Config.port}`)
+
+  const wallet = Wallet.fromMnemonic(web3Config.mnemonic)
   wallet.provider = provider
 
   const adapter = new EthersAdapter({

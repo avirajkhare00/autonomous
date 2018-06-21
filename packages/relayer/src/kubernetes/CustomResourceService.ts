@@ -22,6 +22,14 @@ export class CustomResourceClient<T> {
 
   eventStream$ (): Observable<StreamEvent<T & K8sEventObject>> {
     return fromStream(this.k8sClient.apis[AUTONOMOUS_NAMESPACE].v1.watch[this.resourceName].getStream())
-      .map(buffer => JSON.parse(buffer.toString()))
+      .flatMap(buffer => buffer.toString().split('\n'))
+      .filter(event => event.length > 0)
+      .map(event => {
+        try {
+          return JSON.parse(event)
+        } catch (e) {
+          console.log('Error parsing event', event, e)
+        }
+      })
   }
 }

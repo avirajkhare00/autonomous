@@ -1,10 +1,17 @@
-import { IPFSConfig, Web3Config } from './types'
+import { ContractServerConfig, IPFSConfig, Web3Config } from './types'
 
 export function getTestWeb3Config (): Web3Config {
   return {
-    mnemonic: process.env.TEST_MNEMONIC!,
+    mnemonic: process.env.MNEMONIC!,
     hostname: 'localhost',
     port: 8545
+  }
+}
+
+export function getTestContractServerConfig (): ContractServerConfig {
+  return {
+    hostname: 'localhost',
+    port: 3030
   }
 }
 

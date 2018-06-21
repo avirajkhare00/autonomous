@@ -1,16 +1,21 @@
 import commander from 'commander'
+import dotenv from 'dotenv-safe'
+
 import { getColonyClient } from './colony/getColonyClient'
 import { addColony } from './colony/addColony'
 import { migrateColony } from './environment/migrateColony'
-import { getTestWeb3Config } from './config'
+import { getTestContractServerConfig, getTestWeb3Config } from './config'
 
 (async () => {
+  dotenv.config()
 
   commander
     .command('add')
     .action(async () => {
       let web3Config = getTestWeb3Config()
-      let networkClient = await getColonyClient(web3Config)
+      let contractServer = getTestContractServerConfig()
+
+      let networkClient = await getColonyClient(web3Config, contractServer)
 
       await addColony(networkClient)
     })

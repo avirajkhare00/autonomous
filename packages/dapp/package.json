@@ -4,12 +4,12 @@
   "author": "jvanoers",
   "scripts": {
     "start": "react-scripts-ts start",
-    "lint": "tslint -t stylish --project \"tsconfig.json\"",
     "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom"
+    "dist-serve": "http-server build"
   },
   "dependencies": {
     "@colony/colony-js-adapter-ethers": "^1.4.1",
+    "@colony/colony-js-client": "^1.4.1",
     "@colony/colony-js-contract-loader": "^1.4.1",
     "@colony/colony-js-contract-loader-http": "^1.4.1",
     "enzyme-adapter-react-16": "^1.1.1",
@@ -42,6 +42,7 @@
     "@types/uuid": "^3.4.3",
     "babel-core": "^6.26.3",
     "enzyme": "^3.3.0",
+    "http-server": "^0.11.1",
     "jest": "^22.4.3",
     "jest-enzyme": "^6.0.0",
     "react-addons-test-utils": "^15.4.2",

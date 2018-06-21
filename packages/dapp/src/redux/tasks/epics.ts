@@ -102,7 +102,7 @@ const createTaskEpic: Epic<RootActions, RootState> =
         //   }))
         // .map(cid => cid.toBaseEncodedString())
         ipfsClient.files.add(
-          new Buffer(JSON.stringify(action.specification))
+          Buffer.from(JSON.stringify(action.specification))
         ))
         .map(files => files[0])
         .map(file => file.hash)

@@ -73,3 +73,19 @@ Lerna is a good place to learn(a) about monorepos.
 [https://github.com/lerna/lerna](https://github.com/lerna/lerna)
 
 test
+
+## Bootstrap
+
+Pre-Step: 
+Setup dev env: Ganache, IPFS, contract server
+Colony: migrate colony base contracts
+
+1. Build images for dapp and relayer
+2. Start relayer with local config
+3. Create a colony
+4. Register colony with local relayer
+5. Deploy combined config to relayer
+6. Stop local relayer
+7. Open kubernetes app/ relayer
+App: localhost:9999, relayer:8888
+8. Use bootstrapped relayer to manage (including itself) 

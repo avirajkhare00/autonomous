@@ -10,10 +10,13 @@ import { ROOT_ROUTES } from '../../scenes/routes'
 import { AppReady, CoreActionTypes, createAppInitializedAction, createLoadFailedAction } from './actions'
 import { ContractServerLoader } from '../../lib/ContractServerLoader'
 import { getIPFSClient } from '../../lib/ipfs/getIPFSClient'
+import { env } from '../../config/ApplicationConfig'
 
 const appInitEpic: Epic<any, RootState> =
   action$ => action$.ofType<AppReady>(CoreActionTypes.Ready)
     .mergeMap(_ => {
+      console.log('Environment', env)
+
       // Use MetaMask: Check global web3 object is injected
       if (typeof web3 !== 'undefined') {
         console.log('Loading colony from injected Web3...')
@@ -23,7 +26,9 @@ const appInitEpic: Epic<any, RootState> =
 
         // Use our locally hosted ContractServer to load ABI files
         // Otherwise the JSON files would need to be bundled with the DApp
-        const loader = new ContractServerLoader()
+        const loader = new ContractServerLoader({
+          endpoint: `http://${env.CONTRACT_SERVER_HOST}:${env.CONTRACT_SERVER_PORT}/contracts?name=%%NAME%%&address=%%ADDRESS%%&version=%%VERSION%%`
+        })
 
         // Get the accounts injected by the provider
         const accounts$ = Observable.fromPromise(provider.listAccounts())
@@ -46,14 +51,21 @@ const appInitEpic: Epic<any, RootState> =
           .map(network => Number(network))
 
         // Combine all the above operations to emit the initialized action
+        let ipfsClient = getIPFSClient(env.IPFS_HOST, env.IPFS_API_PORT)
+
+        // Test we have an IPFS connection so we can fail early
+        // Hello world!
+        let ipfsTess$ = Observable.fromPromise(ipfsClient.files.cat('Qmc5gCcjYypU7y28oCALwfSvxCBskLuPKWpK4qpterKC7z'))
+
         return Observable.combineLatest(
           client$,
           networkId$,
-          accounts$
+          accounts$,
+          ipfsTess$
         )
           .map(([networkClient, networkId, accounts]) => createAppInitializedAction(
             networkClient,
-            getIPFSClient(),
+            ipfsClient,
             networkId,
             accounts
           ))
