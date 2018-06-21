@@ -91,6 +91,7 @@ const createTaskEpic: Epic<RootActions, RootState> =
         return Observable.of(createCreateTaskFailedAction(new Error('Network clients not initialised')))
       }
 
+      console.log('Uploading task brief to IPFS:', action.specification)
       let upload$ = Observable.fromPromise(
         // TODO Replace with CID with DAG API
         // ipfsClient.dag.put(
@@ -101,7 +102,7 @@ const createTaskEpic: Epic<RootActions, RootState> =
         //   }))
         // .map(cid => cid.toBaseEncodedString())
         ipfsClient.files.add(
-          new Buffer(JSON.stringify(action.specification))
+          new Buffer(action.specification)
         ))
         .map(files => files[0])
         .map(file => file.hash)

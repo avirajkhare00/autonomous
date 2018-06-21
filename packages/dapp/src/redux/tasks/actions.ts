@@ -38,7 +38,7 @@ export interface GetTaskFailed extends Action {
 
 export interface CreateTask extends Action {
   type: TaskActionTypes.Create
-  specification: Object
+  specification: string
 }
 
 export interface CreateTaskSuccess extends Action {
@@ -72,7 +72,7 @@ export function createGetTaskFailedAction (error: Error): GetTaskFailed {
   return { type: TaskActionTypes.GetFailed, error }
 }
 
-export function createCreateTaskAction (specification: Object): CreateTask {
+export function createCreateTaskAction (specification: string): CreateTask {
   return { type: TaskActionTypes.Create, specification }
 }
 
