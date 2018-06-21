@@ -13,7 +13,7 @@ import {
 } from './actions'
 import { RootActions, RootState } from '../store'
 import { ROOT_ROUTES } from '../../scenes/routes'
-import { createGetTaskAction } from '../tasks/actions'
+import { createGetAllTasksAction } from '../tasks/actions'
 
 const selectEpic: Epic<RootActions, RootState> =
   (action$, store$) => action$.ofType<Select>(ColonyActionTypes.Select)
@@ -31,21 +31,12 @@ const selectEpic: Epic<RootActions, RootState> =
           .flatMap(client => client.getToken.call())
           .map(token => token.address)
 
-        let taskActions$ = client$
-          .flatMap(client => Observable.fromPromise(client.getTaskCount.call())
-            .map(result => Array(result.count).fill(0).map(
-              (_, i) => createGetTaskAction(i)
-              )
-            )
-          )
-
         // Return an action encapsulating the colony
         return Observable.combineLatest(
           client$,
-          token$,
-          taskActions$
+          token$
         )
-          .flatMap(([client, tokenAddress, taskActions]) => [
+          .flatMap(([client, tokenAddress]) => [
             createSelectSuccessAction(
               {
                 address: action.address,
@@ -53,7 +44,7 @@ const selectEpic: Epic<RootActions, RootState> =
               },
               client
             ),
-            ...taskActions
+            createGetAllTasksAction()
           ])
           .catch(e => Observable.of(createSelectFailAction(e)))
       } else {

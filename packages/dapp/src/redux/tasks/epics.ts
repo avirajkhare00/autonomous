@@ -4,18 +4,44 @@ import uuid from 'uuid'
 
 import { RootActions, RootState } from '../store'
 import {
-  TaskActionTypes,
-  GetTask,
-  CreateTask,
   createCreateTaskFailedAction,
   createCreateTaskSuccessAction,
-  createGetTaskSuccessAction,
-  createGetTaskFailedAction,
+  createGetAllTasksFailedAction,
   createGetTaskAction,
-  CreateTaskSuccess
+  createGetTaskFailedAction,
+  createGetTaskSuccessAction,
+  CreateTask,
+  CreateTaskSuccess,
+  GetAllTasks,
+  GetTask,
+  TaskActionTypes
 } from './actions'
 import { createTransactionInitiateAction } from '../transactions/actions'
 import { Task } from '../../models/Task'
+
+const getAllTasksEpic: Epic<RootActions, RootState> =
+  (action$, store$) => action$.ofType<GetAllTasks>(TaskActionTypes.GetAll)
+    .mergeMap(_ => {
+      let colony = store$.getState().colony.colonyClient
+
+      if (!colony) {
+        return Observable.of(createGetAllTasksFailedAction(new Error('Network clients not initialised')))
+      }
+
+      let taskActions$ = Observable.fromPromise(colony.getTaskCount.call())
+        .map(result => Array(result.count).fill(0).map(
+          (_, i) => createGetTaskAction(i + 1)
+          )
+        )
+
+      return Observable.combineLatest(
+        taskActions$
+      )
+        .flatMap(([taskActions]) => [
+          ...taskActions
+        ])
+        .catch(err => Observable.of(createGetTaskFailedAction(err)))
+    })
 
 const getTaskEpic: Epic<RootActions, RootState> =
   (action$, store$) => action$.ofType<GetTask>(TaskActionTypes.Get)
@@ -32,7 +58,7 @@ const getTaskEpic: Epic<RootActions, RootState> =
       let specification$ = task$
       // .flatMap(task => ipfsClient!.dag.get(task.specificationHash) // TODO Replace this with DAG implementation
       // .map(result => result.value)
-        // .map(result => JSON.parse(result.content!.toString()))
+      // .map(result => JSON.parse(result.content!.toString()))
         .flatMap(task => ipfsClient!.files.get(task.specificationHash.toString())
           .catch(err => {
             console.log('Failed to get file from IPFS', err)
@@ -65,6 +91,7 @@ const createTaskEpic: Epic<RootActions, RootState> =
         return Observable.of(createCreateTaskFailedAction(new Error('Network clients not initialised')))
       }
 
+      console.log('Uploading task brief to IPFS:', action.specification)
       let upload$ = Observable.fromPromise(
         // TODO Replace with CID with DAG API
         // ipfsClient.dag.put(
@@ -104,6 +131,7 @@ const taskCreatedEpic: Epic<RootActions, RootState> =
     .map(action => createGetTaskAction(action.taskId))
 
 export const TasksEpics = [
+  getAllTasksEpic,
   getTaskEpic,
   createTaskEpic,
   taskCreatedEpic

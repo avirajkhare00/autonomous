@@ -42,7 +42,7 @@ cd packages/colony
 yarn run colony:add
 ```
 
-*Note: Copy the contract address*
+*Note: Copy the colony address*
 
 Then, run the DApp which will use the ContractServer
 ```bash
