@@ -9,7 +9,7 @@ interface CreateTaskFormState {
   brief: string
 }
 
-export class CreateTaskColonyForm extends Component<CreateTaskFormProps, CreateTaskFormState> {
+export class CreateTaskForm extends Component<CreateTaskFormProps, CreateTaskFormState> {
   state = {
     brief: ''
   }
@@ -17,6 +17,7 @@ export class CreateTaskColonyForm extends Component<CreateTaskFormProps, CreateT
   handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     this.props.onSubmit(this.state.brief)
+    this.setState({ brief: '' })
   }
 
   render() {
@@ -25,10 +26,11 @@ export class CreateTaskColonyForm extends Component<CreateTaskFormProps, CreateT
         <Form.TextArea
           label='Task Brief'
           placeholder='Specification goes here'
+          value={this.state.brief}
           onChange={event => this.setState({ brief: event.currentTarget.value })}
         />
 
-        <Form.Button primary>Submit Task</Form.Button>
+        <Form.Button primary>Create Task</Form.Button>
       </Form>
     )
   }

@@ -8,19 +8,24 @@ import { RouteProps } from 'react-router'
 import { TaskListTable } from './TaskListTable'
 import { Task } from '../../../models/Task'
 import { createCreateTaskAction, createGetAllTasksAction } from '../../../redux/tasks/actions'
-import { CreateTaskColonyForm } from './CreateTaskForm'
+import { CreateTaskForm } from './CreateTaskForm'
+import { SubmitTaskConfigForm } from './SubmitTaskConfigForm'
 
 interface DashboardSceneProps {
   tasks: Task[]
 
   createTask(brief: string): void
 
+  submitConfig(taskId: number, configUrl: string): void
+
   refreshTasks(): void
 }
 
-export const _dashboardScene: SFC<DashboardSceneProps & RouteProps> = ({ tasks, createTask, refreshTasks }) => (
+export const _dashboardScene: SFC<DashboardSceneProps & RouteProps> = ({ tasks, createTask, submitConfig, refreshTasks }) => (
   <div>
-    <CreateTaskColonyForm onSubmit={a => createTask(a)}/>
+    <CreateTaskForm onSubmit={b => createTask(b)}/>
+    <br/>
+    <SubmitTaskConfigForm tasks={tasks} onSubmit={(id, c) => submitConfig(id, c)}/>
     <br/>
     <Button onClick={() => refreshTasks()}>Refresh Tasks</Button>
     <br/>
@@ -41,6 +46,9 @@ const mapDispatch = (dispatch: Dispatch<RootActions>) => ({
     dispatch(createCreateTaskAction(
       brief
     ))
+  },
+  submitConfig(taskId: number, configUrl: string) {
+    console.log(taskId, configUrl)
   },
   refreshTasks() {
     dispatch(createGetAllTasksAction())
