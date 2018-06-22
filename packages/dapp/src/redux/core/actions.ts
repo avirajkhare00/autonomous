@@ -41,3 +41,4 @@ export function createLoadFailedAction (error: Error): LoadFailed {
 export type CoreActions =
   | AppReady
   | AppInitialized
+  | LoadFailed

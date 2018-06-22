@@ -32,6 +32,10 @@ const appInitEpic: Epic<any, RootState> =
 
         // Get the accounts injected by the provider
         const accounts$ = Observable.fromPromise(provider.listAccounts())
+          .timeout(8000)
+          .catch(e => Observable.throw(
+            new Error('Failed to get web3 accounts, ensure **MetaMask** is unlocked and connected to the local **ganache**: ' + e.message))
+          )
 
         // Build a ColonyNetworkClient
         // Note: Signer requires an address to be provided
@@ -45,23 +49,26 @@ const appInitEpic: Epic<any, RootState> =
           .map(adapter => new ColonyNetworkClient({ adapter }))
           // Initialise the client as part of the client creation
           .mergeMap(client => client.init().then(_ => client))
+          .catch(e => Observable.throw(new Error('Failed to initialize ColonyNetworkClient, ensure **ganache** and **Contract Server** is running: ' + e.message)))
 
         // Get the current network Id from Web3
         const networkId$: Observable<number> = Observable.bindNodeCallback(web3.version.getNetwork)()
           .map(network => Number(network))
+          .catch(e => Observable.throw(new Error('Failed to get web3 network ID: ' + e.message)))
 
         // Combine all the above operations to emit the initialized action
         let ipfsClient = getIPFSClient(env.IPFS_HOST, env.IPFS_API_PORT)
 
         // Test we have an IPFS connection so we can fail early
         // Hello world!
-        let ipfsTess$ = Observable.fromPromise(ipfsClient.files.cat('Qmc5gCcjYypU7y28oCALwfSvxCBskLuPKWpK4qpterKC7z'))
+        let ipfsTest$ = Observable.fromPromise(ipfsClient.files.cat('Qmc5gCcjYypU7y28oCALwfSvxCBskLuPKWpK4qpterKC7z'))
+          .catch(e => Observable.throw(new Error('Failed to get test file from **IPFS**: ' + e.message)))
 
         return Observable.combineLatest(
           client$,
           networkId$,
           accounts$,
-          ipfsTess$
+          ipfsTest$
         )
           .map(([networkClient, networkId, accounts]) => createAppInitializedAction(
             networkClient,
@@ -75,7 +82,7 @@ const appInitEpic: Epic<any, RootState> =
             push(ROOT_ROUTES.Landing)
           ])
           .catch(e => {
-            console.log('Error connecting to web3 & Colony', e)
+            console.log('Error initializing app', e)
 
             return Observable.of(createLoadFailedAction(e))
           })
