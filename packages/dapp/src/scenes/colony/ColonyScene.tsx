@@ -4,8 +4,8 @@ import { Header, Segment } from 'semantic-ui-react'
 import { RootState } from '../../redux/store'
 import { ColonyLayout } from '../../components/layout/ColonyLayout'
 import { Colony } from '../../models/Colony'
-import { DashboardScene } from './dashboard/DashboardScene'
 import { RouteProps } from 'react-router'
+import { ColonySwitch } from './navigation'
 
 interface ColonySceneProps {
   colony: Colony
@@ -25,8 +25,7 @@ const _colonyScene: SFC<ColonySceneProps & RouteProps> = ({ colony }) => (
         : null
       }
 
-      <DashboardScene/>
-
+      <ColonySwitch />
     </Segment>
   </ColonyLayout>
 )

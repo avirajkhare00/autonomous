@@ -15,12 +15,16 @@ import { CoreActions } from './core/actions'
 import { tasksReducer, TasksState } from './tasks/reducer'
 import { TasksEpics } from './tasks/epics'
 import { TaskActions } from './tasks/actions'
+import { deploymentLogReducer, DeploymentLogState } from './deployment-logs/reducer'
+import { DeploymentLogEpics } from './deployment-logs/epics'
+import { DeploymentLogActions } from './deployment-logs/actions'
 
 export const rootEpic = combineEpics(
   ...CoreEpics,
   ...ColonyEpics,
   ...TransactionEpics,
-  ...TasksEpics
+  ...TasksEpics,
+  ...DeploymentLogEpics
 )
 
 export interface RootState {
@@ -28,6 +32,7 @@ export interface RootState {
   colony: ColonyState
   transactions: TransactionsState
   tasks: TasksState
+  deploymentLogs: DeploymentLogState
 }
 
 export type RootActions =
@@ -36,6 +41,7 @@ export type RootActions =
   | ColonyActions
   | TransactionActions
   | TaskActions
+  | DeploymentLogActions
 
 const epicMiddleware = createEpicMiddleware(rootEpic)
 
@@ -48,7 +54,8 @@ const rootReducer = combineReducers({
   router: routerReducer,
   colony: colonyReducer,
   transactions: transactionsReducer,
-  tasks: tasksReducer
+  tasks: tasksReducer,
+  deploymentLogs: deploymentLogReducer
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

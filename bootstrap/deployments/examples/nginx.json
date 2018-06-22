@@ -1,0 +1,71 @@
+{
+  "kind": "List",
+  "apiVersion": "v1",
+  "metadata": {},
+  "items": [
+    {
+      "kind": "Deployment",
+      "apiVersion": "apps/v1",
+      "metadata": {
+        "labels": {
+          "app": "nginx-deployment"
+        },
+        "name": "nginx-deployment"
+      },
+      "spec": {
+        "replicas": 1,
+        "template": {
+          "spec": {
+            "containers": [
+              {
+                "image": "nginx:1.7.9",
+                "name": "nginx",
+                "ports": [
+                  {
+                    "containerPort": 80
+                  }
+                ]
+              }
+            ]
+          },
+          "metadata": {
+            "labels": {
+              "app": "nginx-deployment"
+            }
+          }
+        },
+        "selector": {
+          "matchLabels": {
+            "app": "nginx-deployment"
+          }
+        }
+      }
+    },
+    {
+      "kind": "Service",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "nginx-deployment",
+        "creationTimestamp": null
+      },
+      "spec": {
+        "ports": [
+          {
+            "protocol": "TCP",
+            "port": 5555,
+            "targetPort": 80
+          }
+        ],
+        "selector": {
+          "app": "nginx-deployment"
+        },
+        "type": "LoadBalancer",
+        "sessionAffinity": "None",
+        "externalTrafficPolicy": "Cluster"
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    }
+  ]
+}

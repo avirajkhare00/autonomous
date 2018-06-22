@@ -21,16 +21,17 @@ export class KubernetesDeploymentService implements DeploymentService {
 
         let deploymentName = this.getNameFromPayload(deployment)
 
-        console.log('[DEPLOY] Deployment', deploymentName)
         let notifierResource = buildDeploymentNotifier(deploymentDefinition.colonyAddress, deploymentName)
 
         try {
           await this.notifierClient.add(notifierResource)
+          console.log('[DEPLOY] Registered listener for', deploymentName)
         } catch (err) {
           if (err.statusCode !== 409) throw err
         }
 
         await this.deployDeployment(deploymentDefinition.colonyAddress, deployment)
+        console.log('[DEPLOY] Deployed deployment', deploymentName)
       })
 
     await this.getServices(deploymentDefinition.deploymentPayload)
@@ -38,9 +39,9 @@ export class KubernetesDeploymentService implements DeploymentService {
 
         let serviceName = this.getNameFromPayload(service)
 
-        console.log('[DEPLOY] Service', serviceName)
-
         await this.deployService(deploymentDefinition.colonyAddress, service)
+
+        console.log('[DEPLOY] Deployed service', serviceName)
       })
 
     console.log('[DEPLOY] Complete', deploymentDefinition.colonyAddress)

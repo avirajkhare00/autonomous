@@ -5,5 +5,6 @@ export const ROOT_ROUTES = {
 }
 
 export const COLONY_ROUTES = {
-  Dashboard: `${ROOT_ROUTES.Colony}/dashboard`
+  Dashboard: `${ROOT_ROUTES.Colony}/dashboard`,
+  Logs: `${ROOT_ROUTES.Colony}/logs`
 }

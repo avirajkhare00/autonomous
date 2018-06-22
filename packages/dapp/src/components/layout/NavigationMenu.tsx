@@ -11,14 +11,20 @@ interface NavigationMenuProps {
 export const NavigationMenu: SFC<NavigationMenuProps> = ({ onChangeColony }) => (
   <Menu vertical>
     <Menu.Item>
-      <Menu.Header>Menu</Menu.Header>
-
       <Menu.Menu>
         <Menu.Item
           as={NavLink}
           exact
           to={COLONY_ROUTES.Dashboard}
           name={'Dashboard'}
+          activeClassName='active'
+        />
+
+        <Menu.Item
+          as={NavLink}
+          exact
+          to={COLONY_ROUTES.Logs}
+          name={'Logs'}
           activeClassName='active'
         />
       </Menu.Menu>

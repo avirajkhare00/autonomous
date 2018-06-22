@@ -56,6 +56,14 @@
                   {
                     "name": "REACT_APP_CONTRACT_SERVER_PORT",
                     "value": "3030"
+                  },
+                  {
+                    "name": "REACT_APP_RELAYER_HOST",
+                    "value": "localhost"
+                  },
+                  {
+                    "name": "REACT_APP_RELAYER_PORT",
+                    "value": "8888"
                   }
                 ],
                 "resources": {},
