@@ -60,7 +60,7 @@ export class KubernetesDeploymentService implements DeploymentService {
           return this.k8sClient.apis.apps.v1
             .namespaces(namespace)
             .deployments(deployment.metadata.name)
-            .put({ body: deployment })
+            .patch({ body: deployment })
         }
       })
   }
@@ -78,7 +78,7 @@ export class KubernetesDeploymentService implements DeploymentService {
           return this.k8sClient.apis.v1
             .namespaces(namespace)
             .services(service.metadata.name)
-            .put({ body: service })
+            .patch({ body: service })
         }
       })
   }
