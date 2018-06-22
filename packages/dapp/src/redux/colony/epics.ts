@@ -3,10 +3,13 @@ import { push } from 'react-router-redux'
 import { Observable } from 'rxjs/Observable'
 
 import {
-  ColonyActionTypes,
+  ColonyActionTypes, createRegisterFailAction, createRegisterSuccessAction,
+  createSelectAction,
   createSelectFailAction,
   createSelectSuccessAction,
   Deselect,
+  Register,
+  RegisterSuccess,
   Select,
   SelectFail,
   SelectSuccess
@@ -14,6 +17,7 @@ import {
 import { RootActions, RootState } from '../store'
 import { ROOT_ROUTES } from '../../scenes/routes'
 import { createGetAllTasksAction } from '../tasks/actions'
+import { env } from '../../config/ApplicationConfig'
 
 const selectEpic: Epic<RootActions, RootState> =
   (action$, store$) => action$.ofType<Select>(ColonyActionTypes.Select)
@@ -62,8 +66,27 @@ const selectFailOrDeselectEpic: Epic<RootActions, RootState> =
   )
     .map(_ => push(ROOT_ROUTES.Landing))
 
+const registerEpic: Epic<RootActions, RootState> =
+  (action$) => action$.ofType<Register>(ColonyActionTypes.Register)
+    .mergeMap(action => {
+      return Observable.fromPromise(fetch(`http://${env.RELAYER_HOST}:${env.RELAYER_PORT}/register/${action.address}`, {
+        method: 'POST'
+      }))
+        .flatMap(resp => resp.ok
+          ? Observable.of(resp)
+          : Observable.throw(resp.statusText))
+        .map(_resp => createRegisterSuccessAction(action.address))
+        .catch(err => Observable.of(createRegisterFailAction(err)))
+    })
+
+const registerSuccessEpic: Epic<RootActions, RootState> =
+  action$ => action$.ofType<RegisterSuccess>(ColonyActionTypes.RegisterSuccess)
+    .map(action => createSelectAction(action.address))
+
 export const ColonyEpics = [
   selectEpic,
   selectSuccessEpic,
-  selectFailOrDeselectEpic
+  selectFailOrDeselectEpic,
+  registerEpic,
+  registerSuccessEpic
 ]

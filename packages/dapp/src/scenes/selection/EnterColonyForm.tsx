@@ -2,14 +2,15 @@ import { default as React, Component, FormEvent } from 'react'
 import { Form } from 'semantic-ui-react'
 
 interface SelectColonyFormProps {
+  buttonText: string
   onSubmit (address: string): void
 }
 
-interface SelectColonyFormState {
+interface EnterColonyFormState {
   address: string
 }
 
-export class SelectColonyForm extends Component<SelectColonyFormProps, SelectColonyFormState> {
+export class EnterColonyForm extends Component<SelectColonyFormProps, EnterColonyFormState> {
   state = {
     address: ''
   }
@@ -29,7 +30,7 @@ export class SelectColonyForm extends Component<SelectColonyFormProps, SelectCol
           onChange={event => this.setState({ address: event.currentTarget.value })}
         />
 
-        <Form.Button primary>Select Colony</Form.Button>
+        <Form.Button primary>{this.props.buttonText}</Form.Button>
       </Form>
     )
   }

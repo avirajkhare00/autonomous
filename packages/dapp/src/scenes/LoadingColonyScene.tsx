@@ -23,7 +23,7 @@ const loadingColonyScene: SFC<{ isLoading: boolean, error: Error, reload (): voi
             <li>Metamask unlocked and connected to localhost ganache</li>
             <li>IPFS Node at {env.IPFS_HOST}:{env.IPFS_API_PORT}</li>
             <li>Contract Server at {env.CONTRACT_SERVER_HOST}:{env.CONTRACT_SERVER_PORT}</li>
-            <li>Relayer (either locally or Kubernetes according to configuration)</li>
+            <li>Relayer at {env.RELAYER_HOST}:{env.RELAYER_PORT}</li>
           </ul>
 
           <Button onClick={() => reload()}>Reload App</Button>
