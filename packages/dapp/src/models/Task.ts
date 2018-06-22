@@ -1,13 +1,17 @@
 export interface Task {
   id: number
   specificationHash: string,
-  specification: {
-    description: string
-  }
+  specification: TaskSpecification
   deliverableHash?: string,
-  deliverable?: {
-    description: string
-  }
+  deliverable?: TaskSubmission
+}
+
+export interface TaskSpecification {
+  brief: string
+}
+
+export interface TaskSubmission {
+  deploymentString: string
 }
 //
 // More detailed task interface, but doesn't seem required at this stage

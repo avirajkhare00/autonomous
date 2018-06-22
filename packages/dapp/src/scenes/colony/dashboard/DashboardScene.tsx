@@ -18,25 +18,25 @@ import { SubmitTaskConfigForm } from './SubmitTaskConfigForm'
 interface DashboardSceneProps {
   tasks: Task[]
 
-  createTask(brief: string): void
+  createTask (brief: string): void
 
-  submitConfig(taskId: number, configUrl: string): void
+  submitConfig (taskId: number, deploymentString: string): void
 
-  refreshTasks(): void
+  refreshTasks (): void
 }
 
 export const _dashboardScene: SFC<DashboardSceneProps & RouteProps> = ({ tasks, createTask, submitConfig, refreshTasks }) => (
   <div>
-    <CreateTaskForm onSubmit={b => createTask(b)}/>
-    <br/>
-    <SubmitTaskConfigForm tasks={tasks} onSubmit={(id, c) => submitConfig(id, c)}/>
-    <br/>
+    <CreateTaskForm onSubmit={b => createTask(b)} />
+    <br />
+    <SubmitTaskConfigForm tasks={tasks} onSubmit={(id, c) => submitConfig(id, c)} />
+    <br />
     <Button onClick={() => refreshTasks()}>Refresh Tasks</Button>
-    <br/>
+    <br />
     Here's where things about the colony will go.
 
     <div>
-      Like the tasks: <TaskListTable tasks={tasks}/>
+      Like the tasks: <TaskListTable tasks={tasks} />
     </div>
   </div>
 )
@@ -46,18 +46,17 @@ const mapState = (state: RootState): Partial<DashboardSceneProps> => ({
 })
 
 const mapDispatch = (dispatch: Dispatch<RootActions>) => ({
-  createTask(brief: string) {
-    dispatch(createCreateTaskAction(
-      brief
-    ))
+  createTask (brief: string) {
+    dispatch(createCreateTaskAction({
+      brief: brief
+    }))
   },
-  submitConfig(taskId: number, configUrl: string) {
-    dispatch(createSubmitTaskConfigAction(
-      taskId, configUrl
-    ))
-    console.log(taskId, configUrl)
+  submitConfig (taskId: number, deploymentString: string) {
+    dispatch(createSubmitTaskConfigAction(taskId, {
+      deploymentString: deploymentString
+    }))
   },
-  refreshTasks() {
+  refreshTasks () {
     dispatch(createGetAllTasksAction())
   }
 })

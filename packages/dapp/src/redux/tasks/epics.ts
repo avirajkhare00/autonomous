@@ -22,6 +22,11 @@ import {
 } from './actions'
 import { createTransactionInitiateAction } from '../transactions/actions'
 import { Task } from '../../models/Task'
+import {
+  deserializeSpecification,
+  serializeSpecification,
+  serializeSubmission
+} from '../../lib/SpecificationSerializer'
 
 const getAllTasksEpic: Epic<RootActions, RootState> =
   (action$, store$) => action$.ofType<GetAllTasks>(TaskActionTypes.GetAll)
@@ -70,7 +75,7 @@ const getTaskEpic: Epic<RootActions, RootState> =
           })
         )
         .map(files => files[0])
-        .map(result => ({ description: result.content!.toString() }))
+        .map(result => deserializeSpecification(result.content! as Buffer))
 
       // let deliverable$ = task$
       // // .flatMap(task => ipfsClient!.dag.get(task.specificationHash) // TODO Replace this with DAG implementation
@@ -119,9 +124,8 @@ const createTaskEpic: Epic<RootActions, RootState> =
         //     hashAlg: 'sha3-512'
         //   }))
         // .map(cid => cid.toBaseEncodedString())
-        ipfsClient.files.add(
-          Buffer.from(JSON.stringify(action.specification))
-        ))
+        ipfsClient.files.add(serializeSpecification(action.specification))
+      )
         .map(files => files[0])
         .map(file => file.hash)
         // Continue here
@@ -154,7 +158,7 @@ const submitTaskConfigEpic: Epic<RootActions, RootState> =
         return Observable.of(createSubmitTaskConfigFailedAction(new Error('Network clients not initialised')))
       }
 
-      console.log('Uploading task config to IPFS:', action.configUrl)
+      console.log('Uploading task config to IPFS:', JSON.stringify(action.submission))
       let upload$ = Observable.fromPromise(
         // TODO Replace with CID with DAG API
         // ipfsClient.dag.put(
@@ -164,17 +168,16 @@ const submitTaskConfigEpic: Epic<RootActions, RootState> =
         //     hashAlg: 'sha3-512'
         //   }))
         // .map(did => did.toBaseEncodedString())
-        ipfsClient.files.add(
-          new Buffer(action.configUrl)
-        ))
+        ipfsClient.files.add(serializeSubmission(action.submission))
+      )
         .map(files => files[0])
         .map(file => file.hash)
         // Continue here
-        .do(did => console.log('Uploaded to IPFS', did))
+        .do(cid => console.log('Uploaded to IPFS', cid))
 
       return upload$
-        .map(did => () => colony!.submitTaskDeliverable.send(
-          { taskId: action.taskId, deliverableHash: did },
+        .map(cid => () => colony!.submitTaskDeliverable.send(
+          { taskId: action.taskId, deliverableHash: cid },
           { waitForMining: false }
         ))
         .do(init => console.log(init))

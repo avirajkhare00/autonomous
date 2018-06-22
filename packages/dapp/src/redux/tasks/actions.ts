@@ -1,5 +1,5 @@
 import { Action } from 'redux'
-import { Task } from '../../models/Task'
+import { Task, TaskSpecification, TaskSubmission } from '../../models/Task'
 
 export enum TaskActionTypes {
   GetAll = '[Task] Tasks Get All',
@@ -41,7 +41,7 @@ export interface GetTaskFailed extends Action {
 
 export interface CreateTask extends Action {
   type: TaskActionTypes.Create
-  specification: string
+  specification: TaskSpecification
 }
 
 export interface CreateTaskSuccess extends Action {
@@ -57,7 +57,7 @@ export interface CreateTaskFailed extends Action {
 export interface SubmitTaskConfig extends Action {
   type: TaskActionTypes.SubmitConfig
   taskId: number
-  configUrl: string
+  submission: TaskSubmission
 }
 
 export interface SubmitTaskConfigSuccess extends Action {
@@ -90,7 +90,7 @@ export function createGetTaskFailedAction(error: Error): GetTaskFailed {
   return { type: TaskActionTypes.GetFailed, error }
 }
 
-export function createCreateTaskAction(specification: string): CreateTask {
+export function createCreateTaskAction(specification: TaskSpecification): CreateTask {
   return { type: TaskActionTypes.Create, specification }
 }
 
@@ -102,8 +102,8 @@ export function createCreateTaskFailedAction(error: Error): CreateTaskFailed {
   return { type: TaskActionTypes.CreateFailed, error }
 }
 
-export function createSubmitTaskConfigAction(taskId: number, configUrl: string): SubmitTaskConfig {
-  return { type: TaskActionTypes.SubmitConfig, taskId, configUrl }
+export function createSubmitTaskConfigAction(taskId: number, submission: TaskSubmission): SubmitTaskConfig {
+  return { type: TaskActionTypes.SubmitConfig, taskId, submission }
 }
 
 export function createSubmitTaskConfigSuccessAction(taskId: number): SubmitTaskConfigSuccess {
