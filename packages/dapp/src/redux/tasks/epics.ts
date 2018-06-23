@@ -150,6 +150,8 @@ const createTaskEpic: Epic<RootActions, RootState> =
       )
         .map(files => files[0])
         .map(file => file.hash)
+        .timeout(8000)
+        .catch(e => Observable.throw(new Error('Error saving to IPFS. Please check environment: ' + e.message)))
         // Continue here
         .do(cid => console.log('Uploaded to IPFS:', cid))
 
@@ -158,7 +160,6 @@ const createTaskEpic: Epic<RootActions, RootState> =
           { specificationHash: cid },
           { waitForMining: false }
         ))
-        .do(init => console.log(init))
         .map(initiator => createTransactionInitiateAction(
           uuid.v4(),
           'Creating task',
@@ -214,6 +215,8 @@ const submitTaskConfigEpic: Epic<RootActions, RootState> =
       )
         .map(files => files[0])
         .map(file => file.hash)
+        .timeout(8000)
+        .catch(e => Observable.throw('Error saving to IPFS. Please check environment ' + e.message))
         // Continue here
         .do(cid => console.log('Uploaded to IPFS', cid))
 

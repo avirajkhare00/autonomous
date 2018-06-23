@@ -14,9 +14,7 @@ const loadingColonyScene: SFC<{ isLoading: boolean, error: Error, reload (): voi
         <div>
           <Message>
             <Header as={'h1'}>Loading Autonomous DApp</Header>
-            <p>
-              <Loader active inline={'centered'} />
-            </p>
+            <Loader active inline={'centered'} />
             <ul>
               <li>IPFS Node at {env.IPFS_HOST}:{env.IPFS_API_PORT}</li>
               <li>Contract Server at {env.CONTRACT_SERVER_HOST}:{env.CONTRACT_SERVER_PORT}</li>

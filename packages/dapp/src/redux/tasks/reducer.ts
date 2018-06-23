@@ -1,19 +1,61 @@
 import { TaskActions, TaskActionTypes } from './actions'
-import { Task } from '../../models/Task'
+import { Task, TaskSubmission } from '../../models/Task'
+
+export type ConfigurationModalState = {
+  isLoading: boolean
+  isVisible: boolean
+  submission: TaskSubmission,
+  taskId?: number,
+  error?: Error
+}
+
+export type CreateModalState = {
+  isLoading: boolean
+  isVisible: boolean
+  brief: string,
+  managerAddress: string,
+  workerAddress: string,
+  evaluatorAddress: string
+  error?: Error
+}
 
 export interface TasksState {
-  isCreateTaskLoading: boolean,
-  isCreateTaskModalVisible: boolean,
-  isModifyTaskLoading: boolean,
-  isModifyTaskModalVisible: boolean,
+  createModal: CreateModalState,
+  submitModal: ConfigurationModalState,
+  deployModal: ConfigurationModalState,
+  isLoading: boolean
   tasks: Task[]
 }
 
 const initialState: TasksState = {
-  isCreateTaskLoading: false,
-  isCreateTaskModalVisible: false,
-  isModifyTaskLoading: false,
-  isModifyTaskModalVisible: false,
+  createModal: {
+    isLoading: false,
+    isVisible: false,
+    brief: '',
+    managerAddress: '',
+    workerAddress: '',
+    evaluatorAddress: '',
+    error: undefined
+  },
+  submitModal: {
+    taskId: undefined,
+    isLoading: false,
+    isVisible: false,
+    submission: {
+      deploymentString: ''
+    },
+    error: undefined
+  },
+  deployModal: {
+    taskId: undefined,
+    isLoading: false,
+    isVisible: false,
+    submission: {
+      deploymentString: ''
+    },
+    error: undefined
+  },
+  isLoading: false,
   tasks: []
 }
 
@@ -22,50 +64,106 @@ export function tasksReducer(state: TasksState = initialState, action: TaskActio
     case TaskActionTypes.Create: {
       return {
         ...state,
-        isCreateTaskLoading: true
+        createModal: {
+          ...state.createModal,
+          isLoading: true
+        }
       }
     }
 
     case TaskActionTypes.CreateSuccess: {
       return {
         ...state,
-        isCreateTaskLoading: false,
-        isCreateTaskModalVisible: false
+        createModal: {
+          ...state.createModal,
+          isLoading: false,
+          isVisible: false
+        }
       }
     }
 
     case TaskActionTypes.CreateFailed: {
       return {
         ...state,
-        isCreateTaskLoading: false
+        createModal: {
+          ...state.createModal,
+          isLoading: false,
+          isVisible: true,
+          error: action.error
+        }
       }
     }
 
     case TaskActionTypes.SubmitConfig: {
       return {
         ...state,
-        isModifyTaskLoading: true
+        submitModal: {
+          ...state.submitModal,
+          isLoading: true
+        }
       }
     }
 
     case TaskActionTypes.SubmitConfigSuccess: {
       return {
         ...state,
-        isModifyTaskLoading: false,
-        isModifyTaskModalVisible: false
+        submitModal: {
+          ...state.submitModal,
+          isLoading: false,
+          isVisible: false
+        }
       }
     }
 
     case TaskActionTypes.SubmitConfigFailed: {
       return {
         ...state,
-        isModifyTaskLoading: false
+        submitModal: {
+          ...state.submitModal,
+          isLoading: false,
+          isVisible: true,
+          error: action.error
+        }
+      }
+    }
+
+    case TaskActionTypes.Finalize: {
+      return {
+        ...state,
+        deployModal: {
+          ...state.deployModal,
+          isLoading: true
+        }
+      }
+    }
+
+    case TaskActionTypes.FinalizeSuccess: {
+      return {
+        ...state,
+        deployModal: {
+          ...state.deployModal,
+          isLoading: false,
+          isVisible: false
+        }
+      }
+    }
+
+    case TaskActionTypes.FinalizeFailed: {
+      return {
+        ...state,
+        deployModal: {
+          ...state.deployModal,
+          isLoading: false,
+          isVisible: true,
+          error: action.error
+        }
       }
     }
 
     case TaskActionTypes.GetAll: {
       return {
         ...state,
+        isLoading: true,
         tasks: []
       }
     }
@@ -75,7 +173,73 @@ export function tasksReducer(state: TasksState = initialState, action: TaskActio
 
       return {
         ...state,
+        isLoading: false,
         tasks: [...tasks, action.task]
+      }
+    }
+
+    case TaskActionTypes.OpenCreateModal: {
+      return {
+        ...state,
+        createModal: {
+          ...state.createModal,
+          isVisible: true,
+          error: undefined
+        }
+      }
+    }
+
+    case TaskActionTypes.OpenSubmitModal: {
+      return {
+        ...state,
+        submitModal: {
+          ...state.submitModal,
+          isVisible: true,
+          taskId: action.taskId,
+          error: undefined
+        }
+      }
+    }
+
+    case TaskActionTypes.OpenDeployModal: {
+      return {
+        ...state,
+        deployModal: {
+          ...state.deployModal,
+          isVisible: true,
+          taskId: action.taskId,
+          error: undefined
+        }
+      }
+    }
+
+    case TaskActionTypes.CloseCreateModal: {
+      return {
+        ...state,
+        createModal: {
+          ...state.createModal,
+          isVisible: false
+        }
+      }
+    }
+
+    case TaskActionTypes.CloseSubmitModal: {
+      return {
+        ...state,
+        submitModal: {
+          ...state.submitModal,
+          isVisible: false
+        }
+      }
+    }
+
+    case TaskActionTypes.CloseDeployModal: {
+      return {
+        ...state,
+        deployModal: {
+          ...state.deployModal,
+          isVisible: false
+        }
       }
     }
 

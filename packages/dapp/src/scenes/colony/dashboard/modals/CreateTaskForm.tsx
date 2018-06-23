@@ -2,7 +2,11 @@ import { Component, default as React, FormEvent } from 'react'
 import { Form } from 'semantic-ui-react'
 
 interface CreateTaskFormProps {
+  brief: string
+  workerAddress: string
+  evaluatorAddress: string
   onSubmit (brief: string, workerAddress: string, evaluatorAddress: string): void
+  onCancel (): void
 }
 
 interface CreateTaskFormState {
@@ -13,9 +17,9 @@ interface CreateTaskFormState {
 
 export class CreateTaskForm extends Component<CreateTaskFormProps, CreateTaskFormState> {
   state = {
-    brief: '',
-    workerAddress: '',
-    evaluatorAddress: ''
+    brief: this.props.brief,
+    workerAddress: this.props.workerAddress,
+    evaluatorAddress: this.props.evaluatorAddress
   }
 
   handleSubmit (event: FormEvent<HTMLFormElement>) {
@@ -53,6 +57,14 @@ export class CreateTaskForm extends Component<CreateTaskFormProps, CreateTaskFor
           value={this.state.evaluatorAddress}
           onChange={event => this.setState({ evaluatorAddress: event.currentTarget.value })}
         />
+
+        <Form.Button
+          secondary
+          type={'button'}
+          onClick={() => this.props.onCancel()}
+        >
+          Cancel
+        </Form.Button>
 
         <Form.Button primary>Create Task</Form.Button>
       </Form>

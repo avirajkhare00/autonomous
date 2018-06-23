@@ -26,7 +26,8 @@ const Content = glamorous.div({
   display: 'flex',
   flexDirection: 'column',
   flex: 1,
-  overflow: 'scroll'
+  overflow: 'scroll',
+  padding: 32
 })
 
 interface ColonyLayoutProps {

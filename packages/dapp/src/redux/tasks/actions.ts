@@ -15,7 +15,13 @@ export enum TaskActionTypes {
   SubmitConfigFailed = '[Task] Task Submit Config Failed',
   Finalize = '[Task] Task Finalize',
   FinalizeSuccess = '[Task] Task Finalize Success',
-  FinalizeFailed = '[Task] Task Finalize Failed'
+  FinalizeFailed = '[Task] Task Finalize Failed',
+  OpenCreateModal = '[Task] Open Create Modal',
+  CloseCreateModal = '[Task] Close Create Modal',
+  OpenSubmitModal = '[Task] Open Submit Modal',
+  CloseSubmitModal = '[Task] Close Submit Modal',
+  OpenDeployModal = '[Task] Open Deploy Modal',
+  CloseDeployModal = '[Task] Close Deploy Modal'
 }
 
 export interface GetAllTasks extends Action {
@@ -91,6 +97,41 @@ export interface FinalizeFailed extends Action {
   error: Error
 }
 
+export interface OpenCreateModal extends Action {
+  type: TaskActionTypes.OpenCreateModal
+  brief?: string
+  workerAddress?: string
+  evaluatorAddress?: string
+  managerAddress?: string
+  error?: Error
+}
+
+export interface CloseCreateModal extends Action {
+  type: TaskActionTypes.CloseCreateModal
+}
+
+export interface OpenSubmitModal extends Action {
+  type: TaskActionTypes.OpenSubmitModal
+  taskId: number
+  submission?: TaskSubmission
+  error?: Error
+}
+
+export interface CloseSubmitModal extends Action {
+  type: TaskActionTypes.CloseSubmitModal
+}
+
+export interface OpenDeployModal extends Action {
+  type: TaskActionTypes.OpenDeployModal
+  taskId: number
+  submission?: TaskSubmission
+  error?: Error
+}
+
+export interface CloseDeployModal extends Action {
+  type: TaskActionTypes.CloseDeployModal
+}
+
 export function createGetAllTasksAction (): GetAllTasks {
   return { type: TaskActionTypes.GetAll }
 }
@@ -147,6 +188,37 @@ export function createFinalizeFailedAction (taskId: number, error: Error): Final
   return { type: TaskActionTypes.FinalizeFailed, taskId, error }
 }
 
+export function createOpenCreateModalAction (brief?: string, workerAddress?: string, evaluatorAddress?: string, managerAddress?: string, error?: Error): OpenCreateModal {
+  return {
+    type: TaskActionTypes.OpenCreateModal,
+    brief,
+    workerAddress,
+    evaluatorAddress,
+    managerAddress,
+    error
+  }
+}
+
+export function createCloseCreateModalAction (): CloseCreateModal {
+  return { type: TaskActionTypes.CloseCreateModal }
+}
+
+export function createOpenSubmitModalAction (taskId: number, submission?: TaskSubmission, error?: Error): OpenSubmitModal {
+  return { type: TaskActionTypes.OpenSubmitModal, taskId, submission, error }
+}
+
+export function createCloseSubmitModalAction (): CloseSubmitModal {
+  return { type: TaskActionTypes.CloseSubmitModal }
+}
+
+export function createOpenDeployModalAction (taskId: number, submission?: TaskSubmission, error?: Error): OpenDeployModal {
+  return { type: TaskActionTypes.OpenDeployModal, taskId, submission, error }
+}
+
+export function createCloseDeployModalAction (): CloseDeployModal {
+  return { type: TaskActionTypes.CloseDeployModal }
+}
+
 export type TaskActions =
   | GetAllTasks
   | GetAllTasksFailed
@@ -162,3 +234,9 @@ export type TaskActions =
   | Finalize
   | FinalizeSuccess
   | FinalizeFailed
+  | OpenCreateModal
+  | CloseCreateModal
+  | OpenSubmitModal
+  | CloseSubmitModal
+  | OpenDeployModal
+  | CloseDeployModal

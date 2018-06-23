@@ -3,8 +3,6 @@
   "version": "0.0.1",
   "author": "jvanoers",
   "scripts": {
-    "build-semantic": "cd src/semantic && gulp build-css build-assets",
-    "watch-semantic": "cd src/semantic && yarn run build-semantic && gulp watch",
     "start": "yarn run react-scripts-ts start",
     "build": "yarn run react-scripts-ts build",
     "dist-serve": "http-server build"
@@ -18,8 +16,10 @@
     "glamor": "^2.20.40",
     "glamorous": "^4.13.0",
     "ipfs-api": "^22.1.0",
+    "jazzicon": "^1.5.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-jazzicon": "^0.0.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.9",
@@ -49,7 +49,6 @@
     "jest-enzyme": "^6.0.0",
     "react-addons-test-utils": "^15.4.2",
     "react-scripts-ts": "2.16.0",
-    "semantic-ui": "^2.3.2",
     "ts-jest": "^22.4.4",
     "tslib": "^1.9.0",
     "tslint": "~5.9.1",
