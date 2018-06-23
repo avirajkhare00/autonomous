@@ -4,6 +4,7 @@ import { CustomResourceClient } from '../CustomResourceService'
 
 export interface DeploymentService {
   deploy (deployment: Deployment): Promise<void>
+  deleteFor (colonyAddress: string): Promise<void>
 }
 
 export class KubernetesDeploymentService implements DeploymentService {
@@ -45,6 +46,18 @@ export class KubernetesDeploymentService implements DeploymentService {
       })
 
     console.log('[DEPLOY] Complete', deploymentDefinition.colonyAddress)
+  }
+
+  async deleteFor (colonyAddress: string): Promise<void> {
+    let colonies = await this.notifierClient.get()
+
+    await Promise.all(
+      colonies
+        .filter(c => c.colonyAddress === colonyAddress)
+        .map(c => this.notifierClient.remove(c.metadata.name)
+          .then(_ => console.log('[DEPLOYMENT NOTIFIER] Deleted', c.metadata.name))
+        )
+    )
   }
 
   private async deployDeployment (namespace: string, deployment: any) {

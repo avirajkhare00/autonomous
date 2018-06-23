@@ -4,20 +4,24 @@ import { AUTONOMOUS_NAMESPACE, getAutonomousResource } from './constants'
 import { fromStream } from '../utils/rxjs/fromStream'
 
 export class CustomResourceClient<T> {
-  client: any
+  resource: any
 
   constructor (private k8sClient: any, private resourceName: string) {
-    this.client = getAutonomousResource(k8sClient, resourceName)
+    this.resource = getAutonomousResource(k8sClient, resourceName)
   }
 
   async add (resourceObject: T) {
-    await this.client
+    await this.resource
       .post({ body: resourceObject })
   }
 
   async get (): Promise<T[]> {
-    return this.client.get()
+    return this.resource.get()
       .then((c: any) => c.body.items)
+  }
+
+  async remove (name: string): Promise<void> {
+    return this.resource(name).delete()
   }
 
   eventStream$ (): Observable<StreamEvent<T & K8sEventObject>> {

@@ -5,7 +5,7 @@ import { CustomResourceClient } from '../CustomResourceService'
 export interface ColonyRegistrationService {
   hasColony (colonyAddress: string): Promise<boolean>
   register (listener: ColonyRegistration): Promise<void>
-  // remove (colonyAddress: string): Promise<void>
+  deleteFor (colonyAddress: string): Promise<void>
 }
 
 export class KubernetesColonyRegistrationService implements ColonyRegistrationService {
@@ -33,6 +33,7 @@ export class KubernetesColonyRegistrationService implements ColonyRegistrationSe
     }
     try {
       await await this.k8sClient.api.v1.namespaces.post({ body: namespaceResource })
+      console.log('[NAMESPACE] Created', registration.namespace)
     } catch (err) {
       if (err.statusCode !== 409) throw err
     }
@@ -45,7 +46,15 @@ export class KubernetesColonyRegistrationService implements ColonyRegistrationSe
     await this.colonyListenerClient.add(listenerResource)
   }
 
-  // async remove (colonyAddress: string): Promise<void> {
-  //   await this.colonyListenerClient(colonyAddress).delete()
-  // }
+  async deleteFor (colonyAddress: string): Promise<void> {
+    let colonies = await this.colonyListenerClient.get()
+
+    await Promise.all(
+      colonies
+        .filter(c => c.colonyAddress === colonyAddress)
+        .map(c => this.colonyListenerClient.remove(c.metadata.name)
+          .then(_ => console.log('[COLONY LISTENER] Deleted', c.metadata.name))
+        )
+    )
+  }
 }

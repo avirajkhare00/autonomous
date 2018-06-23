@@ -29,7 +29,7 @@ export class RelayerServer {
   deploymentRegistrationService: DeploymentService
 
   constructor (
-    k8sClient: any,
+    private k8sClient: any,
     private colonyNetworkClient: ColonyNetworkClient,
     private ipfsClient: IPFSAPI,
     private port: number = DEFAULT_PORT
@@ -124,6 +124,40 @@ export class RelayerServer {
         ctx.body = { error: 'Colony already registered' }
       }
     })
+
+    router.post('/clean/:colonyAddress', async ctx => {
+      let colony = ctx.params.colonyAddress.toLowerCase()
+
+      try {
+        await this.cleanColony(colony)
+        ctx.status = 200
+      } catch (e) {
+        console.log('[CLEAN] Error cleaning', colony, e)
+        ctx.status = 500
+        ctx.body = { error: e.message }
+      }
+    })
+
+    router.post('/clean', async ctx => {
+
+      try {
+        let namespaces = await this.k8sClient.api.v1.namespaces.get()
+
+        await Promise.all(
+          namespaces.body.items
+            .filter((ns: any) => ns.metadata.name.startsWith('0x'))
+            .map((ns: any) => this.cleanColony(ns.metadata.name)
+              .catch(e => console.log('[CLEAN] Error cleaning', ns.metadata.name, e))
+            )
+        )
+
+        ctx.status = 200
+      } catch (e) {
+        console.log('[CLEAN ALL] Error cleaning all', e)
+        ctx.status = 500
+        ctx.body = { error: e.message }
+      }
+    })
   }
 
   private createApp () {
@@ -139,5 +173,17 @@ export class RelayerServer {
       .use(router.allowedMethods())
 
     return app
+  }
+
+  private async cleanColony (colonyAddress: string) {
+    try {
+      await this.k8sClient.api.v1.namespaces(colonyAddress).delete()
+      console.log('[NAMESPACE] Deleted', colonyAddress)
+    } catch (err) {
+      if (err.statusCode !== 404) throw err
+    }
+
+    await this.colonyRegistrationService.deleteFor(colonyAddress)
+    await this.deploymentRegistrationService.deleteFor(colonyAddress)
   }
 }

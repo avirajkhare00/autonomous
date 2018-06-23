@@ -3,7 +3,12 @@ import { push } from 'react-router-redux'
 import { Observable } from 'rxjs/Observable'
 
 import {
-  ColonyActionTypes, createRegisterFailAction, createRegisterSuccessAction,
+  Clean, CleanAll,
+  ColonyActionTypes, createCleanAllFailAction, createCleanAllSuccessAction,
+  createCleanFailAction,
+  createCleanSuccessAction,
+  createRegisterFailAction,
+  createRegisterSuccessAction,
   createSelectAction,
   createSelectFailAction,
   createSelectSuccessAction,
@@ -83,10 +88,38 @@ const registerSuccessEpic: Epic<RootActions, RootState> =
   action$ => action$.ofType<RegisterSuccess>(ColonyActionTypes.RegisterSuccess)
     .map(action => createSelectAction(action.address))
 
+const cleanEpic: Epic<RootActions, RootState> =
+  (action$) => action$.ofType<Clean>(ColonyActionTypes.Clean)
+    .mergeMap(action => {
+      return Observable.fromPromise(fetch(`http://${env.RELAYER_HOST}:${env.RELAYER_PORT}/clean/${action.address}`, {
+        method: 'POST'
+      }))
+        .flatMap(resp => resp.ok
+          ? Observable.of(resp)
+          : Observable.throw(resp.statusText))
+        .map(_resp => createCleanSuccessAction(action.address))
+        .catch(err => Observable.of(createCleanFailAction(err)))
+    })
+
+const cleanAllEpic: Epic<RootActions, RootState> =
+  (action$) => action$.ofType<CleanAll>(ColonyActionTypes.CleanAll)
+    .mergeMap(_ => {
+      return Observable.fromPromise(fetch(`http://${env.RELAYER_HOST}:${env.RELAYER_PORT}/clean`, {
+        method: 'POST'
+      }))
+        .flatMap(resp => resp.ok
+          ? Observable.of(resp)
+          : Observable.throw(resp.statusText))
+        .map(_resp => createCleanAllSuccessAction())
+        .catch(err => Observable.of(createCleanAllFailAction(err)))
+    })
+
 export const ColonyEpics = [
   selectEpic,
   selectSuccessEpic,
   selectFailOrDeselectEpic,
   registerEpic,
-  registerSuccessEpic
+  registerSuccessEpic,
+  cleanEpic,
+  cleanAllEpic
 ]

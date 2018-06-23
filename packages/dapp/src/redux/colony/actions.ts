@@ -9,7 +9,13 @@ export enum ColonyActionTypes {
   Deselect = '[Colony] Colony Deselect',
   Register = '[Colony] Colony Register Select',
   RegisterSuccess = '[Colony] Colony Register Success',
-  RegisterFail = '[Colony] Colony Register Fail'
+  RegisterFail = '[Colony] Colony Register Fail',
+  Clean = '[Colony] Colony Clean Select',
+  CleanSuccess = '[Colony] Colony Clean Success',
+  CleanFail = '[Colony] Colony Clean Fail',
+  CleanAll = '[Colony] Colony CleanAll Select',
+  CleanAllSuccess = '[Colony] Colony CleanAll Success',
+  CleanAllFail = '[Colony] Colony CleanAll Fail'
 }
 
 export interface Select extends Action {
@@ -47,6 +53,34 @@ export interface Deselect extends Action {
   type: ColonyActionTypes.Deselect
 }
 
+export interface Clean extends Action {
+  type: ColonyActionTypes.Clean
+  address: string
+}
+
+export interface CleanSuccess extends Action {
+  type: ColonyActionTypes.CleanSuccess
+  address: string
+}
+
+export interface CleanFail extends Action {
+  type: ColonyActionTypes.CleanFail
+  error: Error
+}
+
+export interface CleanAll extends Action {
+  type: ColonyActionTypes.CleanAll
+}
+
+export interface CleanAllSuccess extends Action {
+  type: ColonyActionTypes.CleanAllSuccess
+}
+
+export interface CleanAllFail extends Action {
+  type: ColonyActionTypes.CleanAllFail
+  error: Error
+}
+
 export function createSelectAction (address: string): Select {
   return { type: ColonyActionTypes.Select, address }
 }
@@ -75,6 +109,30 @@ export function createDeselectAction (): Deselect {
   return { type: ColonyActionTypes.Deselect }
 }
 
+export function createCleanAction (address: string): Clean {
+  return { type: ColonyActionTypes.Clean, address }
+}
+
+export function createCleanSuccessAction (address: string): CleanSuccess {
+  return { type: ColonyActionTypes.CleanSuccess, address }
+}
+
+export function createCleanFailAction (error: Error): CleanFail {
+  return { type: ColonyActionTypes.CleanFail, error }
+}
+
+export function createCleanAllAction (): CleanAll {
+  return { type: ColonyActionTypes.CleanAll }
+}
+
+export function createCleanAllSuccessAction (): CleanAllSuccess {
+  return { type: ColonyActionTypes.CleanAllSuccess }
+}
+
+export function createCleanAllFailAction (error: Error): CleanAllFail {
+  return { type: ColonyActionTypes.CleanAllFail, error }
+}
+
 export type ColonyActions =
   | Select
   | SelectSuccess
@@ -83,3 +141,9 @@ export type ColonyActions =
   | RegisterSuccess
   | RegisterFail
   | Deselect
+  | Clean
+  | CleanSuccess
+  | CleanFail
+  | CleanAll
+  | CleanAllSuccess
+  | CleanAllFail

@@ -32,6 +32,9 @@ const appInitEpic: Epic<any, RootState> =
 
         // Get the accounts injected by the provider
         const accounts$ = Observable.fromPromise(provider.listAccounts())
+          .flatMap(accounts => accounts.length === 0
+            ? Observable.throw(new Error('No accounts, ensure **MetaMask** is unlocked'))
+            : Observable.of(accounts))
           .timeout(8000)
           .catch(e => Observable.throw(
             new Error('Failed to get web3 accounts, ensure **MetaMask** is unlocked and connected to the local **ganache**: ' + e.message))
