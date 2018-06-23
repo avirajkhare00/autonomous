@@ -1,51 +1,87 @@
 import { default as React, SFC } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Icon, Menu } from 'semantic-ui-react'
+import { Icon } from 'semantic-ui-react'
+import glamorous from 'glamorous'
+
 import { COLONY_ROUTES } from '../../scenes/routes'
-import { MenuBackgroundColor, TitleColor } from '../colors/BaseColors'
+import { FontFamily, MenuBackgroundHighlight, MenuTextColor, Primary } from '../colors/BaseColors'
 
 interface NavigationMenuProps {
-  onChangeColony(): void
+  onChangeColony (): void
+}
+
+const Container = glamorous.div({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%'
+})
+
+const menuCommon: React.CSSProperties = ({
+  color: MenuTextColor,
+  fontSize: 16,
+  fontFamily: FontFamily,
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  padding: 16,
+  transition: '0.25s cubic-bezier(0.17, 0.67, 0.52, 0.97)'
+})
+
+const MenuLink = glamorous(NavLink)({
+  ...menuCommon,
+  borderLeft: '4px solid transparent',
+  ':hover': {
+    backgroundColor: MenuBackgroundHighlight,
+    color: MenuTextColor
+  }
+})
+
+const AlignedIcon = glamorous(Icon)({
+  height: 'inherit !important',
+  marginRight: '8px !important'
+})
+
+const MenuButton = glamorous.a({
+  ...menuCommon,
+  cursor: 'pointer',
+  ':hover': {
+    backgroundColor: MenuBackgroundHighlight,
+    color: MenuTextColor
+  }
+})
+
+const activeStyle: React.CSSProperties = {
+  borderLeft: `4px solid ${Primary}`,
+  backgroundColor: MenuBackgroundHighlight
 }
 
 export const NavigationMenu: SFC<NavigationMenuProps> = ({ onChangeColony }) => (
-  <Menu vertical style={{ backgroundColor: MenuBackgroundColor }}>
-    <Menu.Item
-      style={{ color: TitleColor }}
-      as={NavLink}
+  <Container>
+    <MenuLink
       exact
       to={COLONY_ROUTES.Dashboard}
-      activeClassName='active'
+      activeStyle={activeStyle}
     >
-      <Icon name='list'/>
-      Deployment
-    </Menu.Item>
+      <AlignedIcon name='list' />
+      Deployments
+    </MenuLink>
 
-    <Menu.Item
-      style={{ color: TitleColor }}
-      as={NavLink}
+    <MenuLink
       exact
       to={COLONY_ROUTES.Logs}
-      activeClassName='active'
+      activeStyle={activeStyle}
     >
-      <Icon name='cloud download'/>
-      Deployment Status
-    </Menu.Item>
+      <AlignedIcon name='cloud download' />
+      Deployment Logs
+    </MenuLink>
 
-    <Menu.Item
-      style={{ color: TitleColor }}
-      activeClassName='active'
-    >
-      <Icon name='cog'/>
-      Register Colony
-    </Menu.Item>
+    <br/>
 
-    <Menu.Item
-      style={{ color: TitleColor }}
+    <MenuButton
       onClick={() => onChangeColony()}
     >
-      <Icon name='exchange'/>
+      <AlignedIcon name='exchange' />
       Change colony
-    </Menu.Item>
-  </Menu>
+    </MenuButton>
+  </Container>
 )

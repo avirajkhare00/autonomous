@@ -1,10 +1,9 @@
 import { default as React, SFC } from 'react'
 
 import { BaseLayout } from './BaseLayout'
-import { BoldBackground } from './BoldBackground'
 import glamorous from 'glamorous'
 
-const Background = glamorous(BoldBackground)({
+const Background = glamorous.div({
   alignItems: 'center',
   justifyContent: 'center'
 })

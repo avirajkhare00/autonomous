@@ -1,17 +1,32 @@
 import { default as React, SFC } from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { Grid } from 'semantic-ui-react'
+import glamorous from 'glamorous'
+
 import { RootActions } from '../../redux/store'
 import { NavigationMenu } from './NavigationMenu'
-import { BoldBackground } from './BoldBackground'
 import { BaseLayout } from './BaseLayout'
 import { createDeselectAction } from '../../redux/colony/actions'
-import glamorous from 'glamorous'
 import { MenuBackgroundColor } from '../colors/BaseColors'
 
-const Background = glamorous(BoldBackground)({
-  paddingTop: -40
+const Container = glamorous.div({
+  display: 'flex',
+  flexDirection: 'row',
+  flex: 1
+})
+
+const Menu = glamorous.div({
+  display: 'flex',
+  flexDirection: 'column',
+  backgroundColor: MenuBackgroundColor,
+  width: 260
+})
+
+const Content = glamorous.div({
+  display: 'flex',
+  flexDirection: 'column',
+  flex: 1,
+  overflow: 'scroll'
 })
 
 interface ColonyLayoutProps {
@@ -20,16 +35,14 @@ interface ColonyLayoutProps {
 
 const _colonyLayout: SFC<ColonyLayoutProps> = ({ changeColony, children }) => (
   <BaseLayout>
-    <Background>
-        <Grid>
-          <Grid.Column mobile={16} tablet={5} computer={5} style={{ backgroundColor: MenuBackgroundColor }}>
-            <NavigationMenu onChangeColony={changeColony} />
-          </Grid.Column>
-          <Grid.Column mobile={16} tablet={10} computer={10}>
-            {children}
-          </Grid.Column>
-        </Grid>
-    </Background>
+    <Container>
+      <Menu>
+        <NavigationMenu onChangeColony={changeColony} />
+      </Menu>
+      <Content>
+        {children}
+      </Content>
+    </Container>
   </BaseLayout>
 )
 
