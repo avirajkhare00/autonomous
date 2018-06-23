@@ -1,5 +1,6 @@
 declare module 'ethers' {
-  import Web3 from 'web3'
+  import { default as Web3, Provider as Web3Provider } from 'web3'
+  import { Provider } from 'ethers'
 
   export type Provider = any
   export type Networks = 'homestead' | 'ropsten' | 'rinkeby' | 'kovan'
@@ -20,9 +21,9 @@ declare module 'ethers' {
     class Web3Provider implements Provider {
       constructor (web3Provider: Web3, network?: Networks)
 
-      listAccounts(): Promise<string[]>
+      listAccounts (): Promise<string[]>
 
-      getSigner(address?: string): any
+      getSigner (address?: string): any
     }
 
     class JsonRpcProvider implements Provider {

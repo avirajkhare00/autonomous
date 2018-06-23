@@ -19,7 +19,7 @@ export class DeploymentNotificationListener {
 
   async initialize () {
     this.notifierClient.eventStream$().subscribe(event => {
-      console.log('[DEPLOYMENT NOTIFIER] Notifier added!', event.object.colonyAddress, event.object.deploymentName)
+      console.log('[DEPLOYMENT NOTIFIER] Notifier', event.type, event.object.colonyAddress, event.object.deploymentName)
 
       if (event.type === 'ADDED') {
         this.initializeDeploymentEventStream$(event.object)

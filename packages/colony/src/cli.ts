@@ -15,7 +15,7 @@ import { getTestContractServerConfig, getTestWeb3Config } from './config'
       let web3Config = getTestWeb3Config()
       let contractServer = getTestContractServerConfig()
 
-      let networkClient = await getColonyClient(web3Config, contractServer)
+      let { networkClient } = await getColonyClient(web3Config, contractServer)
 
       await addColony(networkClient)
     })

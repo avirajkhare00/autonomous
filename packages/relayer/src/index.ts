@@ -55,10 +55,10 @@ import { ContractServerConfig } from '../../colony/src/types'
   console.log('Contract Server', contractServerConfig)
   console.log('========================')
 
-  let networkClient = await getColonyClient(web3Config, contractServerConfig)
+  let { networkClient, web3 } = await getColonyClient(web3Config, contractServerConfig)
   let ipfsClient = await getIPFSClient(ipfsHost, ipfsPort)
 
-  let relayer = new RelayerServer(k8sClient, networkClient, ipfsClient)
+  let relayer = new RelayerServer(k8sClient, web3, networkClient, ipfsClient)
 
   await relayer.start()
 })()

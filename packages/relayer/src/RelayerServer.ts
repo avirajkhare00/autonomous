@@ -4,6 +4,7 @@ import Router from 'koa-router'
 import { Server } from 'http'
 import { IPFSAPI } from 'ipfs-api'
 import bodyParser from 'koa-bodyparser'
+import Web3 from 'web3'
 
 import { default as ColonyNetworkClient } from '@colony/colony-js-client'
 
@@ -30,6 +31,7 @@ export class RelayerServer {
 
   constructor (
     private k8sClient: any,
+    private web3: Web3,
     private colonyNetworkClient: ColonyNetworkClient,
     private ipfsClient: IPFSAPI,
     private port: number = DEFAULT_PORT
@@ -46,7 +48,7 @@ export class RelayerServer {
     this.deploymentRegistrationService = new KubernetesDeploymentService(resourceClient)
 
     this.deploymentListener = new DeploymentNotificationListener(resourceClient)
-    this.colonyListener = new ColonyRegistrationListener(resourceClient, this.colonyNetworkClient, this.ipfsClient, this.deploymentRegistrationService)
+    this.colonyListener = new ColonyRegistrationListener(resourceClient, this.web3, this.colonyNetworkClient, this.ipfsClient, this.deploymentRegistrationService)
 
     await this.deploymentListener.initialize()
     await this.colonyListener.initialize()

@@ -44,6 +44,7 @@ export class KubernetesColonyRegistrationService implements ColonyRegistrationSe
     )
 
     await this.colonyListenerClient.add(listenerResource)
+    console.log('[COLONY LISTENER] Created', registration.namespace)
   }
 
   async deleteFor (colonyAddress: string): Promise<void> {
