@@ -2,6 +2,7 @@ import { TaskRoleResult } from '@colony/colony-js-client'
 
 export interface Task {
   id: number
+  finalized: boolean
   specificationHash: string,
   specification: TaskSpecification
   deliverableHash?: string,

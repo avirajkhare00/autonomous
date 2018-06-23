@@ -9,6 +9,7 @@ import { TaskListTable } from './TaskListTable'
 import { Task } from '../../../models/Task'
 import {
   createCreateTaskAction,
+  createFinalizeAction,
   createGetAllTasksAction,
   createSubmitTaskConfigAction
 } from '../../../redux/tasks/actions'
@@ -22,10 +23,12 @@ interface DashboardSceneProps {
 
   submitConfig (taskId: number, deploymentString: string): void
 
+  finalizeTask (taskId: number): void
+
   refreshTasks (): void
 }
 
-export const _dashboardScene: SFC<DashboardSceneProps & RouteProps> = ({ tasks, createTask, submitConfig, refreshTasks }) => (
+export const _dashboardScene: SFC<DashboardSceneProps & RouteProps> = ({ tasks, createTask, submitConfig, refreshTasks, finalizeTask }) => (
   <div>
     <CreateTaskForm onSubmit={(b, w, e) => createTask(b, w, e)} />
     <br />
@@ -36,7 +39,7 @@ export const _dashboardScene: SFC<DashboardSceneProps & RouteProps> = ({ tasks, 
     Here's where things about the colony will go.
 
     <div>
-      Like the tasks: <TaskListTable tasks={tasks} />
+      Like the tasks: <TaskListTable tasks={tasks} onFinalize={id => finalizeTask(id)} />
     </div>
   </div>
 )
@@ -62,6 +65,9 @@ const mapDispatch = (dispatch: Dispatch<RootActions>) => ({
   },
   refreshTasks () {
     dispatch(createGetAllTasksAction())
+  },
+  finalizeTask (taskId: number) {
+    dispatch(createFinalizeAction(taskId))
   }
 })
 

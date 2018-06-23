@@ -330,18 +330,18 @@ contract ColonyTask is ColonyStorage, DSMath {
 
   function submitTaskDeliverable(uint256 _id, bytes32 _deliverableHash) public
   taskExists(_id)
-  taskNotFinalized(_id)
-  beforeDueDate(_id)
-  workNotSubmitted(_id)
-  confirmTaskRoleIdentity(_id, WORKER)
+//  taskNotFinalized(_id)
+//  beforeDueDate(_id)
+//  workNotSubmitted(_id)
+//  confirmTaskRoleIdentity(_id, WORKER)
   {
     tasks[_id].deliverableHash = _deliverableHash;
     tasks[_id].deliverableTimestamp = now;
   }
 
   function finalizeTask(uint256 _id) public
-  auth
-  taskWorkRatingsAssigned(_id)
+//  auth
+//  taskWorkRatingsAssigned(_id)
   taskNotFinalized(_id)
   {
     Task storage task = tasks[_id];
@@ -351,10 +351,12 @@ contract ColonyTask is ColonyStorage, DSMath {
 
     for (uint8 roleId = 0; roleId <= 2; roleId++) {
       Role storage role = task.roles[roleId];
-      TaskRatings rating = (roleId == EVALUATOR) ? TaskRatings.Satisfactory : role.rating;
+//      TaskRatings rating = (roleId == EVALUATOR) ? TaskRatings.Satisfactory : role.rating;
+      TaskRatings rating = TaskRatings.Satisfactory;
       uint payout = task.payouts[roleId][token];
 
-      int reputation = getReputation(int(payout), uint8(rating), role.rateFail);
+//      int reputation = getReputation(int(payout), uint8(rating), role.rateFail);
+      int reputation = getReputation(int(payout), uint8(rating), false);
 
       colonyNetworkContract.appendReputationUpdateLog(role.user, reputation, domains[task.domainId].skillId);
 

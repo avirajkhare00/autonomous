@@ -4,9 +4,10 @@ import { Task } from '../../../models/Task'
 
 interface TaskListTableProps {
   tasks: Task[]
+  onFinalize(id: number): void
 }
 
-export const TaskListTable: SFC<TaskListTableProps> = ({ tasks }) => (
+export const TaskListTable: SFC<TaskListTableProps> = ({ tasks, onFinalize }) => (
   <div>
     {tasks.length > 0
       ? (
@@ -17,11 +18,13 @@ export const TaskListTable: SFC<TaskListTableProps> = ({ tasks }) => (
             <td>BriefHash</td>
             <td>Brief</td>
             <td>ConfigUrlHash</td>
+            <td>Finalized</td>
+            <td>Actions</td>
             {/*<td>ConfigUrl</td>*/}
           </tr>
           </thead>
           <tbody>
-          {tasks.map((task, i) => <TaskRow task={task} key={i}/>)}
+          {tasks.map((task, i) => <TaskRow task={task} key={i} finalize={() => onFinalize(task.id)}/>)}
           </tbody>
         </table>
       )

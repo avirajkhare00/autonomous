@@ -63,6 +63,13 @@ export function tasksReducer(state: TasksState = initialState, action: TaskActio
       }
     }
 
+    case TaskActionTypes.GetAll: {
+      return {
+        ...state,
+        tasks: []
+      }
+    }
+
     case TaskActionTypes.GetSuccess: {
       let tasks = state.tasks.filter(t => t.id !== action.task.id)
 

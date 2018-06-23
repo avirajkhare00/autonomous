@@ -12,7 +12,10 @@ export enum TaskActionTypes {
   CreateFailed = '[Task] Task Create Failed',
   SubmitConfig = '[Task] Task Submit Config',
   SubmitConfigSuccess = '[Task] Task Submit Config Success',
-  SubmitConfigFailed = '[Task] Task Submit Config Failed'
+  SubmitConfigFailed = '[Task] Task Submit Config Failed',
+  Finalize = '[Task] Task Finalize',
+  FinalizeSuccess = '[Task] Task Finalize Success',
+  FinalizeFailed = '[Task] Task Finalize Failed'
 }
 
 export interface GetAllTasks extends Action {
@@ -72,48 +75,76 @@ export interface SubmitTaskConfigFailed extends Action {
   error: Error
 }
 
-export function createGetAllTasksAction(): GetAllTasks {
+export interface Finalize extends Action {
+  type: TaskActionTypes.Finalize
+  taskId: number
+}
+
+export interface FinalizeSuccess extends Action {
+  type: TaskActionTypes.FinalizeSuccess
+  taskId: number
+}
+
+export interface FinalizeFailed extends Action {
+  type: TaskActionTypes.FinalizeFailed
+  taskId: number
+  error: Error
+}
+
+export function createGetAllTasksAction (): GetAllTasks {
   return { type: TaskActionTypes.GetAll }
 }
 
-export function createGetAllTasksFailedAction(error: Error): GetAllTasksFailed {
+export function createGetAllTasksFailedAction (error: Error): GetAllTasksFailed {
   return { type: TaskActionTypes.GetAllFailed, error }
 }
 
-export function createGetTaskAction(id: number): GetTask {
+export function createGetTaskAction (id: number): GetTask {
   return { type: TaskActionTypes.Get, id }
 }
 
-export function createGetTaskSuccessAction(task: Task): GetTaskSuccess {
+export function createGetTaskSuccessAction (task: Task): GetTaskSuccess {
   return { type: TaskActionTypes.GetSuccess, task }
 }
 
-export function createGetTaskFailedAction(error: Error): GetTaskFailed {
+export function createGetTaskFailedAction (error: Error): GetTaskFailed {
   return { type: TaskActionTypes.GetFailed, error }
 }
 
-export function createCreateTaskAction(specification: TaskSpecification, workerAddress: string, evaluatorAddress: string): CreateTask {
+export function createCreateTaskAction (specification: TaskSpecification, workerAddress: string, evaluatorAddress: string): CreateTask {
   return { type: TaskActionTypes.Create, specification, workerAddress, evaluatorAddress }
 }
 
-export function createCreateTaskSuccessAction(taskId: number): CreateTaskSuccess {
+export function createCreateTaskSuccessAction (taskId: number): CreateTaskSuccess {
   return { type: TaskActionTypes.CreateSuccess, taskId }
 }
 
-export function createCreateTaskFailedAction(error: Error): CreateTaskFailed {
+export function createCreateTaskFailedAction (error: Error): CreateTaskFailed {
   return { type: TaskActionTypes.CreateFailed, error }
 }
 
-export function createSubmitTaskConfigAction(taskId: number, submission: TaskSubmission): SubmitTaskConfig {
+export function createSubmitTaskConfigAction (taskId: number, submission: TaskSubmission): SubmitTaskConfig {
   return { type: TaskActionTypes.SubmitConfig, taskId, submission }
 }
 
-export function createSubmitTaskConfigSuccessAction(taskId: number): SubmitTaskConfigSuccess {
+export function createSubmitTaskConfigSuccessAction (taskId: number): SubmitTaskConfigSuccess {
   return { type: TaskActionTypes.SubmitConfigSuccess, taskId }
 }
 
-export function createSubmitTaskConfigFailedAction(error: Error): SubmitTaskConfigFailed {
+export function createSubmitTaskConfigFailedAction (error: Error): SubmitTaskConfigFailed {
   return { type: TaskActionTypes.SubmitConfigFailed, error }
+}
+
+export function createFinalizeAction (taskId: number): Finalize {
+  return { type: TaskActionTypes.Finalize, taskId }
+}
+
+export function createFinalizeSuccessAction (taskId: number): FinalizeSuccess {
+  return { type: TaskActionTypes.FinalizeSuccess, taskId }
+}
+
+export function createFinalizeFailedAction (taskId: number, error: Error): FinalizeFailed {
+  return { type: TaskActionTypes.FinalizeFailed, taskId, error }
 }
 
 export type TaskActions =
@@ -128,3 +159,6 @@ export type TaskActions =
   | SubmitTaskConfig
   | SubmitTaskConfigSuccess
   | SubmitTaskConfigFailed
+  | Finalize
+  | FinalizeSuccess
+  | FinalizeFailed

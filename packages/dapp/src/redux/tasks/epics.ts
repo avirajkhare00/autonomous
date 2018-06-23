@@ -6,6 +6,8 @@ import { RootActions, RootState } from '../store'
 import {
   createCreateTaskFailedAction,
   createCreateTaskSuccessAction,
+  createFinalizeFailedAction,
+  createFinalizeSuccessAction,
   createGetAllTasksFailedAction,
   createGetTaskAction,
   createGetTaskFailedAction,
@@ -14,6 +16,8 @@ import {
   createSubmitTaskConfigSuccessAction,
   CreateTask,
   CreateTaskSuccess,
+  Finalize,
+  FinalizeSuccess,
   GetAllTasks,
   GetTask,
   SubmitTaskConfig,
@@ -92,7 +96,10 @@ const getTaskEpic: Epic<RootActions, RootState> =
 
       let managerAddress$ = Observable.fromPromise(colony.getTaskRole.call({ taskId: action.id, role: Role.MANAGER }))
       let workerAddress$ = Observable.fromPromise(colony.getTaskRole.call({ taskId: action.id, role: Role.WORKER }))
-      let evaluatorAddress$ = Observable.fromPromise(colony.getTaskRole.call({ taskId: action.id, role: Role.EVALUATOR }))
+      let evaluatorAddress$ = Observable.fromPromise(colony.getTaskRole.call({
+        taskId: action.id,
+        role: Role.EVALUATOR
+      }))
 
       return Observable.combineLatest(
         task$,
@@ -106,6 +113,7 @@ const getTaskEpic: Epic<RootActions, RootState> =
           specificationHash: networkTask.specificationHash,
           specification: specification,
           deliverableHash: networkTask.deliverableHash,
+          finalized: networkTask.finalized,
           manager: managerAddress,
           worker: workerAddress,
           evaluator: evaluatorAddress
@@ -222,9 +230,30 @@ const submitTaskConfigEpic: Epic<RootActions, RootState> =
         .catch(err => Observable.of(createCreateTaskFailedAction(err)))
     })
 
+const finalizeTaskEpic: Epic<RootActions, RootState> =
+  (action$, store$) => action$.ofType<Finalize>(TaskActionTypes.Finalize)
+    .map(action => {
+      let ipfsClient = store$.getState().core.ipfsClient
+      let colony = store$.getState().colony.colonyClient
+
+      if (!ipfsClient || !colony) {
+        return createFinalizeFailedAction(action.taskId, new Error('Network clients not initialised'))
+      }
+      return createTransactionInitiateAction(
+        uuid.v4(),
+        'Finalizing task',
+        () => colony!.finalizeTask.send(
+          { taskId: action.taskId },
+          { waitForMining: false }
+        ),
+        () => createFinalizeSuccessAction(action.taskId),
+        err => createFinalizeFailedAction(action.taskId, err)
+      )
+    })
+
 const taskChangedEpic: Epic<RootActions, RootState> =
-  action$ => action$.ofType<CreateTaskSuccess | SubmitTaskConfigSuccess>(
-    TaskActionTypes.CreateSuccess, TaskActionTypes.SubmitConfigSuccess
+  action$ => action$.ofType<CreateTaskSuccess | SubmitTaskConfigSuccess | FinalizeSuccess>(
+    TaskActionTypes.CreateSuccess, TaskActionTypes.SubmitConfigSuccess, TaskActionTypes.FinalizeSuccess
   )
     .map(action => createGetTaskAction(action.taskId))
 
@@ -233,5 +262,6 @@ export const TasksEpics = [
   getTaskEpic,
   createTaskEpic,
   submitTaskConfigEpic,
-  taskChangedEpic
+  taskChangedEpic,
+  finalizeTaskEpic
 ]
