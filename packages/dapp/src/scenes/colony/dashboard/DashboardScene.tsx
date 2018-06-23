@@ -21,6 +21,7 @@ import { DeployTaskModal } from './modals/DeployTaskModal'
 
 interface DashboardSceneProps {
   tasks: Task[]
+  isLoadingTasks: boolean
   createModal: CreateModalState,
   submitModal: ConfigurationModalState,
   deployModal: ConfigurationModalState
@@ -40,7 +41,7 @@ interface DashboardSceneProps {
 }
 
 export const _dashboardScene: SFC<DashboardSceneProps & RouteProps> =
-  ({ tasks, createModal, submitModal, deployModal, createTask, submitConfig, refreshTasks, finalizeTask, openCreateModal, openSubmitModal, openDeployModal, closeCreateModal, closeSubmitModal, closeDeployModal }) => (
+  ({ tasks, isLoadingTasks, createModal, submitModal, deployModal, createTask, submitConfig, refreshTasks, finalizeTask, openCreateModal, openSubmitModal, openDeployModal, closeCreateModal, closeSubmitModal, closeDeployModal }) => (
     <div>
       <CreateTaskModal
         state={createModal}
@@ -65,6 +66,7 @@ export const _dashboardScene: SFC<DashboardSceneProps & RouteProps> =
       <Button onClick={() => refreshTasks()}>Refresh Deployments</Button>
 
       <DeploymentList
+        isLoading={isLoadingTasks}
         onSubmit={task => openSubmitModal(task)}
         onDeploy={task => openDeployModal(task)}
         tasks={tasks}
@@ -74,6 +76,7 @@ export const _dashboardScene: SFC<DashboardSceneProps & RouteProps> =
 
 const mapState = (state: RootState): Partial<DashboardSceneProps> => ({
   tasks: state.tasks.tasks,
+  isLoadingTasks: state.tasks.isLoading,
   createModal: state.tasks.createModal,
   submitModal: state.tasks.submitModal,
   deployModal: state.tasks.deployModal
