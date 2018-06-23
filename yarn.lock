@@ -38,28 +38,28 @@
     regenerator-runtime "^0.11.1"
 
 "@colony/colony-js-adapter-ethers@^1.4.1":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@colony/colony-js-adapter-ethers/-/colony-js-adapter-ethers-1.5.0.tgz#af2944dd0439568db1561899edec2631619f7878"
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/@colony/colony-js-adapter-ethers/-/colony-js-adapter-ethers-1.5.3.tgz#72dbdb26a9f53a9b458bb2594b787b68694f4f1d"
   dependencies:
-    "@colony/colony-js-adapter" "^1.5.0"
+    "@colony/colony-js-adapter" "^1.5.3"
     "@colony/colony-js-contract-loader" "^1.4.1"
     "@colony/colony-js-utils" "^1.3.0"
     babel-runtime "^6.26.0"
     ethers "^3.0.17"
 
-"@colony/colony-js-adapter@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@colony/colony-js-adapter/-/colony-js-adapter-1.5.0.tgz#22c6edadffd08cedc19550d23c8052c4d9c4ae6f"
+"@colony/colony-js-adapter@^1.5.3":
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/@colony/colony-js-adapter/-/colony-js-adapter-1.5.3.tgz#44e5fd687339722310cdd5d4363a7f5d1d0bd8a9"
   dependencies:
     "@colony/colony-js-contract-loader" "^1.4.1"
     bn.js "^4.11.6"
 
 "@colony/colony-js-client@^1.4.1":
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/@colony/colony-js-client/-/colony-js-client-1.5.1.tgz#10f708ab79bb43179933a13d3b4d96fbfc77786e"
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/@colony/colony-js-client/-/colony-js-client-1.5.3.tgz#cfed8af49e24c2d79e1247e62827390aced74801"
   dependencies:
-    "@colony/colony-js-adapter" "^1.5.0"
-    "@colony/colony-js-contract-client" "^1.5.0"
+    "@colony/colony-js-adapter" "^1.5.3"
+    "@colony/colony-js-contract-client" "^1.5.3"
     "@colony/colony-js-contract-loader" "^1.4.1"
     "@colony/colony-js-utils" "^1.3.0"
     assert "^1.4.1"
@@ -67,11 +67,11 @@
     bn.js "^4.11.6"
     web3-utils "^1.0.0-beta.34"
 
-"@colony/colony-js-contract-client@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@colony/colony-js-contract-client/-/colony-js-contract-client-1.5.0.tgz#91e3f44b74d8fcb79ceba7e3126e28746057da67"
+"@colony/colony-js-contract-client@^1.5.3":
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/@colony/colony-js-contract-client/-/colony-js-contract-client-1.5.3.tgz#8f5ae70bf6c1789a5664b198be924795160227b5"
   dependencies:
-    "@colony/colony-js-adapter" "^1.5.0"
+    "@colony/colony-js-adapter" "^1.5.3"
     "@colony/colony-js-contract-loader" "^1.4.1"
     "@colony/colony-js-utils" "^1.3.0"
     assert "^1.4.1"
@@ -196,8 +196,8 @@
     "@types/enzyme" "*"
 
 "@types/enzyme@*", "@types/enzyme@^3.1.10":
-  version "3.1.10"
-  resolved "https://registry.yarnpkg.com/@types/enzyme/-/enzyme-3.1.10.tgz#28108a9864e65699751469551a803a35d2e26160"
+  version "3.1.11"
+  resolved "https://registry.yarnpkg.com/@types/enzyme/-/enzyme-3.1.11.tgz#0a059d2fe2c686f024ada911d24473cdb2e13903"
   dependencies:
     "@types/cheerio" "*"
     "@types/react" "*"
@@ -249,8 +249,8 @@
   resolved "https://registry.yarnpkg.com/@types/koa-compose/-/koa-compose-3.2.2.tgz#dc106e000bbf92a3ac900f756df47344887ee847"
 
 "@types/koa-router@^7.0.28":
-  version "7.0.28"
-  resolved "https://registry.yarnpkg.com/@types/koa-router/-/koa-router-7.0.28.tgz#67487c862a831099aed8864a8996bfa7e989edc0"
+  version "7.0.30"
+  resolved "https://registry.yarnpkg.com/@types/koa-router/-/koa-router-7.0.30.tgz#636f399bff7c43f83c016b971b028c3f6316ea26"
   dependencies:
     "@types/koa" "*"
 
@@ -277,8 +277,8 @@
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.0.tgz#5a7306e367c539b9f6543499de8dd519fac37a8b"
 
 "@types/node@*", "@types/node@^10.0.8", "@types/node@^10.1.1":
-  version "10.3.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.3.4.tgz#c74e8aec19e555df44609b8057311052a2c84d9e"
+  version "10.3.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.3.5.tgz#8423cdf6e6fb83433e489900d7600d3b61c8260c"
 
 "@types/node@^8.0.53":
   version "8.10.20"
@@ -320,8 +320,8 @@
     redux ">= 3.7.2"
 
 "@types/react-router@*":
-  version "4.0.26"
-  resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-4.0.26.tgz#4489c873642baa633014294a6d0a290001ba9860"
+  version "4.0.27"
+  resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-4.0.27.tgz#553f54df7c4b09d6046b0201ce9b91c46b2940e3"
   dependencies:
     "@types/history" "*"
     "@types/react" "*"
@@ -2048,7 +2048,7 @@ buffer-from@^0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-0.1.2.tgz#15f4b9bcef012044df31142c14333caf6e0260d0"
 
-buffer-from@^1.0.0:
+buffer-from@^1.0.0, buffer-from@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.1.0.tgz#87fcaa3a298358e0ade6e442cfce840740d1ad04"
 
@@ -3567,7 +3567,7 @@ dns-txt@^2.0.2:
   dependencies:
     buffer-indexof "^1.0.0"
 
-doctrine@^0.7.2:
+doctrine@0.7.2:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-0.7.2.tgz#7cb860359ba3be90e040b26b729ce4bfa654c523"
   dependencies:
@@ -3734,8 +3734,8 @@ ejs@^2.5.9:
   resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.6.1.tgz#498ec0d495655abc6f23cd61868d926464071aa0"
 
 electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.30, electron-to-chromium@^1.3.47:
-  version "1.3.48"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.48.tgz#d3b0d8593814044e092ece2108fc3ac9aea4b900"
+  version "1.3.50"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.50.tgz#7438b76f92b41b919f3fbdd350fbd0757dacddf7"
 
 elegant-spinner@^1.0.1:
   version "1.0.1"
@@ -3827,9 +3827,9 @@ enzyme-adapter-utils@^1.3.0:
     object.assign "^4.0.4"
     prop-types "^15.6.0"
 
-enzyme-matchers@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/enzyme-matchers/-/enzyme-matchers-6.0.1.tgz#1ee6e8c7f59a46a1ab62d971e3afdb45b7fb3ea2"
+enzyme-matchers@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/enzyme-matchers/-/enzyme-matchers-6.0.2.tgz#794d4e43254daaa0fffd3a591e5869fc861deeb2"
   dependencies:
     circular-json-es6 "^2.0.1"
     deep-equal-ident "^1.1.1"
@@ -4174,8 +4174,8 @@ ethereumjs-block@~1.2.2:
     merkle-patricia-tree "^2.1.2"
 
 ethereumjs-tx@^1.0.0, ethereumjs-tx@^1.1.1, ethereumjs-tx@^1.2.0, ethereumjs-tx@^1.2.2, ethereumjs-tx@^1.3.0, ethereumjs-tx@^1.3.3, ethereumjs-tx@^1.3.4:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/ethereumjs-tx/-/ethereumjs-tx-1.3.4.tgz#c2304912f6c07af03237ad8675ac036e290dad48"
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/ethereumjs-tx/-/ethereumjs-tx-1.3.5.tgz#c5ab252977ed2b13fb2fca195fdfa95a7d54f858"
   dependencies:
     ethereum-common "^0.0.18"
     ethereumjs-util "^5.0.0"
@@ -4247,8 +4247,8 @@ ethereumjs-wallet@^0.6.0, ethereumjs-wallet@~0.6.0:
     uuid "^2.0.1"
 
 ethers@^3.0.17, ethers@^3.0.22:
-  version "3.0.22"
-  resolved "https://registry.yarnpkg.com/ethers/-/ethers-3.0.22.tgz#7fab1ea16521705837aa43c15831877b2716b436"
+  version "3.0.24"
+  resolved "https://registry.yarnpkg.com/ethers/-/ethers-3.0.24.tgz#e1f6328628440834740216aeb3f4a8460410ae5b"
   dependencies:
     aes-js "3.0.0"
     bn.js "^4.4.0"
@@ -4682,8 +4682,8 @@ flatten@^1.0.2:
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
 flow-parser@^0.*:
-  version "0.74.0"
-  resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.74.0.tgz#4acc8f55bdce5fa4da43c72c28ef8a9600ace87c"
+  version "0.75.0"
+  resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.75.0.tgz#9a1891c48051c73017b6b5cc07b3681fda3fdfb0"
 
 flush-write-stream@^1.0.0:
   version "1.0.3"
@@ -5689,8 +5689,8 @@ ignore-walk@^3.0.1:
     minimatch "^3.0.4"
 
 ignore@^3.3.5:
-  version "3.3.8"
-  resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.8.tgz#3f8e9c35d38708a3a7e0e9abb6c73e7ee7707b2b"
+  version "3.3.10"
+  resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.10.tgz#0a97fb876986e8081c631160f8f9f389157f0043"
 
 immediate@^3.2.3:
   version "3.2.3"
@@ -5894,46 +5894,6 @@ ipfs-api@^22.0.0, ipfs-api@^22.0.1, ipfs-api@^22.1.0:
     streamifier "~0.1.1"
     tar-stream "^1.6.1"
 
-ipfs-api@^22.1.0:
-  version "22.1.0"
-  resolved "https://registry.yarnpkg.com/ipfs-api/-/ipfs-api-22.1.0.tgz#f85fe9feb83d94f7cb31746a3bebbbd451de2629"
-  dependencies:
-    async "^2.6.1"
-    big.js "^5.1.2"
-    bs58 "^4.0.1"
-    cids "~0.5.3"
-    concat-stream "^1.6.2"
-    detect-node "^2.0.3"
-    flatmap "0.0.3"
-    glob "^7.1.2"
-    ipfs-block "~0.7.1"
-    ipfs-unixfs "~0.1.15"
-    ipld-dag-cbor "~0.12.0"
-    ipld-dag-pb "~0.14.4"
-    is-ipfs "~0.3.2"
-    is-pull-stream "0.0.0"
-    is-stream "^1.1.0"
-    libp2p-crypto "~0.13.0"
-    lru-cache "^4.1.3"
-    multiaddr "^5.0.0"
-    multibase "~0.4.0"
-    multihashes "~0.4.13"
-    ndjson "^1.5.0"
-    once "^1.4.0"
-    peer-id "~0.10.7"
-    peer-info "~0.14.1"
-    promisify-es6 "^1.0.3"
-    pull-defer "~0.2.2"
-    pull-pushable "^2.2.0"
-    pull-stream-to-stream "^1.3.4"
-    pump "^3.0.0"
-    qs "^6.5.2"
-    readable-stream "^2.3.6"
-    stream-http "^2.8.3"
-    stream-to-pull-stream "^1.7.2"
-    streamifier "~0.1.1"
-    tar-stream "^1.6.1"
-
 ipfs-block@~0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/ipfs-block/-/ipfs-block-0.7.1.tgz#f506d6159219e19690d3ab863c039cba293d1e40"
@@ -5948,8 +5908,8 @@ ipfs-unixfs@~0.1.15:
     protons "^1.0.0"
 
 ipfsd-ctl@^0.37.3:
-  version "0.37.4"
-  resolved "https://registry.yarnpkg.com/ipfsd-ctl/-/ipfsd-ctl-0.37.4.tgz#5025266c135a446880e56b3b930e64961a4c84b5"
+  version "0.37.5"
+  resolved "https://registry.yarnpkg.com/ipfsd-ctl/-/ipfsd-ctl-0.37.5.tgz#68cd9edcc45956c83c10de81af913643a9bd170b"
   dependencies:
     async "^2.6.0"
     boom "^7.2.0"
@@ -6589,9 +6549,9 @@ jest-docblock@^22.4.0, jest-docblock@^22.4.3:
   dependencies:
     detect-newline "^2.1.0"
 
-jest-environment-enzyme@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/jest-environment-enzyme/-/jest-environment-enzyme-6.0.1.tgz#99f51d7f988918a963df2859b31e29696d7f6bed"
+jest-environment-enzyme@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/jest-environment-enzyme/-/jest-environment-enzyme-6.0.2.tgz#890526622d5de8a820a1849d2684f03bc006e0ef"
   dependencies:
     jest-environment-jsdom "^22.4.1"
 
@@ -6611,12 +6571,12 @@ jest-environment-node@^22.4.1:
     jest-util "^22.4.3"
 
 jest-enzyme@^6.0.0:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/jest-enzyme/-/jest-enzyme-6.0.1.tgz#6963498f89550bf315b75011a0790c73df95860d"
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/jest-enzyme/-/jest-enzyme-6.0.2.tgz#bc464169de6c2d50602e02bbc9464460507fb295"
   dependencies:
-    enzyme-matchers "^6.0.1"
+    enzyme-matchers "^6.0.2"
     enzyme-to-json "^3.3.0"
-    jest-environment-enzyme "^6.0.1"
+    jest-environment-enzyme "^6.0.2"
 
 jest-get-type@^22.1.0, jest-get-type@^22.4.3:
   version "22.4.3"
@@ -8763,7 +8723,7 @@ ora@^0.2.3:
     cli-spinners "^0.1.2"
     object-assign "^4.0.1"
 
-original-require@^1.0.1:
+original-require@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/original-require/-/original-require-1.0.1.tgz#0f130471584cd33511c5ec38c8d59213f9ac5e20"
 
@@ -9412,8 +9372,8 @@ postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.12, postcss@^5.0.13, postcss@^5.0
     supports-color "^3.2.3"
 
 postcss@^6.0.0, postcss@^6.0.1, postcss@^6.0.13:
-  version "6.0.22"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-6.0.22.tgz#e23b78314905c3b90cbd61702121e7a78848f2a3"
+  version "6.0.23"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-6.0.23.tgz#61c82cc328ac60e677645f979054eb98bc0e3324"
   dependencies:
     chalk "^2.4.1"
     source-map "^0.6.1"
@@ -11413,8 +11373,8 @@ tape@^4.4.0, tape@^4.6.3, tape@^4.8.0:
     through "~2.3.8"
 
 tar-fs@^1.16.2:
-  version "1.16.2"
-  resolved "https://registry.yarnpkg.com/tar-fs/-/tar-fs-1.16.2.tgz#17e5239747e399f7e77344f5f53365f04af53577"
+  version "1.16.3"
+  resolved "https://registry.yarnpkg.com/tar-fs/-/tar-fs-1.16.3.tgz#966a628841da2c4010406a82167cbd5e0c72d509"
   dependencies:
     chownr "^1.0.1"
     mkdirp "^0.5.1"
@@ -11696,11 +11656,11 @@ truffle-hdwallet-provider@0.0.4:
     web3-provider-engine "^8.4.0"
 
 truffle@^4.1.11:
-  version "4.1.11"
-  resolved "https://registry.yarnpkg.com/truffle/-/truffle-4.1.11.tgz#a4df812ebf4a564892900c4a1dac1131104a0799"
+  version "4.1.12"
+  resolved "https://registry.yarnpkg.com/truffle/-/truffle-4.1.12.tgz#f45f4b6c1ce15865fcd7bbf5f63340f5e16e2950"
   dependencies:
     mocha "^4.1.0"
-    original-require "^1.0.1"
+    original-require "1.0.1"
     solc "0.4.24"
 
 ts-jest@22.0.1:
@@ -11744,10 +11704,11 @@ ts-loader@^2.3.7:
     semver "^5.0.1"
 
 ts-node@^6.0.3:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-6.1.1.tgz#19607140acb06150441fcdb61be11f73f7b6657e"
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-6.2.0.tgz#65a0ae2acce319ea4fd7ac8d7c9f1f90c5da6baf"
   dependencies:
     arrify "^1.0.0"
+    buffer-from "^1.1.0"
     diff "^3.1.0"
     make-error "^1.1.1"
     minimist "^1.2.0"
@@ -11771,27 +11732,31 @@ tsconfig-paths@^3.1.1, tsconfig-paths@^3.4.0:
     strip-bom "^3.0.0"
     strip-json-comments "^2.0.1"
 
-tslib@^1.0.0, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0, tslib@~1.9.0:
-  version "1.9.2"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.2.tgz#8be0cc9a1f6dc7727c38deb16c2ebd1a2892988e"
+tslib@1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.0.tgz#e37a86fda8cbbaf23a057f473c9f4dc64e5fc2e8"
+
+tslib@^1.7.1, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0, tslib@~1.9.0:
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
 
 tslint-config-prettier@^1.10.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/tslint-config-prettier/-/tslint-config-prettier-1.13.0.tgz#189e821931ad89e0364e4e292d5c44a14e90ecd6"
 
 tslint-config-standard@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/tslint-config-standard/-/tslint-config-standard-7.0.0.tgz#47bbf25578ed2212456f892d51e1abe884a29f15"
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/tslint-config-standard/-/tslint-config-standard-7.1.0.tgz#6bcc435a179478e365f6cc62312a561221985760"
   dependencies:
-    tslint-eslint-rules "^4.1.1"
+    tslint-eslint-rules "^5.3.1"
 
-tslint-eslint-rules@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/tslint-eslint-rules/-/tslint-eslint-rules-4.1.1.tgz#7c30e7882f26bc276bff91d2384975c69daf88ba"
+tslint-eslint-rules@^5.3.1:
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/tslint-eslint-rules/-/tslint-eslint-rules-5.3.1.tgz#10dec4361df0b3e4385d91ff8e0226bda4ec2ad4"
   dependencies:
-    doctrine "^0.7.2"
-    tslib "^1.0.0"
-    tsutils "^1.4.0"
+    doctrine "0.7.2"
+    tslib "1.9.0"
+    tsutils "2.8.0"
 
 tslint-react@^3.2.0:
   version "3.6.0"
@@ -11833,9 +11798,11 @@ tslint@~5.9.1:
     tslib "^1.8.0"
     tsutils "^2.12.1"
 
-tsutils@^1.4.0:
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-1.9.1.tgz#b9f9ab44e55af9681831d5f28d0aeeaf5c750cb0"
+tsutils@2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-2.8.0.tgz#0160173729b3bf138628dd14a1537e00851d814a"
+  dependencies:
+    tslib "^1.7.1"
 
 tsutils@^2.12.1, tsutils@^2.13.1:
   version "2.27.1"
@@ -11963,8 +11930,8 @@ uglifyjs-webpack-plugin@^0.4.6:
     webpack-sources "^1.0.1"
 
 uglifyjs-webpack-plugin@^1.1.8:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/uglifyjs-webpack-plugin/-/uglifyjs-webpack-plugin-1.2.5.tgz#2ef8387c8f1a903ec5e44fa36f9f3cbdcea67641"
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/uglifyjs-webpack-plugin/-/uglifyjs-webpack-plugin-1.2.6.tgz#f4bb44f02431e82b301d8d4624330a6a35729381"
   dependencies:
     cacache "^10.0.4"
     find-cache-dir "^1.0.0"
@@ -12040,8 +12007,8 @@ unique-string@^1.0.0:
     crypto-random-string "^1.0.0"
 
 universalify@^0.1.0:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.1.tgz#fa71badd4437af4c148841e3b3b165f9e9e590b7"
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
 
 unorm@^1.3.3:
   version "1.4.1"
@@ -12272,8 +12239,8 @@ vinyl@^1.1.0:
     replace-ext "0.0.1"
 
 vinyl@^2.0.1:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/vinyl/-/vinyl-2.1.0.tgz#021f9c2cf951d6b939943c89eb5ee5add4fd924c"
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/vinyl/-/vinyl-2.2.0.tgz#d85b07da96e458d25b2ffe19fece9f2caa13ed86"
   dependencies:
     clone "^2.1.1"
     clone-buffer "^1.0.0"

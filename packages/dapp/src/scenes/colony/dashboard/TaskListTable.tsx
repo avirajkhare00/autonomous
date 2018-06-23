@@ -17,10 +17,10 @@ export const TaskListTable: SFC<TaskListTableProps> = ({ tasks, onFinalize }) =>
             <td>TaskId</td>
             <td>BriefHash</td>
             <td>Brief</td>
-            <td>ConfigUrlHash</td>
+            <td>ConfigHash</td>
+            <td>Config</td>
             <td>Finalized</td>
             <td>Actions</td>
-            {/*<td>ConfigUrl</td>*/}
           </tr>
           </thead>
           <tbody>

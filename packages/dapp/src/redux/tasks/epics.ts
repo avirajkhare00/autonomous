@@ -28,6 +28,7 @@ import { createTransactionInitiateAction } from '../transactions/actions'
 import { Role, Task } from '../../models/Task'
 import {
   deserializeSpecification,
+  deserializeSubmission,
   serializeSpecification,
   serializeSubmission
 } from '../../lib/SpecificationSerializer'
@@ -72,28 +73,28 @@ const getTaskEpic: Epic<RootActions, RootState> =
       // .flatMap(task => ipfsClient!.dag.get(task.specificationHash) // TODO Replace this with DAG implementation
       // .map(result => result.value)
       // .map(result => JSON.parse(result.content!.toString()))
-        .flatMap(task => Observable.fromPromise(ipfsClient!.files.get(task.specificationHash.toString()))
+        .flatMap(task => Observable.fromPromise(ipfsClient!.files.get(task.specificationHash))
           .timeout(5000)
           .catch(err => {
             console.log('Failed to get file from IPFS', task.specificationHash, err)
             return Observable.throw(err)
           })
+          .map(files => files[0])
+          .map(result => deserializeSpecification(result.content))
         )
-        .map(files => files[0])
-        .map(result => deserializeSpecification(result.content))
 
-      // let deliverable$ = task$
-      // // .flatMap(task => ipfsClient!.dag.get(task.specificationHash) // TODO Replace this with DAG implementation
-      // // .map(result => result.value)
-      // // .map(result => JSON.parse(result.content!.toString()))
-      //   .flatMap(task => ipfsClient!.files.get(task.deliverableHash!.toString())
-      //     .catch(err => {
-      //       console.log('Failed to get file from IPFS', err)
-      //       throw err
-      //     })
-      //   )
-      //   .map(files => files[0])
-      //   .map(result => ({ description: result.content!.toString() }))
+      let deliverable$ = task$
+        .flatMap(task => task.deliverableHash ?
+          Observable.fromPromise(ipfsClient!.files.get(task.deliverableHash))
+            .timeout(5000)
+            .catch(err => {
+              console.log('Failed to get file from IPFS', task.specificationHash, err)
+              return Observable.throw(err)
+            })
+            .map(files => files[0])
+            .map(result => deserializeSubmission(result.content))
+          : Observable.of(undefined)
+        )
 
       let managerAddress$ = Observable.fromPromise(colony.getTaskRole.call({ taskId: action.id, role: Role.MANAGER }))
       let workerAddress$ = Observable.fromPromise(colony.getTaskRole.call({ taskId: action.id, role: Role.WORKER }))
@@ -105,15 +106,17 @@ const getTaskEpic: Epic<RootActions, RootState> =
       return Observable.combineLatest(
         task$,
         specification$,
+        deliverable$,
         managerAddress$,
         workerAddress$,
         evaluatorAddress$
       )
-        .map(([networkTask, specification, managerAddress, workerAddress, evaluatorAddress]) => ({
+        .map(([networkTask, specification, deliverable, managerAddress, workerAddress, evaluatorAddress]) => ({
           id: networkTask.id,
           specificationHash: networkTask.specificationHash,
           specification: specification,
           deliverableHash: networkTask.deliverableHash,
+          deliverable: deliverable,
           finalized: networkTask.finalized,
           manager: managerAddress,
           worker: workerAddress,
