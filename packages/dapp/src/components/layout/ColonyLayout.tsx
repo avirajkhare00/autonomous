@@ -7,11 +7,12 @@ import { NavigationMenu } from './NavigationMenu'
 import { BoldBackground } from './BoldBackground'
 import { BaseLayout } from './BaseLayout'
 import { createDeselectAction } from '../../redux/colony/actions'
-// import glamorous from 'glamorous'
+import glamorous from 'glamorous'
+import { MenuBackgroundColor } from '../colors/BaseColors'
 
-// const Background = glamorous(BoldBackground)({
-//   paddingTop: 40
-// })
+const Background = glamorous(BoldBackground)({
+  paddingTop: -40
+})
 
 interface ColonyLayoutProps {
   changeColony (): void
@@ -19,16 +20,16 @@ interface ColonyLayoutProps {
 
 const _colonyLayout: SFC<ColonyLayoutProps> = ({ changeColony, children }) => (
   <BaseLayout>
-    <BoldBackground>
+    <Background>
         <Grid>
-          <Grid.Column mobile={16} tablet={4} computer={4}>
+          <Grid.Column mobile={16} tablet={5} computer={5} style={{ backgroundColor: MenuBackgroundColor }}>
             <NavigationMenu onChangeColony={changeColony} />
           </Grid.Column>
-          <Grid.Column mobile={16} tablet={12} computer={12}>
+          <Grid.Column mobile={16} tablet={10} computer={10}>
             {children}
           </Grid.Column>
         </Grid>
-    </BoldBackground>
+    </Background>
   </BaseLayout>
 )
 

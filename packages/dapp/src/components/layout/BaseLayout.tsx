@@ -2,8 +2,7 @@ import { default as React, SFC } from 'react'
 import glamorous from 'glamorous'
 import { Icon, Menu } from 'semantic-ui-react'
 import { env } from '../../config/ApplicationConfig'
-import { COLONY_ROUTES } from '../../scenes/routes'
-import { NavLink } from 'react-router-dom'
+import { MenuBackgroundColor, TitleColor } from '../colors/BaseColors'
 
 const FullDiv = glamorous.div({
   width: '100%',
@@ -12,28 +11,13 @@ const FullDiv = glamorous.div({
   flexDirection: 'column'
 })
 
-// const TitleSyle = glamorous.div({
-//   backgroundColor: MenuBackgroundColor
-// })
-
-// const MenuItemSyle = glamorous.div({
-//   color: TitleColor
-// })
-
 export const BaseLayout: SFC = ({ children }) => (
   <FullDiv>
-    {/*<TitleSyle>*/}
-      <Menu secondary>
-        <Menu.Item
-          as={NavLink}
-          exact
-          to={COLONY_ROUTES.Dashboard}
-        >
-            {env.APP_NAME}
-            <Icon name='cogs' padding/>
-        </Menu.Item>
-      </Menu>
-    {/*</TitleSyle>*/}
+    <Menu pointing secondary style={{ backgroundColor: MenuBackgroundColor }}>
+      <Menu.Item style={{ color: TitleColor, height: '50px', fontSize: '20px' }}>
+        {env.APP_NAME} &nbsp;<Icon name='cogs' style={{ color: TitleColor }}/>
+      </Menu.Item>
+    </Menu>
     {children}
   </FullDiv>
 )
