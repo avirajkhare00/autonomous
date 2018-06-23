@@ -36,3 +36,4 @@ bin/
 ormconfig.ts
 
 lerna-debug.log
+dapp/semantic/dist
