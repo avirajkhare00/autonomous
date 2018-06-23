@@ -21,7 +21,7 @@ import {
   TaskActionTypes
 } from './actions'
 import { createTransactionInitiateAction } from '../transactions/actions'
-import { Task } from '../../models/Task'
+import { Role, Task } from '../../models/Task'
 import {
   deserializeSpecification,
   serializeSpecification,
@@ -90,15 +90,25 @@ const getTaskEpic: Epic<RootActions, RootState> =
       //   .map(files => files[0])
       //   .map(result => ({ description: result.content!.toString() }))
 
+      let managerAddress$ = Observable.fromPromise(colony.getTaskRole.call({ taskId: action.id, role: Role.MANAGER }))
+      let workerAddress$ = Observable.fromPromise(colony.getTaskRole.call({ taskId: action.id, role: Role.WORKER }))
+      let evaluatorAddress$ = Observable.fromPromise(colony.getTaskRole.call({ taskId: action.id, role: Role.EVALUATOR }))
+
       return Observable.combineLatest(
         task$,
-        specification$
+        specification$,
+        managerAddress$,
+        workerAddress$,
+        evaluatorAddress$
       )
-        .map(([networkTask, specification]) => ({
+        .map(([networkTask, specification, managerAddress, workerAddress, evaluatorAddress]) => ({
           id: networkTask.id,
           specificationHash: networkTask.specificationHash,
           specification: specification,
-          deliverableHash: networkTask.deliverableHash
+          deliverableHash: networkTask.deliverableHash,
+          manager: managerAddress,
+          worker: workerAddress,
+          evaluator: evaluatorAddress
         }) as Task)
         .map(task => createGetTaskSuccessAction(task))
         .catch(err => Observable.of(createGetTaskFailedAction(err)))
@@ -141,7 +151,27 @@ const createTaskEpic: Epic<RootActions, RootState> =
           uuid.v4(),
           'Creating task',
           initiator,
-          ({ taskId }) => createCreateTaskSuccessAction(taskId),
+          ({ taskId }) => createTransactionInitiateAction(
+            uuid.v4(),
+            'Assigning Worker Role',
+            () => colony!.setTaskRoleUser.send({
+              taskId,
+              role: Role.WORKER,
+              user: action.workerAddress
+            }, { waitForMining: false }),
+            () => createTransactionInitiateAction(
+              uuid.v4(),
+              'Assigning Evaluator Role',
+              () => colony!.setTaskRoleUser.send({
+                taskId,
+                role: Role.EVALUATOR,
+                user: action.evaluatorAddress
+              }, { waitForMining: false }),
+              () => createCreateTaskSuccessAction(taskId),
+              err => createCreateTaskFailedAction(err)
+            ),
+            err => createCreateTaskFailedAction(err)
+          ),
           err => createCreateTaskFailedAction(err)
         ))
         .do(uberact => console.log(uberact))

@@ -6,8 +6,15 @@ declare module '@colony/colony-js-client' {
   type TypedEventCallback<ParamTypes> = (args: ParamTypes) => void
 
   export class ContractEvent<T> {
-    addListener(handlerFunction: TypedEventCallback<T>): void
-    removeListener(handlerFunction: TypedEventCallback<T>): void
+    addListener (handlerFunction: TypedEventCallback<T>): void
+
+    removeListener (handlerFunction: TypedEventCallback<T>): void
+  }
+
+  export type TaskRoleResult = {
+    address: Address, // Address of the user for the given role
+    rated: boolean, // Has the user work been rated
+    rating: number // Rating the user received
   }
 
   export class ColonyClient {
@@ -93,12 +100,7 @@ declare module '@colony/colony-js-client' {
     getTaskRole: Caller<{
       taskId: number, // Integer taskId
       role: Role // MANAGER, EVALUATOR, or WORKER
-    },
-      {
-        address: Address, // Address of the user for the given role
-        rated: boolean, // Has the user work been rated
-        rating: number // Rating the user received
-      }>
+    }, TaskRoleResult>
     /*
       For a given task, will return the number of submitted ratings and the date of their submission
     */
@@ -423,7 +425,9 @@ declare module '@colony/colony-js-client' {
   }
   export type MultisigSender<I, O> = (input: I) => Promise<O>
   export type Address = string
+
   export type Role = 'MANAGER' | 'EVALUATOR' | 'WORKER'
+
   export type IPFSHash = string
 
   export default class ColonyNetworkClient {

@@ -42,6 +42,8 @@ export interface GetTaskFailed extends Action {
 export interface CreateTask extends Action {
   type: TaskActionTypes.Create
   specification: TaskSpecification
+  workerAddress: string
+  evaluatorAddress: string
 }
 
 export interface CreateTaskSuccess extends Action {
@@ -90,8 +92,8 @@ export function createGetTaskFailedAction(error: Error): GetTaskFailed {
   return { type: TaskActionTypes.GetFailed, error }
 }
 
-export function createCreateTaskAction(specification: TaskSpecification): CreateTask {
-  return { type: TaskActionTypes.Create, specification }
+export function createCreateTaskAction(specification: TaskSpecification, workerAddress: string, evaluatorAddress: string): CreateTask {
+  return { type: TaskActionTypes.Create, specification, workerAddress, evaluatorAddress }
 }
 
 export function createCreateTaskSuccessAction(taskId: number): CreateTaskSuccess {

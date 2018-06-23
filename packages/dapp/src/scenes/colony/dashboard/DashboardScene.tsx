@@ -18,7 +18,7 @@ import { SubmitTaskConfigForm } from './SubmitTaskConfigForm'
 interface DashboardSceneProps {
   tasks: Task[]
 
-  createTask (brief: string): void
+  createTask (brief: string, workerAddress: string, evaluatorAddress: string): void
 
   submitConfig (taskId: number, deploymentString: string): void
 
@@ -27,7 +27,7 @@ interface DashboardSceneProps {
 
 export const _dashboardScene: SFC<DashboardSceneProps & RouteProps> = ({ tasks, createTask, submitConfig, refreshTasks }) => (
   <div>
-    <CreateTaskForm onSubmit={b => createTask(b)} />
+    <CreateTaskForm onSubmit={(b, w, e) => createTask(b, w, e)} />
     <br />
     <SubmitTaskConfigForm tasks={tasks} onSubmit={(id, c) => submitConfig(id, c)} />
     <br />
@@ -46,10 +46,14 @@ const mapState = (state: RootState): Partial<DashboardSceneProps> => ({
 })
 
 const mapDispatch = (dispatch: Dispatch<RootActions>) => ({
-  createTask (brief: string) {
-    dispatch(createCreateTaskAction({
-      brief: brief
-    }))
+  createTask (brief: string, workerAddress: string, evaluatorAddress: string) {
+    dispatch(createCreateTaskAction(
+      {
+        brief: brief
+      },
+      workerAddress,
+      evaluatorAddress
+    ))
   },
   submitConfig (taskId: number, deploymentString: string) {
     dispatch(createSubmitTaskConfigAction(taskId, {

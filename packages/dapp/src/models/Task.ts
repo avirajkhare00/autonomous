@@ -1,9 +1,14 @@
+import { TaskRoleResult } from '@colony/colony-js-client'
+
 export interface Task {
   id: number
   specificationHash: string,
   specification: TaskSpecification
   deliverableHash?: string,
   deliverable?: TaskSubmission
+  manager: TaskRoleResult
+  worker?: TaskRoleResult
+  evaluator?: TaskRoleResult
 }
 
 export interface TaskSpecification {
@@ -13,6 +18,13 @@ export interface TaskSpecification {
 export interface TaskSubmission {
   deploymentString: string
 }
+
+export enum Role {
+  MANAGER = 'MANAGER',
+  EVALUATOR = 'EVALUATOR',
+  WORKER = 'WORKER'
+}
+
 //
 // More detailed task interface, but doesn't seem required at this stage
 // import { IPFSHash } from '@colony/colony-js-client'
