@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "author": "jvanoers",
   "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
+    "build-semantic": "cd src/semantic && gulp build-css build-assets",
+    "watch-semantic": "cd src/semantic && yarn run build-semantic && gulp watch",
+    "start": "yarn run build-semantic && react-scripts-ts start",
+    "build": "yarn run build-semantic && react-scripts-ts build",
     "dist-serve": "http-server build"
   },
   "dependencies": {
