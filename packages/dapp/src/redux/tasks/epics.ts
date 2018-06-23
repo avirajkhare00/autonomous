@@ -72,14 +72,15 @@ const getTaskEpic: Epic<RootActions, RootState> =
       // .flatMap(task => ipfsClient!.dag.get(task.specificationHash) // TODO Replace this with DAG implementation
       // .map(result => result.value)
       // .map(result => JSON.parse(result.content!.toString()))
-        .flatMap(task => ipfsClient!.files.get(task.specificationHash.toString())
+        .flatMap(task => Observable.fromPromise(ipfsClient!.files.get(task.specificationHash.toString()))
+          .timeout(5000)
           .catch(err => {
-            console.log('Failed to get file from IPFS', err)
-            throw err
+            console.log('Failed to get file from IPFS', task.specificationHash, err)
+            return Observable.throw(err)
           })
         )
         .map(files => files[0])
-        .map(result => deserializeSpecification(result.content! as Buffer))
+        .map(result => deserializeSpecification(result.content))
 
       // let deliverable$ = task$
       // // .flatMap(task => ipfsClient!.dag.get(task.specificationHash) // TODO Replace this with DAG implementation

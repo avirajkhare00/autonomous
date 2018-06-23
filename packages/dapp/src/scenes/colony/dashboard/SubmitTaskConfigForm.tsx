@@ -10,13 +10,13 @@ interface SubmitTaskConfigFormProps {
 
 interface SubmitTaskConfigFormState {
   taskId: number
-  configUrl: string
+  configuration: string
 }
 
 export class SubmitTaskConfigForm extends Component<SubmitTaskConfigFormProps, SubmitTaskConfigFormState> {
   state = {
     taskId: 0,
-    configUrl: ''
+    configuration: ''
   }
 
   taskIdOptions() {
@@ -30,8 +30,8 @@ export class SubmitTaskConfigForm extends Component<SubmitTaskConfigFormProps, S
 
   handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    this.props.onSubmit(this.state.taskId, this.state.configUrl)
-    this.setState({ taskId: 0, configUrl: '' })
+    this.props.onSubmit(this.state.taskId, this.state.configuration)
+    this.setState({ taskId: 0, configuration: '' })
   }
 
   render() {
@@ -43,12 +43,11 @@ export class SubmitTaskConfigForm extends Component<SubmitTaskConfigFormProps, S
           label='Task Id'
           onChange={(_, data) => this.setState({ taskId: data.value as number })}
         />
-        <Form.Input
+        <Form.TextArea
           fluid
-          label='Config Url'
-          placeholder='https://github.com/...'
-          value={this.state.configUrl}
-          onChange={event => this.setState({ configUrl: event.currentTarget.value })}
+          label='Configuration Payload (JSON)'
+          value={this.state.configuration}
+          onChange={event => this.setState({ configuration: event.currentTarget.value })}
         />
 
         <Form.Button primary>Submit Config</Form.Button>

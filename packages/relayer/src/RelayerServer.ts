@@ -46,7 +46,7 @@ export class RelayerServer {
     this.deploymentRegistrationService = new KubernetesDeploymentService(resourceClient)
 
     this.deploymentListener = new DeploymentNotificationListener(resourceClient)
-    this.colonyListener = new ColonyRegistrationListener(resourceClient, this.colonyNetworkClient, this.ipfsClient)
+    this.colonyListener = new ColonyRegistrationListener(resourceClient, this.colonyNetworkClient, this.ipfsClient, this.deploymentRegistrationService)
 
     await this.deploymentListener.initialize()
     await this.colonyListener.initialize()

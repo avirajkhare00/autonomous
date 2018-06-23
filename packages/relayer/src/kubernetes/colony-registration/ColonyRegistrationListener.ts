@@ -3,6 +3,12 @@ import { IPFSAPI } from 'ipfs-api'
 import { Observable } from 'rxjs'
 
 import { CustomResourceClient } from '../CustomResourceService'
+import { TaskSubmission } from '../../../../dapp/src/models/Task'
+import { DeploymentService } from '../deployment/DeploymentService'
+
+export const deserializeSubmission = (data: Buffer): TaskSubmission => {
+  return JSON.parse(data.toString())
+}
 
 export class ColonyRegistrationListener {
   notifierClient: CustomResourceClient<ColonyListenerResource>
@@ -10,7 +16,8 @@ export class ColonyRegistrationListener {
   constructor (
     k8sClient: any,
     private colonyNetworkClient: ColonyNetworkClient,
-    private ipfsClient: IPFSAPI
+    private ipfsClient: IPFSAPI,
+    private deploymentService: DeploymentService
   ) {
     this.notifierClient = new CustomResourceClient(k8sClient, 'colonylisteners')
   }
@@ -29,19 +36,28 @@ export class ColonyRegistrationListener {
     try {
       const colonyClient = await this.colonyNetworkClient.getColonyClientByAddress(resource.colonyAddress)
 
-      colonyClient.events.TaskAdded.addListener(async ({ id }) => {
+      colonyClient.events.TaskFinalized.addListener(async ({ id }) => {
         let client = await colonyClient.getTask.call({ taskId: id })
 
-        console.log('Task Addded!', id, client.specificationHash)
+        console.log('[COLONY] Task Finalized', id, client.deliverableHash)
 
         // TODO Switch to DAG API
-        let spec$ = Observable.fromPromise(this.ipfsClient.files.get(client.specificationHash.toString()))
+        let spec$ = Observable.fromPromise(this.ipfsClient.files.get(client.deliverableHash!.toString()))
+          .timeout(5000)
           .map(files => files[0])
-          .map(result => ({ description: result.content!.toString() }))
+          .map(result => deserializeSubmission(result.content! as Buffer))
+          .map(submission => JSON.parse(submission.deploymentString))
 
-        spec$.subscribe(contents => {
-          console.log('Resolved spec: ', contents)
-        })
+        spec$.subscribe(
+          async payload => {
+            console.log('[COLONY] Received spec', JSON.stringify(payload))
+            await this.deploymentService.deploy({
+              colonyAddress: resource.colonyAddress,
+              deploymentPayload: payload
+            })
+          },
+          err => console.log('[COLONY] Error getting spec!', err)
+        )
       })
     } catch (e) {
       console.log('[COLONY] Error listening to colony', e)

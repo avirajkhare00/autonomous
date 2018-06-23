@@ -10,6 +10,7 @@ export const deserializeSpecification = (data: Buffer): TaskSpecification => {
 export const serializeSubmission = (spec: TaskSubmission): Buffer => {
   return Buffer.from(JSON.stringify(spec))
 }
+
 export const deserializeSubmission = (data: Buffer): TaskSubmission => {
   return JSON.parse(data.toString())
 }
