@@ -116,7 +116,7 @@
             "containers": [
               {
                 "name": "autonomous-relayer",
-                "image": "autonomous-relayer:0.2",
+                "image": "autonomous-relayer:0.1",
                 "ports": [
                   {
                     "name": "http",

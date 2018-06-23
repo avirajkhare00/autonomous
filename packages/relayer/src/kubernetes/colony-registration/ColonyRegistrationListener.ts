@@ -4,8 +4,11 @@ import { Observable } from 'rxjs'
 import Web3 from 'web3'
 
 import { CustomResourceClient } from '../CustomResourceService'
-import { TaskSubmission } from '../../../../dapp/src/models/Task'
 import { DeploymentService } from '../deployment/DeploymentService'
+
+export interface TaskSubmission {
+  deploymentString: string
+}
 
 export const deserializeSubmission = (data: Buffer): TaskSubmission => {
   return JSON.parse(data.toString())
@@ -25,13 +28,15 @@ export class ColonyRegistrationListener {
   }
 
   async initialize () {
-    this.notifierClient.eventStream$().subscribe(async event => {
-      console.log('[COLONY LISTENER] Listener', event.type, event.object.colonyAddress)
+    this.notifierClient.eventStream$().subscribe(
+      async event => {
+        console.log('[COLONY LISTENER] Listener', event.type, event.object.colonyAddress)
 
-      if (event.type === 'ADDED') {
-        await this.initializeColonyListenerHandler$(event.object)
-      }
-    })
+        if (event.type === 'ADDED') {
+          await this.initializeColonyListenerHandler$(event.object)
+        }
+      },
+      e => console.log('Error in colony listener stream', e))
   }
 
   private async initializeColonyListenerHandler$ (resource: ColonyListenerResource) {

@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs'
 
 import { AUTONOMOUS_NAMESPACE, getAutonomousResource } from './constants'
-import { fromStream } from '../utils/rxjs/fromStream'
+import { resilientFromStream } from '../utils/rxjs/fromStream'
 
 export class CustomResourceClient<T> {
   resource: any
@@ -25,7 +25,7 @@ export class CustomResourceClient<T> {
   }
 
   eventStream$ (): Observable<StreamEvent<T & K8sEventObject>> {
-    return fromStream(this.k8sClient.apis[AUTONOMOUS_NAMESPACE].v1.watch[this.resourceName].getStream())
+    return resilientFromStream(() => this.k8sClient.apis[AUTONOMOUS_NAMESPACE].v1.watch[this.resourceName].getStream())
       .flatMap(buffer => buffer.toString().split('\n'))
       .filter(event => event.length > 0)
       .map(event => {

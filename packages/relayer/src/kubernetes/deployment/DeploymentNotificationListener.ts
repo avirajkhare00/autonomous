@@ -1,5 +1,5 @@
 import { CustomResourceClient } from '../CustomResourceService'
-import { fromStream } from '../../utils/rxjs/fromStream'
+import { resilientFromStream } from '../../utils/rxjs/fromStream'
 
 type Store = {
   [address: string]: {
@@ -24,7 +24,8 @@ export class DeploymentNotificationListener {
       if (event.type === 'ADDED') {
         this.initializeDeploymentEventStream$(event.object)
       }
-    })
+    },
+      e => console.log('Error in deployment notifier stream', e))
   }
 
   getEventsFor (colonyAddress: string) {
@@ -32,12 +33,11 @@ export class DeploymentNotificationListener {
   }
 
   private initializeDeploymentEventStream$ (resource: DeploymentNotifierResource) {
-    let deploymentEvent$ = fromStream(
-      this.k8sClient.apis.apps.v1
+    let deploymentEvent$ = resilientFromStream(
+      () => this.k8sClient.apis.apps.v1
         .watch.ns(resource.colonyAddress)
         .deploy(resource.deploymentName)
-        .getStream()
-    )
+        .getStream())
       .map(buffer => JSON.parse(buffer.toString()) as StreamEvent<DeploymentEvent>)
 
     deploymentEvent$.subscribe(event => {
