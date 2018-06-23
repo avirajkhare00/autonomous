@@ -1,18 +1,17 @@
 import { default as React, SFC } from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { Container, Grid } from 'semantic-ui-react'
-import glamorous from 'glamorous'
-
+import { Grid } from 'semantic-ui-react'
 import { RootActions } from '../../redux/store'
 import { NavigationMenu } from './NavigationMenu'
 import { BoldBackground } from './BoldBackground'
 import { BaseLayout } from './BaseLayout'
 import { createDeselectAction } from '../../redux/colony/actions'
+// import glamorous from 'glamorous'
 
-const Background = glamorous(BoldBackground)({
-  paddingTop: 40
-})
+// const Background = glamorous(BoldBackground)({
+//   paddingTop: 40
+// })
 
 interface ColonyLayoutProps {
   changeColony (): void
@@ -20,8 +19,7 @@ interface ColonyLayoutProps {
 
 const _colonyLayout: SFC<ColonyLayoutProps> = ({ changeColony, children }) => (
   <BaseLayout>
-    <Background>
-      <Container>
+    <BoldBackground>
         <Grid>
           <Grid.Column mobile={16} tablet={4} computer={4}>
             <NavigationMenu onChangeColony={changeColony} />
@@ -30,8 +28,7 @@ const _colonyLayout: SFC<ColonyLayoutProps> = ({ changeColony, children }) => (
             {children}
           </Grid.Column>
         </Grid>
-      </Container>
-    </Background>
+    </BoldBackground>
   </BaseLayout>
 )
 
