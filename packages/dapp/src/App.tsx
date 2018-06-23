@@ -12,7 +12,8 @@ import 'rxjs/add/operator/catch'
 import 'rxjs/add/operator/timeout'
 import 'rxjs/add/operator/delay'
 
-import './semantic/dist/semantic.min.css'
+import 'semantic-ui-css/semantic.min.css'
+// import './semantic/dist/semantic.min.css';
 
 import { Component, default as React } from 'react'
 import { Provider } from 'react-redux'

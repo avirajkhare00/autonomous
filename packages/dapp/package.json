@@ -5,8 +5,8 @@
   "scripts": {
     "build-semantic": "cd src/semantic && gulp build-css build-assets",
     "watch-semantic": "cd src/semantic && yarn run build-semantic && gulp watch",
-    "start": "yarn run build-semantic && react-scripts-ts start",
-    "build": "yarn run build-semantic && react-scripts-ts build",
+    "start": "yarn run react-scripts-ts start",
+    "build": "yarn run react-scripts-ts build",
     "dist-serve": "http-server build"
   },
   "dependencies": {
