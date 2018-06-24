@@ -1,9 +1,12 @@
-import { default as React, Component, FormEvent } from 'react'
-import { Form } from 'semantic-ui-react'
+import { Component, default as React, FormEvent } from 'react'
+import { Divider, Form } from 'semantic-ui-react'
+import { InlineTextAndButtonContainer, InlineTextLeftContainer } from './ColonySelectScene'
+import { PrimaryMenuButton, SecondaryMenuButton } from '../../components/buttons/BaseButtons'
 
 interface ColonyRelayerFormProps {
-  onSubmit (address: string): void
-  onDelete (address: string): void
+  onSubmit(address: string): void
+
+  onDelete(address: string): void
 }
 
 interface ColonyRelayerFormState {
@@ -15,12 +18,12 @@ export class ColonyRelayerForm extends Component<ColonyRelayerFormProps, ColonyR
     address: ''
   }
 
-  handleSubmit (event: FormEvent<HTMLFormElement>) {
+  handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     this.props.onSubmit(this.state.address)
   }
 
-  render () {
+  render() {
     return (
       <Form onSubmit={e => this.handleSubmit(e)}>
         <Form.Input
@@ -29,25 +32,28 @@ export class ColonyRelayerForm extends Component<ColonyRelayerFormProps, ColonyR
           placeholder='0x...'
           onChange={event => this.setState({ address: event.currentTarget.value })}
         />
-
-        <p>
-          Registration will create you a namespace on the Kubernetes cluster and listen
-          to completed tasks in the colony.
-        </p>
-
-        <Form.Button primary>Register</Form.Button>
-
-        <p>
-          This will call the Relayer to delete the colony's namespace and listener.
-          (Useful for testing!)
-        </p>
-        <Form.Button
-          type={'button'}
-          negative
-          onClick={() => this.props.onDelete(this.state.address)}
-        >
-          Clean up Colony
-        </Form.Button>
+        <InlineTextAndButtonContainer>
+          <InlineTextLeftContainer>
+            <p>
+              Registration will create you a namespace on the Kubernetes cluster and listen
+              to completed tasks in the colony.
+            </p>
+          </InlineTextLeftContainer>
+          <PrimaryMenuButton>Register Colony</PrimaryMenuButton>
+        </InlineTextAndButtonContainer>
+        <Divider/>
+        <InlineTextAndButtonContainer>
+          <InlineTextLeftContainer>
+            <p>
+              Cleaning a colony will call the Relayer to delete the colony's namepsace and listener (useful for testing)
+            </p>
+          </InlineTextLeftContainer>
+          <SecondaryMenuButton
+            onClick={() => this.props.onDelete(this.state.address)}
+          >
+            Clean Colony
+          </SecondaryMenuButton>
+        </InlineTextAndButtonContainer>
       </Form>
     )
   }

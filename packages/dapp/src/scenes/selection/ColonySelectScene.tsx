@@ -2,7 +2,8 @@ import { default as React, SFC } from 'react'
 import { RouteProps } from 'react-router'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import { Card, Divider, Button } from 'semantic-ui-react'
+import glamorous from 'glamorous'
+import { Card } from 'semantic-ui-react'
 
 import { ColonySelectionLayout } from '../../components/layout/ColonySelectionLayout'
 import { RootActions } from '../../redux/store'
@@ -14,57 +15,87 @@ import {
   createSelectAction
 } from '../../redux/colony/actions'
 import { ColonyRelayerForm } from './ColonyRelayerForm'
+import { CancelMenuButton } from '../../components/buttons/BaseButtons'
 
 interface LoginSceneProps {
-  selectColony (address: string): void
-  registerColony (address: string): void
-  cleanColony (address: string): void
+  selectColony(address: string): void
+
+  registerColony(address: string): void
+
+  cleanColony(address: string): void
+
   cleanAll(): void
 }
 
+const CardContainer = glamorous(Card)({
+  display: 'flex',
+  flex: 0.5
+})
+
+const CardContentContainer = glamorous(Card.Content)({
+  margin: '10px!important'
+})
+
+const CardHeaderContainer = glamorous(Card.Header)({
+  margin: '10px!important',
+  marginLeft: '0px!important'
+})
+
+export const InlineTextAndButtonContainer = glamorous.div({
+  marginBottom: '10px',
+  display: 'flex',
+  flexDirection: 'row'
+})
+
+export const InlineTextLeftContainer = glamorous.div({
+  margin: 'auto',
+  flex: 1
+})
+
 export const _colonySelectScene: SFC<LoginSceneProps & RouteProps> = ({ selectColony, registerColony, cleanColony, cleanAll }) => (
   <ColonySelectionLayout>
-    <Card>
-      <Card.Content>
-        <Card.Header>Browse Colony</Card.Header>
-        <Divider />
-        <EnterColonyForm onSubmit={c => selectColony(c)} buttonText={'Select Colony'} />
-      </Card.Content>
-    </Card>
-    <Card>
-      <Card.Content>
-        <Card.Header>Register new Colony with Autonomous</Card.Header>
-        <Divider />
+    <CardContainer>
+      <CardContentContainer>
+        <CardHeaderContainer>Select a Colony</CardHeaderContainer>
         <p>
-          These actions do not affect the Colony or interact with the Blockchain, these methods
-          interact with the Autonomous Relayer, which listens to changes in registered colonies
-          and manages their deployments.
+          Enter a colony address to manage deployments using Autonomous.
+        </p>
+        <EnterColonyForm onSubmit={c => selectColony(c)} buttonText={'Select Colony'}/>
+      </CardContentContainer>
+      <CardContentContainer>
+        <CardHeaderContainer>Register a new Colony with Autonomous</CardHeaderContainer>
+        <p>
+          These actions do not affect the colony or interact with the Blockchain. These methods interact with the
+          Autonomous Relayer, which listens to changes in registered colonies and manages their deployments.
         </p>
         <ColonyRelayerForm
           onSubmit={c => registerColony(c)}
           onDelete={c => cleanColony(c)}
         />
-
-        <p>
-          Clean all namespaces and listeners on the Relayer (careful!)
-        </p>
-        <Button onClick={() => cleanAll()}>Clean All</Button>
-      </Card.Content>
-    </Card>
+        <InlineTextAndButtonContainer>
+          <InlineTextLeftContainer>
+            <p>
+              Clean all namespaces and listeners on the Relayer (careful!)
+            </p>
+          </InlineTextLeftContainer>
+          <CancelMenuButton onClick={() => cleanAll()}>Clean All</CancelMenuButton>
+        </InlineTextAndButtonContainer>
+      </CardContentContainer>
+    </CardContainer>
   </ColonySelectionLayout>
 )
 
 const mapDispatch = (dispatch: Dispatch<RootActions>) => ({
-  selectColony (address: string) {
+  selectColony(address: string) {
     dispatch(createSelectAction(address))
   },
-  registerColony (address: string) {
+  registerColony(address: string) {
     dispatch(createRegisterAction(address))
   },
-  cleanColony (address: string) {
+  cleanColony(address: string) {
     dispatch(createCleanAction(address))
   },
-  cleanAll () {
+  cleanAll() {
     dispatch(createCleanAllAction())
   }
 })
