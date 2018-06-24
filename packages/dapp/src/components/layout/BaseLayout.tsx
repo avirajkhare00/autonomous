@@ -69,7 +69,7 @@ export const baseLayout: SFC<BaseLayoutProps> = ({ children, initialized, accoun
   <FullDiv>
     <Header>
       <LogoContainer>
-        <Logo src={logo} alt={'Autonomous'} /> {env.APP_NAME}
+        <Logo src={logo} alt={'Autonomous'}/> {env.APP_NAME}
       </LogoContainer>
       {initialized ? (
           <MetaContainer>

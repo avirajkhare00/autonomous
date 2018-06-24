@@ -1,12 +1,14 @@
 import { Component, default as React, FormEvent } from 'react'
 import { Form } from 'semantic-ui-react'
 import { TaskSubmission } from '../../../../models/Task'
+import { CommonButtonForm } from './CommonButtonForm'
 
 interface SubmitTaskConfigFormProps {
   submission: TaskSubmission
 
-  onSubmit (configuration: string): void
-  onCancel (): void
+  onSubmit(configuration: string): void
+
+  onCancel(): void
 }
 
 interface SubmitTaskConfigFormState {
@@ -17,12 +19,12 @@ export class SubmitTaskConfigForm extends Component<SubmitTaskConfigFormProps, S
     configuration: this.props.submission.deploymentString
   }
 
-  handleSubmit (event: FormEvent<HTMLFormElement>) {
+  handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     this.props.onSubmit(this.state.configuration)
   }
 
-  render () {
+  render() {
     return (
       <Form onSubmit={e => this.handleSubmit(e)}>
 
@@ -33,15 +35,7 @@ export class SubmitTaskConfigForm extends Component<SubmitTaskConfigFormProps, S
           onChange={event => this.setState({ configuration: event.currentTarget.value })}
         />
 
-        <Form.Button
-          type={'button'}
-          secondary
-          onClick={() => this.props.onCancel()}
-        >
-          Cancel
-        </Form.Button>
-
-        <Form.Button primary>Submit</Form.Button>
+        <CommonButtonForm primaryButtonText={'Submit'} onCancel={this.props.onCancel}/>
       </Form>
     )
   }

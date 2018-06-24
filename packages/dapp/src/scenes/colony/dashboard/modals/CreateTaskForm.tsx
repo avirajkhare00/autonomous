@@ -1,12 +1,15 @@
 import { Component, default as React, FormEvent } from 'react'
 import { Form } from 'semantic-ui-react'
+import { CommonButtonForm } from './CommonButtonForm'
 
 interface CreateTaskFormProps {
   brief: string
   workerAddress: string
   evaluatorAddress: string
-  onSubmit (brief: string, workerAddress: string, evaluatorAddress: string): void
-  onCancel (): void
+
+  onSubmit(brief: string, workerAddress: string, evaluatorAddress: string): void
+
+  onCancel(): void
 }
 
 interface CreateTaskFormState {
@@ -22,7 +25,7 @@ export class CreateTaskForm extends Component<CreateTaskFormProps, CreateTaskFor
     evaluatorAddress: this.props.evaluatorAddress
   }
 
-  handleSubmit (event: FormEvent<HTMLFormElement>) {
+  handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     this.props.onSubmit(
       this.state.brief,
@@ -32,7 +35,7 @@ export class CreateTaskForm extends Component<CreateTaskFormProps, CreateTaskFor
     this.setState({ brief: '' })
   }
 
-  render () {
+  render() {
     return (
       <Form onSubmit={e => this.handleSubmit(e)}>
         <Form.TextArea
@@ -58,15 +61,7 @@ export class CreateTaskForm extends Component<CreateTaskFormProps, CreateTaskFor
           onChange={event => this.setState({ evaluatorAddress: event.currentTarget.value })}
         />
 
-        <Form.Button
-          secondary
-          type={'button'}
-          onClick={() => this.props.onCancel()}
-        >
-          Cancel
-        </Form.Button>
-
-        <Form.Button primary>Create Task</Form.Button>
+        <CommonButtonForm primaryButtonText={'Create Task'} onCancel={this.props.onCancel}/>
       </Form>
     )
   }

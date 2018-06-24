@@ -1,5 +1,5 @@
 import { default as React, SFC } from 'react'
-import { Button, Loader } from 'semantic-ui-react'
+import { Icon, Loader } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { RootActions, RootState } from '../../../redux/store'
@@ -8,24 +8,26 @@ import { RouteProps } from 'react-router'
 import { DeploymentLogTable } from './DeploymentLogTable'
 import { DeploymentLog } from '../../../models/DeploymentLog'
 import { createLoadDeploymentsAction } from '../../../redux/deployment-logs/actions'
+import { SecondaryButton } from '../../../components/buttons/BaseButtons'
 
 interface DeploymentLogSceneProps {
   log: DeploymentLog
   address: string | undefined
   isLoading: boolean
-  refreshLog (address: string): void
+
+  refreshLog(address: string): void
 }
 
 export const deploymentLogScene: SFC<DeploymentLogSceneProps & RouteProps> = ({ log, isLoading, refreshLog, address }) => (
   <div>
     {address
-      ? <Button onClick={() => refreshLog(address)}>Refresh Log</Button>
+      ? <SecondaryButton onClick={() => refreshLog(address)}><Icon name={'refresh'}/> Refresh Log</SecondaryButton>
       : <div>Not connected to a colony. (somehow you broke it!)</div>
     }
 
     {isLoading
-      ? <Loader active inline={'centered'} />
-      : <DeploymentLogTable log={log} />
+      ? <Loader active inline={'centered'}/>
+      : <DeploymentLogTable log={log}/>
     }
   </div>
 )
@@ -37,7 +39,7 @@ const mapState = (state: RootState): Partial<DeploymentLogSceneProps> => ({
 })
 
 const mapDispatch = (dispatch: Dispatch<RootActions>) => ({
-  refreshLog (address: string) {
+  refreshLog(address: string) {
     dispatch(createLoadDeploymentsAction(address))
   }
 })

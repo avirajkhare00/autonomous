@@ -63,7 +63,7 @@ export const NavigationMenu: SFC<NavigationMenuProps> = ({ onChangeColony }) => 
       activeStyle={activeStyle}
     >
       <AlignedIcon name='list' />
-      Deployments
+      Deployment tasks
     </MenuLink>
 
     <MenuLink

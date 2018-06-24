@@ -1,7 +1,7 @@
 import { Component, default as React, FormEvent } from 'react'
 import { Form } from 'semantic-ui-react'
 import glamorous from 'glamorous'
-import { PrimaryMenuButton } from '../../components/buttons/BaseButtons'
+import { PrimaryLoginButton } from '../../components/buttons/LoginButtons'
 
 interface SelectColonyFormProps {
   buttonText: string
@@ -40,7 +40,7 @@ export class EnterColonyForm extends Component<SelectColonyFormProps, EnterColon
         />
 
         <ButtonContainer>
-          <PrimaryMenuButton>{this.props.buttonText}</PrimaryMenuButton>
+          <PrimaryLoginButton>{this.props.buttonText}</PrimaryLoginButton>
         </ButtonContainer>
       </Form>
     )

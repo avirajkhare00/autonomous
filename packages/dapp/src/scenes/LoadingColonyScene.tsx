@@ -1,20 +1,21 @@
 import { default as React, SFC } from 'react'
 import { connect, Dispatch } from 'react-redux'
-import { Button, Header, Loader, Message } from 'semantic-ui-react'
+import { Header, Loader, Message } from 'semantic-ui-react'
 
 import { ColonySelectionLayout } from '../components/layout/ColonySelectionLayout'
 import { RootActions, RootState } from '../redux/store'
 import { env } from '../config/ApplicationConfig'
 import { createAppReadyAction } from '../redux/core/actions'
+import { SecondaryButton } from '../components/buttons/BaseButtons'
 
-const loadingColonyScene: SFC<{ isLoading: boolean, error: Error, reload (): void }> = ({ isLoading, error, reload }) => (
+const loadingColonyScene: SFC<{ isLoading: boolean, error: Error, reload(): void }> = ({ isLoading, error, reload }) => (
   <ColonySelectionLayout>
     {isLoading
       ? (
         <div>
           <Message>
             <Header as={'h1'}>Loading Autonomous DApp</Header>
-            <Loader active inline={'centered'} />
+            <Loader active inline={'centered'}/>
             <ul>
               <li>IPFS Node at {env.IPFS_HOST}:{env.IPFS_API_PORT}</li>
               <li>Contract Server at {env.CONTRACT_SERVER_HOST}:{env.CONTRACT_SERVER_PORT}</li>
@@ -38,7 +39,7 @@ const loadingColonyScene: SFC<{ isLoading: boolean, error: Error, reload (): voi
             <li>Relayer at {env.RELAYER_HOST}:{env.RELAYER_PORT}</li>
           </ul>
 
-          <Button onClick={() => reload()}>Reload App</Button>
+          <SecondaryButton onClick={() => reload()}>Reload App</SecondaryButton>
 
           <h2>Error:</h2>
           <p style={{ maxWidth: 600 }}>{error.message.toString()}</p>
@@ -55,7 +56,7 @@ const mapState = (state: RootState) => ({
 })
 
 const mapDispatch = (dispatch: Dispatch<RootActions>) => ({
-  reload () {
+  reload() {
     dispatch(createAppReadyAction())
   }
 })

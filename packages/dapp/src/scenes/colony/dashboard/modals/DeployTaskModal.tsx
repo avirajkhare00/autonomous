@@ -1,5 +1,5 @@
 import { default as React, SFC } from 'react'
-import { Message, Modal, Dimmer, Loader } from 'semantic-ui-react'
+import { Dimmer, Loader, Message, Modal } from 'semantic-ui-react'
 
 import { ConfigurationModalState } from '../../../../redux/tasks/reducer'
 import { DeployTaskForm } from './DeployTaskForm'
@@ -12,8 +12,7 @@ interface DeployTaskModalProps {
 
 export const DeployTaskModal: SFC<DeployTaskModalProps> = ({ state, onSubmit, onCancel }) => (
   <Modal open={state.isVisible}>
-    <Modal.Header content={`Task ${state.taskId}`} />
-    <Modal.Header content='Deploy configuration' />
+    <Modal.Header content={`Task ${state.taskId} - Deploy configuration`} />
     <Modal.Content>
       <Dimmer active={state.isLoading} inverted>
         <Loader size='small'>Deploying task...</Loader>

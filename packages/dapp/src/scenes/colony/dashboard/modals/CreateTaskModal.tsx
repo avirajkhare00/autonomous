@@ -1,17 +1,19 @@
 import { default as React, SFC } from 'react'
-import { Message, Modal, Dimmer, Loader } from 'semantic-ui-react'
+import { Dimmer, Loader, Message, Modal } from 'semantic-ui-react'
 import { CreateModalState } from '../../../../redux/tasks/reducer'
 import { CreateTaskForm } from './CreateTaskForm'
 
 interface CreateTaskModalProps {
   state: CreateModalState
-  onSubmit (brief: string, workerAddress: string, evaluatorAddress: string): void
-  onCancel (): void
+
+  onSubmit(brief: string, workerAddress: string, evaluatorAddress: string): void
+
+  onCancel(): void
 }
 
 export const CreateTaskModal: SFC<CreateTaskModalProps> = ({ state, onSubmit, onCancel }) => (
   <Modal open={state.isVisible}>
-    <Modal.Header content='Submit a configuration' />
+    <Modal.Header content='Create a deployment task'/>
     <Modal.Content>
       <Dimmer active={state.isLoading} inverted>
         <Loader size='small'>Creating task...</Loader>

@@ -1,17 +1,23 @@
 import { default as React, SFC } from 'react'
-import { Button } from 'semantic-ui-react'
+import { Header, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { RootActions, RootState } from '../../../redux/store'
 import { RouteProps } from 'react-router'
+import glamorous from 'glamorous'
 
 import { DeploymentList } from './DeploymentList'
 import { Task } from '../../../models/Task'
 import {
-  createCloseCreateModalAction, createCloseDeployModalAction, createCloseSubmitModalAction,
+  createCloseCreateModalAction,
+  createCloseDeployModalAction,
+  createCloseSubmitModalAction,
   createCreateTaskAction,
   createFinalizeAction,
-  createGetAllTasksAction, createOpenCreateModalAction, createOpenDeployModalAction, createOpenSubmitModalAction,
+  createGetAllTasksAction,
+  createOpenCreateModalAction,
+  createOpenDeployModalAction,
+  createOpenSubmitModalAction,
   createSubmitTaskConfigAction
 } from '../../../redux/tasks/actions'
 import { SubmitTaskModal } from './modals/SubmitTaskModal'
@@ -21,6 +27,7 @@ import { DeployTaskModal } from './modals/DeployTaskModal'
 import { TransactionsList } from '../../../components/transactions/TransactionsList'
 import { Transaction } from '../../../models/Transaction'
 import { createDismissTransaction } from '../../../redux/transactions/actions'
+import { PrimaryButton, SecondaryButton } from '../../../components/buttons/BaseButtons'
 
 interface DashboardSceneProps {
   transactions: Transaction[]
@@ -30,21 +37,44 @@ interface DashboardSceneProps {
   submitModal: ConfigurationModalState,
   deployModal: ConfigurationModalState
 
-  createTask (brief: string, workerAddress: string, evaluatorAddress: string): void
-  submitConfig (taskId: number, deploymentString: string): void
-  refreshTasks (): void
-  finalizeTask (taskId: number): void
+  createTask(brief: string, workerAddress: string, evaluatorAddress: string): void
 
-  openCreateModal (): void
-  openSubmitModal (task: Task): void
-  openDeployModal (task: Task): void
+  submitConfig(taskId: number, deploymentString: string): void
 
-  closeCreateModal (): void
-  closeSubmitModal (): void
-  closeDeployModal (): void
+  refreshTasks(): void
+
+  finalizeTask(taskId: number): void
+
+  openCreateModal(): void
+
+  openSubmitModal(task: Task): void
+
+  openDeployModal(task: Task): void
+
+  closeCreateModal(): void
+
+  closeSubmitModal(): void
+
+  closeDeployModal(): void
 
   dismissTransaction(id: string): void
 }
+
+const InlineTextAndButtonContainer = glamorous.div({
+  marginBottom: '25px!important',
+  display: 'flex',
+  flexDirection: 'row',
+  marginRight: '42px!important'
+})
+
+const HeaderContainer = glamorous(Header)({
+  margin: 'auto!important',
+  marginRight: '20px!important'
+})
+
+const ButtonLeftContainer = glamorous.div({
+  flex: 1
+})
 
 export const _dashboardScene: SFC<DashboardSceneProps & RouteProps> =
   ({ transactions, tasks, isLoadingTasks, createModal, submitModal, deployModal, createTask, submitConfig, refreshTasks, finalizeTask, openCreateModal, openSubmitModal, openDeployModal, closeCreateModal, closeSubmitModal, closeDeployModal, dismissTransaction }) => (
@@ -67,11 +97,21 @@ export const _dashboardScene: SFC<DashboardSceneProps & RouteProps> =
         onCancel={() => closeDeployModal()}
       />
 
-      <TransactionsList transactions={transactions} dismiss={id => dismissTransaction(id)} />
+      <TransactionsList transactions={transactions} dismiss={id => dismissTransaction(id)}/>
 
-      <Button onClick={() => openCreateModal()} primary>Create Deployment</Button>
+      <InlineTextAndButtonContainer>
+        <HeaderContainer as={'h1'} style={{}}>Open deployment tasks</HeaderContainer>
 
-      <Button onClick={() => refreshTasks()}>Refresh Deployments</Button>
+        <ButtonLeftContainer onClick={() => refreshTasks()}>
+          <SecondaryButton>
+          <Icon name={'refresh'}/> Refresh deployments
+          </SecondaryButton>
+        </ButtonLeftContainer>
+
+        <PrimaryButton onClick={() => openCreateModal()} primary>
+          <Icon name={'plus circle'}/> Create new deployment
+        </PrimaryButton>
+      </InlineTextAndButtonContainer>
 
       <DeploymentList
         isLoading={isLoadingTasks}
@@ -92,7 +132,7 @@ const mapState = (state: RootState): Partial<DashboardSceneProps> => ({
 })
 
 const mapDispatch = (dispatch: Dispatch<RootActions>) => ({
-  createTask (brief: string, workerAddress: string, evaluatorAddress: string) {
+  createTask(brief: string, workerAddress: string, evaluatorAddress: string) {
     dispatch(createCreateTaskAction(
       {
         brief: brief
@@ -101,44 +141,44 @@ const mapDispatch = (dispatch: Dispatch<RootActions>) => ({
       evaluatorAddress
     ))
   },
-  submitConfig (taskId: number, deploymentString: string) {
+  submitConfig(taskId: number, deploymentString: string) {
     dispatch(createSubmitTaskConfigAction(taskId, {
       deploymentString: deploymentString
     }))
   },
-  refreshTasks () {
+  refreshTasks() {
     dispatch(createGetAllTasksAction())
   },
-  finalizeTask (taskId: number) {
+  finalizeTask(taskId: number) {
     dispatch(createFinalizeAction(taskId))
   },
-  openCreateModal () {
+  openCreateModal() {
     dispatch(createOpenCreateModalAction())
   },
-  openSubmitModal (task: Task) {
+  openSubmitModal(task: Task) {
     dispatch(createOpenSubmitModalAction(
       task.id,
       task.deliverable,
       undefined
     ))
   },
-  openDeployModal (task: Task) {
+  openDeployModal(task: Task) {
     dispatch(createOpenDeployModalAction(
       task.id,
       task.deliverable,
       undefined
     ))
   },
-  closeCreateModal () {
+  closeCreateModal() {
     dispatch(createCloseCreateModalAction())
   },
-  closeSubmitModal () {
+  closeSubmitModal() {
     dispatch(createCloseSubmitModalAction())
   },
-  closeDeployModal () {
+  closeDeployModal() {
     dispatch(createCloseDeployModalAction())
   },
-  dismissTransaction (id: string) {
+  dismissTransaction(id: string) {
     dispatch(createDismissTransaction(id))
   }
 })

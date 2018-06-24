@@ -1,7 +1,7 @@
 import { Component, default as React, FormEvent } from 'react'
 import { Divider, Form } from 'semantic-ui-react'
 import { InlineTextAndButtonContainer, InlineTextLeftContainer } from './ColonySelectScene'
-import { PrimaryMenuButton, SecondaryMenuButton } from '../../components/buttons/BaseButtons'
+import { PrimaryLoginButton, SecondaryLoginButton } from '../../components/buttons/LoginButtons'
 
 interface ColonyRelayerFormProps {
   onSubmit(address: string): void
@@ -39,7 +39,7 @@ export class ColonyRelayerForm extends Component<ColonyRelayerFormProps, ColonyR
               to completed tasks in the colony.
             </p>
           </InlineTextLeftContainer>
-          <PrimaryMenuButton>Register Colony</PrimaryMenuButton>
+          <PrimaryLoginButton>Register Colony</PrimaryLoginButton>
         </InlineTextAndButtonContainer>
         <Divider/>
         <InlineTextAndButtonContainer>
@@ -48,11 +48,11 @@ export class ColonyRelayerForm extends Component<ColonyRelayerFormProps, ColonyR
               Cleaning a colony will call the Relayer to delete the colony's namepsace and listener (useful for testing)
             </p>
           </InlineTextLeftContainer>
-          <SecondaryMenuButton
+          <SecondaryLoginButton
             onClick={() => this.props.onDelete(this.state.address)}
           >
             Clean Colony
-          </SecondaryMenuButton>
+          </SecondaryLoginButton>
         </InlineTextAndButtonContainer>
       </Form>
     )

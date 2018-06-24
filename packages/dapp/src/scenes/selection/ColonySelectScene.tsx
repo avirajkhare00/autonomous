@@ -15,7 +15,7 @@ import {
   createSelectAction
 } from '../../redux/colony/actions'
 import { ColonyRelayerForm } from './ColonyRelayerForm'
-import { CancelMenuButton } from '../../components/buttons/BaseButtons'
+import { RedLoginButton } from '../../components/buttons/LoginButtons'
 
 interface LoginSceneProps {
   selectColony(address: string): void
@@ -78,7 +78,7 @@ export const _colonySelectScene: SFC<LoginSceneProps & RouteProps> = ({ selectCo
               Clean all namespaces and listeners on the Relayer (careful!)
             </p>
           </InlineTextLeftContainer>
-          <CancelMenuButton onClick={() => cleanAll()}>Clean All</CancelMenuButton>
+          <RedLoginButton onClick={() => cleanAll()}>Clean All</RedLoginButton>
         </InlineTextAndButtonContainer>
       </CardContentContainer>
     </CardContainer>

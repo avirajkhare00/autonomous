@@ -1,18 +1,19 @@
 import { default as React, SFC } from 'react'
-import { Message, Modal, Dimmer, Loader } from 'semantic-ui-react'
+import { Dimmer, Loader, Message, Modal } from 'semantic-ui-react'
 import { SubmitTaskConfigForm } from './SubmitTaskConfigForm'
 import { ConfigurationModalState } from '../../../../redux/tasks/reducer'
 
 interface SubmitTaskModalProps {
   state: ConfigurationModalState
-  onSubmit (taskId: number, configuration: string): void
-  onCancel (): void
+
+  onSubmit(taskId: number, configuration: string): void
+
+  onCancel(): void
 }
 
 export const SubmitTaskModal: SFC<SubmitTaskModalProps> = ({ state, onSubmit, onCancel }) => (
   <Modal open={state.isVisible}>
-    <Modal.Header content={`Task ${state.taskId}`} />
-    <Modal.Header content='Submit a configuration' />
+    <Modal.Header content={`Task ${state.taskId} - Submit a configuration`}/>
     <Modal.Content>
       <Dimmer active={state.isLoading} inverted>
         <Loader size='small'>Submitting task...</Loader>
