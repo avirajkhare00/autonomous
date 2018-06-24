@@ -1,5 +1,5 @@
 declare module 'ethers' {
-  import { default as Web3, Provider as Web3Provider } from 'web3'
+  import { default as Web3 } from 'web3'
   import { Provider } from 'ethers'
 
   export type Provider = any
