@@ -79,7 +79,7 @@ colony and maintain decentralised control of the platform.**
 
 ## Team
 
-Jaime Van Oers | Github: [@jvanoers](https://github.com/jvanoers) | Email: jaimevanoers@gmail.com
+Jaime van Oers | Github: [@jvanoers](https://github.com/jvanoers) | Email: jaimevanoers@gmail.com
 
 Ken Yip | Github: [@kkyip](https://github.com/kkyip) | Email: ken.yip.kky@gmail.com
 
