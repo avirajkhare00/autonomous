@@ -264,7 +264,7 @@ resources assigned to colonies.
 - Confirm `localhost:5555` is offline (be careful of caching)
 
 
-## Demo 2: Bootstrapping Autonomous
+## Demo 2.a: Bootstrapping Autonomous
 
 This demo will use Autonomous to deploy a version of itself onto the local
 cluster. It then uses the cluster-hosted deployment to both launch another
@@ -327,7 +327,6 @@ To test for a successful deployment:
 
 Congratulations, Autonomous deployed itself!
 
-
 #### Turn off local Autonomous
 
 Where you previous ran `yarn start` for the `DApp` and `Relayer`, turn
@@ -350,42 +349,82 @@ deployment.
 
 - Confirm `localhost:5555` shows `nginx` once successful.
 
-------
-TODO
-------
+## Demo 2.b: Using Autonomous to upgrade itself
 
-BOOTSTRAP 
+The final puzzle piece in bootstrapping Autonomous is to prove it can upgrade
+itself once deployed in the cluster.
 
-Confirm relayer address:
-localhost:8888/hello (relayer exposed port)
+This demo will work through the steps of upgrading the Autonomous relayer to
+a new version which exposes a new API endpoint at `localhost:8888/hello`
 
-Go to autonomous colony
-(Login, not register)
-0x44F44C1dEFf80a3E94B96E872233fcB63e425438
+Suspicious individuals can confirm the hello endpoint does not currently exist:
+```bash
+curl localhost:8888/hello 
+# -> 404 not found 
+```
 
--- 
-NEw task (new autonomous version from bootstrapped environment)
-approve txs
+#### Change the Relayer to include the new endpoint
 
-submit work
------ GO TO COMBINED.json again
+```bash
+vi autonomous/packages/relayer/RelayServer.ts
+```
 
-BUT-----
+Under `configureRoutes()`, add code which represents a software change in
+Autonomous:
 
-line 119: version: 0.1 ---> 0.2 (an upgrade)
+```js
+router.get('/hello', ctx => {
+    ctx.status = 200
+    ctx.body = { hello: 'world!' }
+})
+```
 
-submit it as work to new task
+#### Build a new version of the Autonomous image
 
-deploy
+Once the change is complete, tag the code change in a new container version.
 
-----
+This will build `autonomous-relayer:0.2`
 
-WAIT
+```bash
+cd autonomous/
+./bootstrap/buildPackage.sh relayer 0.2
+```
 
---- go to localhost:8888
+#### Deploy an updated config to the Autonomous Colony
 
-REFRESH: "Hello world!"
+- Login to the autonomous colony
 
----
+    (Login, not register)
+    *0x44F44C1dEFf80a3E94B96E872233fcB63e425438*
 
-Deployment logs -> refresh log!
+- Create a new deployment as before
+- Approve the transactions
+
+- Update the config file to use the new docker tag
+
+    Find instances of `autonomous-relayer:0.1` and replace with `autonomous-relayer:0.2`.
+    
+    Line 119:
+    ```bash
+    vi autonomous/bootstrap/deployments/combined.json
+    ```
+
+- Submit the updated config to the task
+- Approve the `MetaMask` transactions
+
+- Deploy the task
+
+#### Confirm the deployment was successful
+
+The Relayer will have submitted the updated configuration to the cluster, which
+will restart itself and the DApp.
+
+- Wait for the services to deploy
+- Confirm the change made has propagated to the platform:
+
+    ```bash
+    curl localhost:8888/hello
+    --> { "hello": "world!" }
+    ```
+    
+Congratulations, you have now fully bootstrapped the Autonomous technical demo!
