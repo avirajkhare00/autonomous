@@ -19,9 +19,9 @@ colony and maintain decentralised control of the platform.**
 
 ## Whitepaper & Bootstrapping Demo Video
 
-[Bootstrapping Demo Video](https://www.useloom.com/share/3c0ecf21022c46d98ff993f6ee4af22c)
-
 [Autonomous - Whitepaper.pdf](/Autonomous%20-%20Whitepaper.pdf)
+
+[Bootstrapping Demo Video](https://www.useloom.com/share/3c0ecf21022c46d98ff993f6ee4af22c)
 
 
 ## Packages
