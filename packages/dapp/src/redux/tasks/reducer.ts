@@ -163,7 +163,6 @@ export function tasksReducer(state: TasksState = initialState, action: TaskActio
     case TaskActionTypes.GetAll: {
       return {
         ...state,
-        isLoading: true,
         tasks: []
       }
     }

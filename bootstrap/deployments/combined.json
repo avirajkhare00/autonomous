@@ -46,7 +46,7 @@
                     "value": "127.0.0.1"
                   },
                   {
-                    "name": "IPFS_API_PORT",
+                    "name": "REACT_APP_IPFS_API_PORT",
                     "value": "43123"
                   },
                   {
