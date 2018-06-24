@@ -17,13 +17,15 @@ interface TaskListTableProps {
 
 const IconCenter = glamorous.div({
   display: 'flex',
-  alignItems: 'center'
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: 16
 })
 
 export const deploymentCard: SFC<TaskListTableProps> = ({ task, colony, onSubmit, onDeploy }) => (
   <Card>
     <IconCenter>
-      <Jazzicon diameter={50} seed={colony ? colony.address + task.id.toString() : task.id.toString()} />
+      <Jazzicon diameter={50} seed={task.id + parseInt(colony.address.substring(0,8), 16)} />
     </IconCenter>
     <Card.Content>
       <Card.Header>Task #{task.id}</Card.Header>

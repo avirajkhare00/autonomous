@@ -48,7 +48,7 @@ const automaticDismissTransactionEpic: Epic<RootActions, RootState> =
   action$ => action$.ofType<TransactionReceiptReceived>(TransactionActionTypes.Receipt)
     .mergeMap(action => {
       return new Observable(observer => {
-        setInterval(() => {
+        setTimeout(() => {
           observer.next(createDismissTransaction(action.id))
         }, 3000)
       })
