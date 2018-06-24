@@ -27,9 +27,25 @@ interface LoginSceneProps {
   cleanAll(): void
 }
 
+const CardsContainer = glamorous.div({
+  display: 'flex',
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  alignItems: 'space-even',
+  justifyContent: 'center',
+  flex: 1
+})
+
+const CardWrapper = glamorous.div({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flex: 0.4
+})
+
 const CardContainer = glamorous(Card)({
   display: 'flex',
-  flex: 0.5
+  flex: 0.8
 })
 
 const CardContentContainer = glamorous(Card.Content)({
@@ -54,34 +70,43 @@ export const InlineTextLeftContainer = glamorous.div({
 
 export const _colonySelectScene: SFC<LoginSceneProps & RouteProps> = ({ selectColony, registerColony, cleanColony, cleanAll }) => (
   <ColonySelectionLayout>
-    <CardContainer>
-      <CardContentContainer>
-        <CardHeaderContainer>Select a Colony</CardHeaderContainer>
-        <p>
-          Enter a colony address to manage deployments using Autonomous.
-        </p>
-        <EnterColonyForm onSubmit={c => selectColony(c)} buttonText={'Select Colony'}/>
-      </CardContentContainer>
-      <CardContentContainer>
-        <CardHeaderContainer>Register a new Colony with Autonomous</CardHeaderContainer>
-        <p>
-          These actions do not affect the colony or interact with the Blockchain. These methods interact with the
-          Autonomous Relayer, which listens to changes in registered colonies and manages their deployments.
-        </p>
-        <ColonyRelayerForm
-          onSubmit={c => registerColony(c)}
-          onDelete={c => cleanColony(c)}
-        />
-        <InlineTextAndButtonContainer>
-          <InlineTextLeftContainer>
+    <CardsContainer>
+      <CardWrapper>
+        <CardContainer>
+          <CardContentContainer>
+            <CardHeaderContainer>Select a Colony</CardHeaderContainer>
             <p>
-              Clean all namespaces and listeners on the Relayer (careful!)
+              Enter a colony address to manage deployments using Autonomous.
             </p>
-          </InlineTextLeftContainer>
-          <RedLoginButton onClick={() => cleanAll()}>Clean All</RedLoginButton>
-        </InlineTextAndButtonContainer>
-      </CardContentContainer>
-    </CardContainer>
+            <EnterColonyForm onSubmit={c => selectColony(c)} buttonText={'Select Colony'}/>
+          </CardContentContainer>
+        </CardContainer>
+      </CardWrapper>
+
+      <CardWrapper>
+        <CardContainer>
+          <CardContentContainer>
+            <CardHeaderContainer>Register a new Colony with Autonomous</CardHeaderContainer>
+            <p>
+              These actions do not affect the colony or interact with the Blockchain. These methods interact with the
+              Autonomous Relayer, which listens to changes in registered colonies and manages their deployments.
+            </p>
+            <ColonyRelayerForm
+              onSubmit={c => registerColony(c)}
+              onDelete={c => cleanColony(c)}
+            />
+            <InlineTextAndButtonContainer>
+              <InlineTextLeftContainer>
+                <p>
+                  Clean all namespaces and listeners on the Relayer (careful!)
+                </p>
+              </InlineTextLeftContainer>
+              <RedLoginButton onClick={() => cleanAll()}>Clean All</RedLoginButton>
+            </InlineTextAndButtonContainer>
+          </CardContentContainer>
+        </CardContainer>
+      </CardWrapper>
+    </CardsContainer>
   </ColonySelectionLayout>
 )
 

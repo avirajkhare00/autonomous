@@ -1,91 +1,68 @@
-# Autonomous Monorepo
+# Autonomous
 
-## Development
+![Logo Banner](https://i.imgur.com/lw7Oel9.jpg)
 
-First, start a local Ethereum instance (ganache)
+## Abstract
 
-```bash
-cd packages/colony
-yarn run ganache:start
-```
+Autonomous; a platform which provides decentralised autonomous deployment for software and hardware using cloud infrastructure. By decentralising the control of deployment, changes to services can be made at any time and its infrastructure can be funded, owned and controlled by decentralised communities.
 
-Start a local IPFS node:
+This platform allows for the decentralised control of software and hardware infrastructure, and is capable of bootstrapping itself to be controlled by a decentralised colony, whilst still providing services to control the deployments in other colonies. In short, the infrastructure which controls colony infrastructure is itself controlled by a colony. Autonomous can manage and run itself through a shared, open source colony and maintain decentralised control of the platform.
 
-```bash
-cd packages/colony
-yarn run ipfs:start
-```
+## Whitepaper
 
-Ensure contracts are compiled: 
-```bash
-cd packages/colony
-yarn run contracts:compile
-```
+Navigate to `root/Autonomous - Whitepaper.pdf` or [click here](https://github.com/jvanoers/autonomous/blob/master/Autonomous%20-%20Whitepaper.pdf)
 
-Then, start a contract server
+## Folder Structure
 
-```bash
-cd packages/colony
-yarn run contracts:serve
-```
+**EXPLAIN THE STRUCTURE**
 
-Then, deploy Colony on the test network
+## Demo Instructions
 
-```bash
-cd packages/colony
-yarn run contracts:deploy
-```
+**EXPLAIN THE INSTRUCTIONS**
 
-Then, create a test colony using the Colony deployment 
-```bash
-cd packages/colony
-yarn run colony:add
-```
+## Troubleshooting
 
-*Note: Copy the colony address*
+**ADD THE TROUBLESHOOTING INFORMATION**
 
-Then, run the DApp which will use the ContractServer
-```bash
-cd packages/dapp
-yarn start
-```
+## Quick Guide for Users
 
-Then, ensure your metamask is pointed to your local ganache instance:
-```
-open http://localhost:3000
+1. Register or select a colony to use with Autonomous
 
-MetaMask --> Networks Dropdown
-:: Select Localhost:8545
-```
+!["Login" page](https://i.imgur.com/06j4VQS.jpg)
 
-## Use yarn!
+2. Navigate to "Deployment tasks" to manage deployments
 
-Run on repo root (installs all dependencies in `/packages`)
+![Deployment tasks](https://i.imgur.com/32ENMWu.jpg)
 
-```bash
-yarn install
-```
+3. Create a new deployment task with a brief, worker address and evaluator address
 
-## Lerna
+![Create a new deployment task](https://i.imgur.com/n1kRMHa.jpg)
 
-Lerna is a good place to learn(a) about monorepos.
+4. A transaction is initiated when creating deployment tasks. Users can track the status of the transaction via toast notifications
 
-[https://github.com/lerna/lerna](https://github.com/lerna/lerna)
+![Transaction statuses](https://i.imgur.com/6YLRhU1.jpg)
 
-test
+5. After a task has been successfully created, workers can submit their configurations for the deployment task
 
-## Bootstrap
+![Submit a configuration](https://i.imgur.com/vbGY51Z.jpg)
 
-Pre-Step: 
-Setup dev env: Ganache, IPFS, contract server
-Colony: migrate colony base contracts
+6. After a worker has submitted their configuration, evaluators can approve the configuration for deployment
 
-1. Build images for dapp and relayer
-2. Start relayer with local config
-3. Create a colony
-4. Register colony with local relayer
-5. Deploy combined config to relayer
-6. Stop local relayer
-7. Open kubernetes app/ relayer
-App: localhost:9999, relayer:8888
-8. Use bootstrapped relayer to manage (including itself) 
+![Approve and deploy a configuration](https://i.imgur.com/DEv0v9i.jpg)
+
+7. Navigate to "Deployment logs" to track the history of deployments
+
+
+![Deployment logs](https://i.imgur.com/CGgDWkG.jpg)
+
+## Team
+
+Jaime Van Oers | Github: [@jvanoers](https://github.com/jvanoers) | Email: jaimevanoers@gmail.com
+
+Ken Yip | Github: [@kkyip](https://github.com/kkyip) | Email: ken.yip.kky@gmail.com
+
+Thomas Kingston | Github: [@DyslexicMot](https://github.com/DyslexicMot)
+
+## License
+
+Autonomous is licensed under the terms of the GNU Affero General Public License (GNU AGPLv3). See the licensing file for more details.

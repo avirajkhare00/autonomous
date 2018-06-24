@@ -1,5 +1,6 @@
 import { default as React, SFC } from 'react'
 import { DeploymentEvent, StreamEvent } from '../../../models/DeploymentLog'
+import { Table } from 'semantic-ui-react'
 
 interface TaskListTableProps {
   deployment: string
@@ -7,9 +8,9 @@ interface TaskListTableProps {
 }
 
 export const DeploymentRow: SFC<TaskListTableProps> = ({ deployment, events }) => (
-  <tr>
-    <td>{deployment}</td>
-    <td>
+  <Table.Row>
+    <Table.Cell>{deployment}</Table.Cell>
+    <Table.Cell>
       <ul>
         {
           events.map((e, i) =>
@@ -18,6 +19,6 @@ export const DeploymentRow: SFC<TaskListTableProps> = ({ deployment, events }) =
             </li>
           )}
       </ul>
-    </td>
-  </tr>
+    </Table.Cell>
+  </Table.Row>
 )

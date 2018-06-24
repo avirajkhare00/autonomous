@@ -4,6 +4,7 @@ export const MenuTextColor = '#F5F5FE'
 
 export const LightBackground = '#F5F5FE'
 export const DarkForeground = '#20294F'
+export const FadedBackground = 'rgba(32, 41, 79, 0.5)'
 
 export const TitleColor = '#FFFFFF'
 export const BackgroundColor = '#FFFFFF'

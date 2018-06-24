@@ -38,7 +38,7 @@ export const DeploymentList: SFC<TaskListTableProps> = ({ isLoading, tasks, onSu
             />
           )
         : (!isLoading
-            ? <Header as={'h2'}>You have no deployments yet, add one!</Header>
+            ? <Header>You have no deployments yet, add one!</Header>
             : null
         )
       }

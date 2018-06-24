@@ -1,20 +1,21 @@
 import { default as React, SFC } from 'react'
 import { DeploymentLog } from '../../../models/DeploymentLog'
 import { DeploymentRow } from './DeploymentRow'
+import { Table } from 'semantic-ui-react'
 
 interface DeploymentLogTableProps {
   log: DeploymentLog
 }
 
 export const DeploymentLogTable: SFC<DeploymentLogTableProps> = ({ log }) => (
-  <table>
-    <thead>
-    <tr>
-      <td>Deployment Name</td>
-      <td>Events</td>
-    </tr>
-    </thead>
-    <tbody>
+  <Table>
+    <Table.Header>
+    <Table.Row>
+      <Table.HeaderCell>Deployment Name</Table.HeaderCell>
+      <Table.HeaderCell>Events</Table.HeaderCell>
+    </Table.Row>
+    </Table.Header>
+    <Table.Body>
     {
       Object.entries(log).map((kvp, i) =>
         <DeploymentRow
@@ -23,6 +24,6 @@ export const DeploymentLogTable: SFC<DeploymentLogTableProps> = ({ log }) => (
           events={kvp[1]}
         />
       )}
-    </tbody>
-  </table>
+    </Table.Body>
+  </Table>
 )
