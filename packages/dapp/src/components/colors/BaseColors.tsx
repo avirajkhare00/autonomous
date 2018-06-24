@@ -11,3 +11,6 @@ export const BackgroundColor = '#FFFFFF'
 export const Primary = '#5290FB'
 
 export const FontFamily = '\'Roboto\', sans-serif'
+
+export const CardStatusBackgroundColor = '#E3E4F9'
+export const CardStatusColor = '#20294F'

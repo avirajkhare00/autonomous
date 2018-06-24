@@ -8,6 +8,7 @@ import { RootState } from '../../../redux/store'
 import { Colony } from '../../../models/Colony'
 import { connect } from 'react-redux'
 import { PrimaryCardButton } from '../../../components/buttons/CardButtons'
+import { CardStatusBackgroundColor, CardStatusColor } from '../../../components/colors/BaseColors'
 
 interface TaskListTableProps {
   task: Task
@@ -19,7 +20,7 @@ interface TaskListTableProps {
 }
 
 const CardContainer = glamorous(Card)({
-  height: '370px!important',
+  height: '380px!important',
   margin: '13px!important'
 })
 
@@ -31,11 +32,22 @@ const CardContentContainer = glamorous(Card.Content)({
 const CommonCardContentContainer = glamorous(CardContentContainer)({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'center'
+})
+
+const StatusContainer = glamorous.div({
+  backgroundColor: CardStatusBackgroundColor,
+  color: CardStatusColor,
+  borderRadius: 99,
+  fontSize: 12,
+  padding: '4px 8px'
+})
+
+const HeaderCenter = glamorous(CommonCardContentContainer)({
   margin: '10px!important'
 })
 
-const IconCenter = glamorous(CommonCardContentContainer)({
+const IconCenter = glamorous(HeaderCenter)({
   marginTop: '30px!important'
 })
 
@@ -45,7 +57,11 @@ const DescriptionCardContentContainer = glamorous(CardContentContainer)({
   height: '170px!important',
   minHeight: '170px!important',
   maxHeight: '170px!important',
-  paddingTop: '0px!important'
+  paddingTop: '10px!important'
+})
+
+const ButtonCardContentContainer = glamorous(CommonCardContentContainer)({
+  marginBottom: '10px!important'
 })
 
 export const deploymentCard: SFC<TaskListTableProps> = ({ task, colony, onSubmit, onDeploy }) => (
@@ -56,15 +72,21 @@ export const deploymentCard: SFC<TaskListTableProps> = ({ task, colony, onSubmit
     <CommonCardContentContainer>
       <Card.Header>Task #{task.id}</Card.Header>
     </CommonCardContentContainer>
+    <CommonCardContentContainer>
+      {task.deliverableHash
+        ? (<StatusContainer>Status: In Review</StatusContainer>)
+        : (<StatusContainer>Status: In Progress</StatusContainer>)
+      }
+    </CommonCardContentContainer>
     <DescriptionCardContentContainer>
       <Card.Description>{task.specification.brief}</Card.Description>
     </DescriptionCardContentContainer>
-    <CommonCardContentContainer>
+    <ButtonCardContentContainer>
       {task.deliverableHash
         ? (<PrimaryCardButton onClick={() => onDeploy()}>Deploy</PrimaryCardButton>)
         : (<PrimaryCardButton onClick={() => onSubmit()}>Submit Config</PrimaryCardButton>)
       }
-    </CommonCardContentContainer>
+    </ButtonCardContentContainer>
   </CardContainer>
 )
 

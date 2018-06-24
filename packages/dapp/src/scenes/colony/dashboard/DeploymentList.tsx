@@ -28,7 +28,7 @@ export const DeploymentList: SFC<TaskListTableProps> = ({ isLoading, tasks, onSu
 
     <CardsContainer>
       {tasks.length > 0
-        ? tasks
+        ? tasks.filter(t => !t.finalized)
           .map((task, i) =>
             <DeploymentCard
               task={task}
