@@ -22,7 +22,11 @@ This procedure starts from a clean environment. The READMEs of individual compon
 or [Troubleshooting](/TROUBLESHOOTING.md) may provide help if issues arise. 
 
 
-- Install `Docker for Windows` (with Kubernetes support, maybe edge) / Docker for Mac.
+- Install `Docker for Windows` / `Docker for Mac` (**with Kubernetes support**) 
+
+    [Docker for Mac (edge)](https://docs.docker.com/docker-for-mac/edge-release-notes/)
+    
+    [Docker for Windows (edge)](https://docs.docker.com/docker-for-windows/edge-release-notes/)
 
 - Ensure `docker` is accessible in `$PATH` (used when building test images)
 

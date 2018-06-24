@@ -30,9 +30,11 @@ the reader. Extension to GKE/AKE/EKS is expected to be mostly painless.
 #### Setup Docker for Windows / Docker for Mac with Kubernetes:
 
 Download the latest version for your platform with Kubernetes support.
-(Edge edition on Windows)
 
-{{TODO}} Add Links to download pages
+[Docker for Mac (edge)](https://docs.docker.com/docker-for-mac/edge-release-notes/)
+
+[Docker for Windows (edge)](https://docs.docker.com/docker-for-windows/edge-release-notes/)
+
 
 #### Required Services
 

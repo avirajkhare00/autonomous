@@ -4,25 +4,47 @@
 
 ## Abstract
 
-Autonomous; a platform which provides decentralised autonomous deployment for software and hardware using cloud infrastructure. By decentralising the control of deployment, changes to services can be made at any time and its infrastructure can be funded, owned and controlled by decentralised communities.
+Autonomous; a platform which provides decentralised autonomous deployment for software and
+hardware using cloud infrastructure. By decentralising the control of deployments,
+changes to services can be made at any time and its infrastructure can be funded,
+owned and controlled by decentralised communities.
 
-This platform allows for the decentralised control of software and hardware infrastructure, and is capable of bootstrapping itself to be controlled by a decentralised colony, whilst still providing services to control the deployments in other colonies. In short, the infrastructure which controls colony infrastructure is itself controlled by a colony. Autonomous can manage and run itself through a shared, open source colony and maintain decentralised control of the platform.
+Additionally, this platform is capable of itself being
+controlled by a decentralised colony, whilst still providing 
+services to control the deployments in other colonies. In short, 
+the platform which controls colony infrastructure is itself controlled 
+by a colony, and can update itself:
+**Autonomous can manage and run itself through a shared, open source 
+colony and maintain decentralised control of the platform.**
 
 ## Whitepaper
 
-Navigate to `root/Autonomous - Whitepaper.pdf` or [click here](https://github.com/jvanoers/autonomous/blob/master/Autonomous%20-%20Whitepaper.pdf)
+[Autonomous - Whitepaper.pdf](/Autonomous%20-%20Whitepaper.pdf)
 
-## Folder Structure
+## Packages
 
-**EXPLAIN THE STRUCTURE**
+| Package                                              | Description
+| ---------------------------------------------------- | --------------------------------------------------------------
+| [`@autonomous/relayer`](/packages/relayer) | A service which orchestrates Colony-derived deployments to Kubernetes 
+| [`@autonomous/dapp`](/packages/dapp)       | A web app which allows for the control of Colonies and Relayer helper functions
+| [`@autonomous/colony`](/packages/colony)   | A collection of tools and scripts to power the infrastructure of Autonomous
+
+
+## Requirements
+
+- Node
+- Browser with MetaMask installed
+- Docker for Windows / Docker for Mac as the Kubernetes host (edge branch)
+
+    [Docker for Mac (edge)](https://docs.docker.com/docker-for-mac/edge-release-notes/)
+    
+    [Docker for Windows (edge)](https://docs.docker.com/docker-for-windows/edge-release-notes/)
 
 ## Demo Instructions
 
-**EXPLAIN THE INSTRUCTIONS**
+[Demo](/DEMO.md)
 
-## Troubleshooting
-
-**ADD THE TROUBLESHOOTING INFORMATION**
+[Troubleshooting](/TROUBLESHOOTING.md)
 
 ## Quick Guide for Users
 
@@ -61,7 +83,7 @@ Jaime Van Oers | Github: [@jvanoers](https://github.com/jvanoers) | Email: jaime
 
 Ken Yip | Github: [@kkyip](https://github.com/kkyip) | Email: ken.yip.kky@gmail.com
 
-Thomas Kingston | Github: [@DyslexicMot](https://github.com/DyslexicMot)
+Thomas Kingston | Github: [@DyslexicMot](https://github.com/DyslexicMot) | Email: tom.kingston.tfk@gmail.com
 
 ## License
 
