@@ -1,4 +1,4 @@
-import { TransactionReceipt, Transaction } from '@colony/colony-js-adapter'
+import { Transaction, TransactionReceipt } from '@colony/colony-js-adapter'
 import { Action } from 'redux'
 import { ContractResponse } from '@colony/colony-js-contract-client'
 
@@ -6,7 +6,8 @@ export enum TransactionActionTypes {
   Initiate = '[WEB3] Transaction Initiate',
   Submitted = '[WEB3] Transaction Submitted',
   Receipt = '[WEB3] Transaction Receipt',
-  Error = '[WEB3] Transaction Error'
+  Error = '[WEB3] Transaction Error',
+  DismissTransaction = '[Task] Dismiss Transaction'
 }
 
 export type TransactionInitiator<T> = () => Promise<ContractResponse<T>>
@@ -40,6 +41,11 @@ export interface TransactionError extends Action {
   error: Error
 }
 
+export interface DismissTransaction extends Action {
+  type: TransactionActionTypes.DismissTransaction
+  transactionId: string
+}
+
 export function createTransactionInitiateAction<T> (
   id: string,
   description: string,
@@ -62,8 +68,13 @@ export function createTransactionErrorAction (id: string, error: Error): Transac
   return { type: TransactionActionTypes.Error, id, error }
 }
 
+export function createDismissTransaction (transactionId: string): DismissTransaction {
+  return { type: TransactionActionTypes.DismissTransaction, transactionId }
+}
+
 export type TransactionActions =
   | InitiateTransaction<any>
   | TransactionSubmitted
   | TransactionReceiptReceived
   | TransactionError
+  | DismissTransaction

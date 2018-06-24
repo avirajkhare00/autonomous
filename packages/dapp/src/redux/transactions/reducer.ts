@@ -16,6 +16,7 @@ export function transactionsReducer (state: TransactionsState = initialState, ac
 
       let newTx: Transaction = {
         id: action.id,
+        isVisible: true,
         description: action.description,
         state: TransactionState.INITIATED,
         transactionHash: undefined,
@@ -39,6 +40,7 @@ export function transactionsReducer (state: TransactionsState = initialState, ac
           action.id,
           t => ({
             id: t.id,
+            isVisible: true,
             description: t.description,
             state: TransactionState.SUBMITTED,
             transactionHash: action.transaction.hash,
@@ -57,6 +59,7 @@ export function transactionsReducer (state: TransactionsState = initialState, ac
           action.id,
           t => ({
             id: t.id,
+            isVisible: true,
             description: t.description,
             state: TransactionState.RECEIVED,
             transactionHash: t.transactionHash,
@@ -75,11 +78,31 @@ export function transactionsReducer (state: TransactionsState = initialState, ac
           action.id,
           t => ({
             id: t.id,
+            isVisible: true,
             description: t.description,
             state: TransactionState.ERROR,
             transactionHash: t.transactionHash,
             receipt: t.receipt,
             error: action.error
+          })
+        )
+      }
+    }
+
+    case TransactionActionTypes.DismissTransaction: {
+      return {
+        ...state,
+        transactions: modifyTransactions(
+          state.transactions,
+          action.transactionId,
+          t => ({
+            id: t.id,
+            isVisible: false,
+            description: t.description,
+            state: t.state,
+            transactionHash: t.transactionHash,
+            receipt: t.receipt,
+            error: t.error
           })
         )
       }

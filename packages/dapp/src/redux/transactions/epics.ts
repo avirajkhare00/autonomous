@@ -2,11 +2,13 @@ import { Epic } from 'redux-observable'
 
 import { RootActions, RootState } from '../store'
 import {
+  createDismissTransaction,
   createTransactionErrorAction,
   createTransactionReceiptAction,
   createTransactionSubmittedAction,
   InitiateTransaction,
-  TransactionActionTypes
+  TransactionActionTypes,
+  TransactionReceiptReceived
 } from './actions'
 import { Observable } from 'rxjs/Observable'
 
@@ -42,6 +44,17 @@ const initiateTransactionEpic: Epic<RootActions, RootState> =
         })
     })
 
+const automaticDismissTransactionEpic: Epic<RootActions, RootState> =
+  action$ => action$.ofType<TransactionReceiptReceived>(TransactionActionTypes.Receipt)
+    .mergeMap(action => {
+      return new Observable(observer => {
+        setInterval(() => {
+          observer.next(createDismissTransaction(action.id))
+        }, 3000)
+      })
+    })
+
 export const TransactionEpics = [
-  initiateTransactionEpic
+  initiateTransactionEpic,
+  automaticDismissTransactionEpic
 ]

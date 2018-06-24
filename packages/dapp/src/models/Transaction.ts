@@ -2,6 +2,7 @@ import { TransactionReceipt } from '@colony/colony-js-adapter'
 
 export interface Transaction {
   id: string,
+  isVisible: boolean,
   description: string,
   state: TransactionState,
   transactionHash?: string,

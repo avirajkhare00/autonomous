@@ -18,8 +18,12 @@ import { SubmitTaskModal } from './modals/SubmitTaskModal'
 import { ConfigurationModalState, CreateModalState } from '../../../redux/tasks/reducer'
 import { CreateTaskModal } from './modals/CreateTaskModal'
 import { DeployTaskModal } from './modals/DeployTaskModal'
+import { TransactionsList } from '../../../components/transactions/TransactionsList'
+import { Transaction } from '../../../models/Transaction'
+import { createDismissTransaction } from '../../../redux/transactions/actions'
 
 interface DashboardSceneProps {
+  transactions: Transaction[]
   tasks: Task[]
   isLoadingTasks: boolean
   createModal: CreateModalState,
@@ -38,10 +42,12 @@ interface DashboardSceneProps {
   closeCreateModal (): void
   closeSubmitModal (): void
   closeDeployModal (): void
+
+  dismissTransaction(id: string): void
 }
 
 export const _dashboardScene: SFC<DashboardSceneProps & RouteProps> =
-  ({ tasks, isLoadingTasks, createModal, submitModal, deployModal, createTask, submitConfig, refreshTasks, finalizeTask, openCreateModal, openSubmitModal, openDeployModal, closeCreateModal, closeSubmitModal, closeDeployModal }) => (
+  ({ transactions, tasks, isLoadingTasks, createModal, submitModal, deployModal, createTask, submitConfig, refreshTasks, finalizeTask, openCreateModal, openSubmitModal, openDeployModal, closeCreateModal, closeSubmitModal, closeDeployModal, dismissTransaction }) => (
     <div>
       <CreateTaskModal
         state={createModal}
@@ -61,6 +67,8 @@ export const _dashboardScene: SFC<DashboardSceneProps & RouteProps> =
         onCancel={() => closeDeployModal()}
       />
 
+      <TransactionsList transactions={transactions} dismiss={id => dismissTransaction(id)} />
+
       <Button onClick={() => openCreateModal()} primary>Create Deployment</Button>
 
       <Button onClick={() => refreshTasks()}>Refresh Deployments</Button>
@@ -75,6 +83,7 @@ export const _dashboardScene: SFC<DashboardSceneProps & RouteProps> =
   )
 
 const mapState = (state: RootState): Partial<DashboardSceneProps> => ({
+  transactions: Array.from(state.transactions.transactions.values()),
   tasks: state.tasks.tasks,
   isLoadingTasks: state.tasks.isLoading,
   createModal: state.tasks.createModal,
@@ -128,6 +137,9 @@ const mapDispatch = (dispatch: Dispatch<RootActions>) => ({
   },
   closeDeployModal () {
     dispatch(createCloseDeployModalAction())
+  },
+  dismissTransaction (id: string) {
+    dispatch(createDismissTransaction(id))
   }
 })
 
