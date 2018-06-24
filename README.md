@@ -17,9 +17,12 @@ by a colony, and can update itself:
 **Autonomous can manage and run itself through a shared, open source 
 colony and maintain decentralised control of the platform.**
 
-## Whitepaper
+## Whitepaper & Bootstrapping Demo Video
+
+[Bootstrapping Demo Video](https://www.useloom.com/share/3c0ecf21022c46d98ff993f6ee4af22c)
 
 [Autonomous - Whitepaper.pdf](/Autonomous%20-%20Whitepaper.pdf)
+
 
 ## Packages
 
@@ -40,9 +43,9 @@ colony and maintain decentralised control of the platform.**
     
     [Docker for Windows (edge)](https://docs.docker.com/docker-for-windows/edge-release-notes/)
 
-## Demo Instructions
+## Technical Demo Instructions
 
-[Demo](/DEMO.md)
+[Technical Demo](/DEMO.md)
 
 [Troubleshooting](/TROUBLESHOOTING.md)
 
