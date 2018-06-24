@@ -64,7 +64,7 @@ const InlineTextAndButtonContainer = glamorous.div({
   marginBottom: '25px!important',
   display: 'flex',
   flexDirection: 'row',
-  marginRight: '42px!important'
+  marginRight: '13px!important'
 })
 
 const HeaderContainer = glamorous(Header)({
@@ -104,7 +104,7 @@ export const _dashboardScene: SFC<DashboardSceneProps & RouteProps> =
 
         <ButtonLeftContainer onClick={() => refreshTasks()}>
           <SecondaryButton>
-          <Icon name={'refresh'}/> Refresh deployments
+            <Icon name={'refresh'}/> Refresh deployments
           </SecondaryButton>
         </ButtonLeftContainer>
 

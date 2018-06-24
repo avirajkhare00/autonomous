@@ -205,6 +205,7 @@ export function tasksReducer(state: TasksState = initialState, action: TaskActio
         ...state,
         deployModal: {
           ...state.deployModal,
+          submission: action.submission!,
           isVisible: true,
           taskId: action.taskId,
           error: undefined

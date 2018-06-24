@@ -17,7 +17,7 @@ interface TaskListTableProps {
 const CardsContainer = glamorous.div({
   display: 'flex',
   flexDirection: 'row',
-  marginTop: '20px!important'
+  flexWrap: 'wrap'
 })
 
 export const DeploymentList: SFC<TaskListTableProps> = ({ isLoading, tasks, onSubmit, onDeploy }) => (

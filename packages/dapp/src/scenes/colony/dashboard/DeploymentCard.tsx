@@ -19,8 +19,8 @@ interface TaskListTableProps {
 }
 
 const CardContainer = glamorous(Card)({
-  height: '360px!important',
-  margin: '10px!important'
+  height: '370px!important',
+  margin: '13px!important'
 })
 
 const CardContentContainer = glamorous(Card.Content)({
@@ -28,23 +28,23 @@ const CardContentContainer = glamorous(Card.Content)({
   border: 'none!important'
 })
 
-const TopCardContentContainer = glamorous(CardContentContainer)({
+const CommonCardContentContainer = glamorous(CardContentContainer)({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   margin: '10px!important'
 })
 
-const IconCenter = glamorous(TopCardContentContainer)({
+const IconCenter = glamorous(CommonCardContentContainer)({
   marginTop: '30px!important'
 })
 
 const DescriptionCardContentContainer = glamorous(CardContentContainer)({
   whiteSpace: 'pre-wrap',
   wordWrap: 'break-word',
-  height: '180px!important',
-  minHeight: '180px!important',
-  maxHeight: '180px!important',
+  height: '170px!important',
+  minHeight: '170px!important',
+  maxHeight: '170px!important',
   paddingTop: '0px!important'
 })
 
@@ -53,18 +53,18 @@ export const deploymentCard: SFC<TaskListTableProps> = ({ task, colony, onSubmit
     <IconCenter>
       <Jazzicon diameter={50} seed={task.id + parseInt(colony.address.substring(0, 8), 16)}/>
     </IconCenter>
-    <TopCardContentContainer>
+    <CommonCardContentContainer>
       <Card.Header>Task #{task.id}</Card.Header>
-    </TopCardContentContainer>
+    </CommonCardContentContainer>
     <DescriptionCardContentContainer>
       <Card.Description>{task.specification.brief}</Card.Description>
     </DescriptionCardContentContainer>
-    <CardContentContainer>
+    <CommonCardContentContainer>
       {task.deliverableHash
         ? (<PrimaryCardButton onClick={() => onDeploy()}>Deploy</PrimaryCardButton>)
         : (<PrimaryCardButton onClick={() => onSubmit()}>Submit Config</PrimaryCardButton>)
       }
-    </CardContentContainer>
+    </CommonCardContentContainer>
   </CardContainer>
 )
 
